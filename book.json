@@ -10,8 +10,7 @@
 		"splitter",
 		"pageview-count",
 		"tbfed-pagefooter",
-		"flexible-alerts",
-		"ancre-navigation"
+		"flexible-alerts"
 	],
 	"pluginsConfig": {
 		"tbfed-pagefooter": {
