@@ -1,0 +1,30 @@
+{
+	"author": "DuGuoSheng",
+	"title": "6.S081 All-In-One",
+	"plugins": [
+		"-lunr",
+		"-search",
+		"search-pro",
+		"expandable-chapters",
+		"code-optimize",
+		"splitter",
+		"pageview-count",
+		"tbfed-pagefooter",
+		"flexible-alerts",
+		"ancre-navigation"
+	],
+	"pluginsConfig": {
+		"tbfed-pagefooter": {
+			"copyright": "copyright by duguosheng",
+			"modify_label": "该文件修订时间：",
+			"modify_format": "YYYY-MM-DD HH:mm:ss"
+		},
+		"flexible-alerts": {
+			"style": "flat"
+		},
+		"code-optimize": {
+			"copyButtons": true,
+			"showLines": false
+		}
+	}
+}
