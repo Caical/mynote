@@ -2,8 +2,6 @@
 
 整个*Camera Open* 过程总结如下：
 
-[TOC]
-
 ## 一、*Java APP* 层
 
 + 调用 *Frameworks* 层 *Camera.java* 中的 `open()` 方法；

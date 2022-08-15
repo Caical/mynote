@@ -1,6 +1,5 @@
 # Camera Open 流程
 
-[TOC]
 # 一、Java 层 Camera Class 使用介绍
 
 先看下谷歌官方对 Camera Class 的介绍：
