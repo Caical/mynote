@@ -1,0 +1,693 @@
+# Camera Init 初始化流程
+
+*Open Camera*是*Preview、TakePicture、Record*的基础，*Open Camera*会初始化很多对象，而*Preview*等操作是围绕着这些对象进行操作的，所以这里用*Open Camera*来理清各个对象间的交互关系。
+
+## 一、Camera 系统架构
+
+看到一张好图，自：《[sdm660–opencamera流程详细分析](https://blog.csdn.net/u012906122/article/details/83055905)》
+
+![QQ截图20220815162759](image\QQ截图20220815162759.png)
+
+*Camera*模块的系统架构分为四层，从上到下分别是
+
+1. ***Package* 文件夹下的 *Java* 层**
+2. ***Framework* 文件夹下的 *Framework* 层**
+   *Framework*层下细分为：*Java* *Framework*、JNI *Framework*、*Hardware* *Interface* *Framework* 。
+3. ***Hardware* 文件夹下的 *Hal* 层**
+   *HAL* 层下又细分为 *Hardware* *Interface* 与 *mm*-*camera* 层。
+   *ADIL* 是 JNI Framework 层 与 *Hardware* *Interface* *Framework* 层 交互的接口，即CameraClient* 进程与 *CameraService* 进程的交互。
+   *HIDL* 是发生在 F*r*amework 层 与 *HAL*层交互的接口。
+4. **Kernel 文件夹下的 *Driver* 层**
+
+关于进程间通信的更多内容可以去看另一篇文档中Android机制部分的IPC。
+
+接下来，我们进代码分析下 *Camera Init* 初始化流程。
+
+## 二、Camera Init 初始化流程
+
+## 2.1 CameraService 启动
+
+*CameraService* 是一个可执行程序放在 */system/bin/cameraserver*，开机时通过`init.rc` 文件自启动。
+
+```rc
+frameworks/av/camera/cameraserver/cameraserver.rc
+service cameraserver /system/bin/cameraserver
+    class main
+    user cameraserver
+    group audio camera input drmrpc
+    ioprio rt 4
+    writepid /dev/cpuset/camera-daemon/tasks /dev/stune/foreground/tasks
+```
+
+cameraserver 可执行程序代码如下：
+
+```cpp
+frameworks/av/camera/cameraserver/main_cameraserver.cpp
+
+#define LOG_TAG "cameraserver"
+//#define LOG_NDEBUG 0
+#include "CameraService.h"
+
+using namespace android;
+int main(int argc __unused, char** argv __unused)
+{
+    signal(SIGPIPE, SIG_IGN);
+
+    sp<ProcessState> proc(ProcessState::self());
+    sp<IServiceManager> sm = defaultServiceManager();
+    ALOGI("ServiceManager: %p", sm.get());
+    CameraService::instantiate();
+    ProcessState::self()->startThreadPool();
+    IPCThreadState::self()->disableBackgroundScheduling(true);
+    IPCThreadState::self()->joinThreadPool();
+}
+```
+
+## 2.2 CameraService::instantiate()
+
+```c
+frameworks/native/include/binder/BinderService.h
+    
+public:
+    static status_t publish(bool allowIsolated = false) {
+        sp<IServiceManager> sm(defaultServiceManager());
+        return sm->addService( String16(SERVICE::getServiceName()), new SERVICE(), allowIsolated);
+    }
+	static void instantiate() { publish(); }
+```
+
+这段代码的意思是，向 *ServicIeManager*添加 *name* 为 "*media.camera*"的*service* 。
+
+```c
+String16(SERVICE::getServiceName())
+=============>
+    // Implementation of BinderService<T>
+    static char const* getServiceName() { return "media.camera"; }
+
+new SERVICE()
+=============>
+相当于调用 new CameraService()
+```
+
+## 2.3 CameraService.cpp
+
+由于是还 强指针的引用类型，代码`new CameraService()` ，在调用 `CameraService::CameraService()` 同时还会调用 `void CameraService::onFirstRef()`。
+
+## 2.4 CameraService::CameraService()
+
+主要工作如下：
+
+1. 定义全局 *CameraService* 指针对象 *gCameraService*
+2. 初始化变量 *mNumberOfCameras = 0、mNumberOfNormalCameras = 0、mModule = NULL*
+3. 将当前对象保存在 全局 *CameraService* 指针 *gCameraService* 中
+
+```cpp
+frameworks/av/services/camera/libcameraservice/CameraService.cpp
+
+static CameraService *gCameraService;  // 1. 定义全局 CameraService 指针对象
+
+CameraService::CameraService() :
+        mEventLog(DEFAULT_EVENT_LOG_LENGTH),
+        mNumberOfCameras(0), mNumberOfNormalCameras(0),
+        mSoundRef(0), mModule(nullptr) {
+    ALOGI("CameraService started (pid=%d)", getpid());
+    gCameraService = this;	// 2. 将当前对象保存在 全局 CameraService 指针中
+
+    this->camera_device_status_change = android::camera_device_status_change;
+    this->torch_mode_status_change = android::torch_mode_status_change;
+
+    mServiceLockWrapper = std::make_shared<WaitableMutexWrapper>(&mServiceLock);
+}
+```
+
+## 2.5 CameraService::onFirstRef()
+
+主要工作如下：
+
+1. 加载 *hal* 层 *camera modul*e，保存在 *rawModule* 中 ，*module*定义在 
+
+   *hardware/libhardware/include/hardware/camera_common.h*
+
+2. 初始化 *CameraModule* 对像，将 **camera_module_t* *rawModule* 保存在 *mModule* 中
+
+3. 调用 *Camera HAL module* 的 *init* 方法，调用`mModule->get_number_of_cameras()`，用来设置 *mCameraInfoMap vector* 的容量
+
+4. 打印 *hardware camera module* 的 *name* ，*hal* 层代码定义在 *hardware/qcom/camera/QCamera2/QCamera2Hal.cpp*
+
+5. 获取 *camera* 个数，保存在*CameraService* 的私有变量 *mNumberOfCameras* 及 *mNumberOfNormalCameras* 中
+
+6. 初始化 *CameraFlashlight* 模块，根据 *camera* *number* 初始化 *mHasFlashlightMap* *vector* 数组变量
+
+7. 调用`mModule->getCameraInfo()`
+
+8. 返回*hal* 层*mHalDescriptors* 的信息，保存在 *info* 中
+
+9. 通过 *BpCameraServiceProxy* 远程调用 *BnCameraService* 的 `pingForUserUpdate()` 函数
+
+```cpp
+frameworks/av/services/camera/libcameraservice/CameraService.cpp
+void CameraService::onFirstRef()
+{
+    ALOGI("CameraService process starting");
+    BnCameraService::onFirstRef();
+
+	// 1. 加载 hal 层 camera module，保存在 rawModule 中
+	// #define CAMERA_HARDWARE_MODULE_ID "camera"
+	// module定义在 hardware/libhardware/include/hardware/camera_common.h 
+	
+    camera_module_t *rawModule;  
+    int err = hw_get_module(CAMERA_HARDWARE_MODULE_ID,(const hw_module_t **)&rawModule);
+		
+
+	// 2. 初始化 CameraModule 对像，将 camera_module_t *rawModule 保存在 mModule 中
+    mModule = new CameraModule(rawModule);	
+    
+    // 3. 调用 Camera HAL module 的 init 方法
+    // 从 hardware/libhardware/include/hardware/camera_common.h  中得知 
+    // #define CAMERA_MODULE_API_VERSION_CURRENT CAMERA_MODULE_API_VERSION_2_4
+    // 因此，hal 层代码位于 hardware/qcom/camera/QCamera2/QCamera2Hal.cpp
+    err = mModule->init();
+	================>
+	+	@ frameworks/frameworks-new/av/services/camera/libcameraservice/common/CameraModule.cpp
+	+	int CameraModule::init() {
+	+	    if (getModuleApiVersion() >= CAMERA_MODULE_API_VERSION_2_4 && mModule->init != NULL) {
+	+	        ATRACE_BEGIN("camera_module->init");
+	+	        res = mModule->init();  // 从 QCamera2Hal.cpp 中得知，init = NULL
+	+	    }
+	+	    mCameraInfoMap.setCapacity(getNumberOfCameras());	// 设置CameraInfoMap vector的大小
+	+		==========>
+	+			numCameras = mModule->get_number_of_cameras();	
+	+	    return res;
+	+	}
+	<================
+	// 4. 打印 hardware camera module 的name ，定义在  hardware/qcom/camera/QCamera2/QCamera2Hal.cpp
+    ALOGI("Loaded \"%s\" camera module", mModule->getModuleName());  // "QCamera Module"
+
+	// 5. 获取 camera 个数，保存在CameraService 的私有变量 mNumberOfCameras 及 mNumberOfNormalCameras 中
+    mNumberOfCameras = mModule->getNumberOfCameras();
+    mNumberOfNormalCameras = mNumberOfCameras;
+
+	// 6. 初始化 CameraFlashlight 模块，根据 camera number 初始化 mHasFlashlightMap vector 数组变量
+    mFlashlight = new CameraFlashlight(*mModule, *this);
+    status_t res = mFlashlight->findFlashUnits();
+
+	// 7. 调用mModule->getCameraInfo()
+    int latestStrangeCameraId = INT_MAX;
+    for (int i = 0; i < mNumberOfCameras; i++) {
+        String8 cameraId = String8::format("%d", i);
+        // Get camera info
+        
+        struct camera_info info;
+        bool haveInfo = true;
+        status_t rc = mModule->getCameraInfo(i, &info);  // 8. 返回 hardware 层 mHalDescriptors 的信息，保存在 info 中
+
+        // Defaults to use for cost and conflicting devices
+        int cost = 100;
+        char** conflicting_devices = nullptr;
+        size_t conflicting_devices_length = 0;
+
+        // If using post-2.4 module version, query the cost + conflicting devices from the HAL
+        if (mModule->getModuleApiVersion() >= CAMERA_MODULE_API_VERSION_2_4 && haveInfo) {
+            cost = info.resource_cost;
+            conflicting_devices = info.conflicting_devices;
+            conflicting_devices_length = info.conflicting_devices_length;
+        }
+        std::set<String8> conflicting;
+        for (size_t i = 0; i < conflicting_devices_length; i++) {
+            conflicting.emplace(String8(conflicting_devices[i]));
+        }
+        // Initialize state for each camera device
+        {
+            Mutex::Autolock lock(mCameraStatesLock);
+            mCameraStates.emplace(cameraId, std::make_shared<CameraState>(cameraId, cost, conflicting));
+        }
+
+        if (mFlashlight->hasFlashUnit(cameraId)) {
+            mTorchStatusMap.add(cameraId, ICameraServiceListener::TORCH_STATUS_AVAILABLE_OFF);
+        }
+    }
+    if (mModule->getModuleApiVersion() >= CAMERA_MODULE_API_VERSION_2_1) {
+        mModule->setCallbacks(this);
+    }
+	// 9. 通过 BpCameraServiceProxy 远程调用 BnCameraService 的 pingForUserUpdate() 函数
+	// 远程函数位于 IMPLEMENT_META_INTERFACE(CameraServiceProxy, "android.hardware.ICameraServiceProxy");
+	
+    CameraService::pingCameraServiceProxy();
+}
+```
+
+## 2.6 获取Camera数量 mModule->getNumberOfCameras()
+
+进入hardware 层代码中：
+
+```cpp
+hardware/qcom/camera/QCamera2/QCamera2Hal.cpp
+
+camera_module_t HAL_MODULE_INFO_SYM = {
+    .common                 = camera_common,
+    .get_number_of_cameras  = qcamera::QCamera2Factory::get_number_of_cameras,
+    .get_camera_info        = qcamera::QCamera2Factory::get_camera_info,
+    .set_callbacks          = qcamera::QCamera2Factory::set_callbacks,
+    .get_vendor_tag_ops     = qcamera::QCamera3VendorTags::get_vendor_tag_ops,
+    .open_legacy            = qcamera::QCamera2Factory::open_legacy,
+    .set_torch_mode         = qcamera::QCamera2Factory::set_torch_mode,
+    .init                   = NULL,
+    .reserved               = {0}
+};
+```
+
+首先初始化 *gQCamera2Factory* 对像，接着判断当前*camera hal* 层走 *HAL1* 还是 *HAL3*，调用对应的接口。
+*camera* 个数是直接返回的变量*mNumOfCameras_expose*，而 *mNumOfCameras_expose* 变量是在 *gQCamera2Factory*() 中赋值的。
+接着，通过判定是否支持 双摄，来调用不同的 *getNumberOfCameras*() 函数
+
+```cpp
+hardware/qcom/camera/QCamera2/QCamera2Factory.cpp
+
+int QCamera2Factory::get_number_of_cameras()
+{
+    int numCameras = 0;
+    if (!gQCamera2Factory) {
+        gQCamera2Factory = new QCamera2Factory();
+    }
+#ifdef QCAMERA_HAL1_SUPPORT
+    if(gQCameraMuxer)
+        numCameras = gQCameraMuxer->get_number_of_cameras();
+    else
+#endif
+        numCameras = gQCamera2Factory->getNumberOfCameras();
+        	=======>  return mNumOfCameras_expose;
+
+    LOGH("num of cameras: %d", numCameras);
+    return numCameras;
+}
+```
+
+接下来进入函数 `QCamera2Factory()` 看下：
+
+1. 打开*/dev/mediax* 节点 获取*camera* 的个数，保存在g_cam_ctrl.num_cam
+2. 返回 `g_cam_ctrl.num_cam_to_expose = g_cam_ctrl.num_cam - is_secure;` ，此处我们没有 *secure* ，所就它就是camera 个数
+3. 判断当前*Camera*系统 是否支待 *HAL3*，且如果没有定义*QCAMERA_HAL1_SUPPORT* ,则默认支持 HAL3
+4. 判断当前*Camera*系统是否支持双摄，如果是走*HAL3* ，即未定义*QCAMERA_HAL1_SUPPORT* ，默认不支待双摄
+5. 判断当前*Camera*系统中所有*camera*是否走的是*HAL3*， *YUV sensor*是只能走*HAL1* 了
+   更新 *mHalDescriptors* 中每个*camear id* 所对应的 *HAL API VERSION*
+
+```c++
+QCamera2Factory::QCamera2Factory()
+{
+    mHalDescriptors = NULL;
+    mCallbacks = NULL;
+    mNumOfCameras = get_num_of_cameras();		// 1. 打开/dev/mediax 节点 获取camera 的个数，保存在g_cam_ctrl.num_cam
+    mNumOfCameras_expose = get_num_of_cameras_to_expose(); // 2. 返回 g_cam_ctrl.num_cam_to_expose = g_cam_ctrl.num_cam - is_secure; ，此处我们没有 secure ，所就它就是camera 个数
+    int bDualCamera = 0;
+    char propDefault[PROPERTY_VALUE_MAX];
+    char prop[PROPERTY_VALUE_MAX];
+    // 3. 判断当前Camera系统 是否支待 HAL3，且如果没有定义QCAMERA_HAL1_SUPPORT ,则默认支持 HAL3
+    property_get("persist.camera.HAL3.enabled", prop, "0");
+    int isHAL3Enabled = atoi(prop);
+#ifndef QCAMERA_HAL1_SUPPORT
+    isHAL3Enabled = 1;
+#endif
+
+	// 4. 判断当前Camera系统是否支持双摄，如果是走HAL3 ，即未定义QCAMERA_HAL1_SUPPORT ，默认不支待双摄
+    // Signifies whether system has to enable dual camera mode
+    snprintf(propDefault, PROPERTY_VALUE_MAX, "%d", isDualCamAvailable(isHAL3Enabled));
+    property_get("persist.camera.dual.camera", prop, "0");
+    bDualCamera = atoi(prop);
+    LOGH("dualCamera:%d ", bDualCamera);
+#ifndef QCAMERA_HAL1_SUPPORT
+    bDualCamera = 0;
+#endif
+
+    if(bDualCamera) {
+        LOGI("Enabling QCamera Muxer");
+#ifdef QCAMERA_HAL1_SUPPORT
+        if (!gQCameraMuxer) {
+            QCameraMuxer::getCameraMuxer(&gQCameraMuxer, mNumOfCameras);
+            if (!gQCameraMuxer) {
+                LOGE("Error !! Failed to get QCameraMuxer");
+            }
+        }
+#endif
+    }
+#ifdef QCAMERA_HAL1_SUPPORT
+    if (!gQCameraMuxer && (mNumOfCameras > 0) &&(mNumOfCameras <= MM_CAMERA_MAX_NUM_SENSORS)) {
+#else
+    if ((mNumOfCameras > 0) &&(mNumOfCameras <= MM_CAMERA_MAX_NUM_SENSORS)) {
+#endif
+        mHalDescriptors = new hal_desc[mNumOfCameras];
+        if ( NULL != mHalDescriptors) {
+            uint32_t cameraId = 0;
+            
+			// 5. 判断当前Camera系统中所有camera是否走的是HAL3，  YUV sensor是只能走HAL1 了
+			// 6. 更新 mHalDescriptors 中每个camear id 所对应的 HAL API VERSION
+            for (int i = 0; i < mNumOfCameras ; i++, cameraId++) {
+                mHalDescriptors[i].cameraId = cameraId;
+                // Set Device version to 3.x when both HAL3 is enabled & its BAYER sensor
+                if (isHAL3Enabled && !(is_yuv_sensor(cameraId))) {
+                    mHalDescriptors[i].device_version = CAMERA_DEVICE_API_VERSION_3_0;
+                } else {
+                    mHalDescriptors[i].device_version = CAMERA_DEVICE_API_VERSION_1_0;
+                }
+            }
+        }
+    } 
+}
+```
+
+## 2.7 hardware层调用 get_num_of_cameras()
+
+1. 打开 */dev/media0 -->（msm_config）msm_sensor_init /dev/media1 ---->（msm_camera）v4l2*
+2. 调用 *MEDIA_IOC_DEVICE_INFO* 获取设备信息
+3. 如果判断不是 *msm_config* 则直接*continue*
+4. 寻找 *entity.id = 2* 的所有*subdev* ，且 *type=MEDIA_ENT_T_V4L2_SUBDEV , group_id=14 , name =* *"msm_sensor_init"*
+5. 找开 */dev/media0 /dev/media1* ... ，开始查找*camear* 个数，保存在 *g_cam_ctrl.num_cam* 中
+6. 如果判断不是 *msm_config* 则直接*continue*
+7. 遍历 *V4L2* 下*camear* 的个数
+8. 获取所有信息，保存在 *g_cam_ctrl* 中
+
+```c
+hardware/qcom/camera/QCamera2/stack/mm-camera-interface/src/mm_camera_interface.c
+
+uint8_t get_num_of_cameras()
+{
+    struct media_device_info mdev_info;
+    int num_media_devices = 0;
+    int8_t num_cameras = 0;
+    char subdev_name[32];
+    char prop[PROPERTY_VALUE_MAX];
+    LOGD("E");
+
+    memset (&g_cam_ctrl, 0, sizeof (g_cam_ctrl));
+
+    while (1) {
+        uint32_t num_entities = 1U;
+        char dev_name[32];
+		// 1. 打开 /dev/media0 -->（msm_config）msm_sensor_init     /dev/media1  ---->（msm_camera）v4l2
+        snprintf(dev_name, sizeof(dev_name), "/dev/media%d", num_media_devices);
+        dev_fd = open(dev_name, O_RDWR | O_NONBLOCK);
+  
+        num_media_devices++;
+        // 2. 调用 MEDIA_IOC_DEVICE_INFO 获取设备信息
+        rc = ioctl(dev_fd, MEDIA_IOC_DEVICE_INFO, &mdev_info);
+		===============>
+		+	// kernel/msm-4.4/drivers/media/media-device.c
+		+	static long media_device_ioctl(struct file *filp, unsigned int cmd, unsigned long arg){
+		+		switch (cmd) {
+		+		case MEDIA_IOC_DEVICE_INFO:
+		+			ret = media_device_get_info(dev, (struct media_device_info __user *)arg);
+		+			============>
+		+			-		strlcpy(info.driver, dev->dev->driver->name, sizeof(info.driver));
+		+			-		strlcpy(info.model, dev->model, sizeof(info.model));
+		+			-		strlcpy(info.serial, dev->serial, sizeof(info.serial));
+		+			-		strlcpy(info.bus_info, dev->bus_info, sizeof(info.bus_info));
+		+			-	
+		+			-		info.media_version = MEDIA_API_VERSION;
+		+			-		info.hw_revision = dev->hw_revision;
+		+			-		info.driver_version = dev->driver_version;
+		+			-		copy_to_user(__info, &info, sizeof(*__info))
+		+			<============	
+		+			break;
+		+	
+		+		case MEDIA_IOC_ENUM_ENTITIES:
+		+			ret = media_device_enum_entities(dev, (struct media_entity_desc __user *)arg);
+		+			break;
+		+	}
+		<===============
+
+		// 3. 如果判断不是 msm_config 则直接continue 
+        if (strncmp(mdev_info.model, MSM_CONFIGURATION_NAME, sizeof(mdev_info.model)) != 0) {
+            close(dev_fd);
+            dev_fd = -1;
+            continue;
+        }
+
+        while (1) {
+            struct media_entity_desc entity;
+            memset(&entity, 0, sizeof(entity));
+            entity.id = num_entities++;		// 2
+            LOGD("entity id %d", entity.id);
+            
+            // 4. 寻找 entity.id = 2 的所有subdev ，且 type=MEDIA_ENT_T_V4L2_SUBDEV , group_id=14 , name = "msm_sensor_init"
+            rc = ioctl(dev_fd, MEDIA_IOC_ENUM_ENTITIES, &entity);
+            ===========>
+            + 	media_device_enum_entities(dev, (struct media_entity_desc __user *)arg);
+            +	------->
+            +		pvdev->vdev->entity.type = MEDIA_ENT_T_DEVNODE_V4L;		 // V4L
+			+		pvdev->vdev->entity.group_id = QCAMERA_VNODE_GROUP_ID;   // #define QCAMERA_VNODE_GROUP_ID 2
+			+	<-------
+            <===========
+       
+            LOGD("entity name %s type %d group id %d",  entity.name, entity.type, entity.group_id);
+            if (entity.type == MEDIA_ENT_T_V4L2_SUBDEV && entity.group_id == MSM_CAMERA_SUBDEV_SENSOR_INIT) {
+                snprintf(subdev_name, sizeof(dev_name), "/dev/%s", entity.name);
+                break;
+            }
+        }
+        close(dev_fd);
+        dev_fd = -1;
+    }
+
+    num_media_devices = 0;
+    while (1) {
+        uint32_t num_entities = 1U;
+        char dev_name[32];
+		// 5. 找开 /dev/media0 /dev/media1 ... ，开始查找camear 个数
+        snprintf(dev_name, sizeof(dev_name), "/dev/media%d", num_media_devices);
+        dev_fd = open(dev_name, O_RDWR | O_NONBLOCK);
+        num_media_devices++;
+        
+        memset(&mdev_info, 0, sizeof(mdev_info));
+        rc = ioctl(dev_fd, MEDIA_IOC_DEVICE_INFO, &mdev_info);
+
+		// 6. 如果判断不是 `msm_camera` 则直接`continue` 
+        if(strncmp(mdev_info.model, MSM_CAMERA_NAME, sizeof(mdev_info.model)) != 0) {
+            close(dev_fd);
+            dev_fd = -1;
+            continue;
+        }
+
+        while (1) {
+            struct media_entity_desc entity;
+            memset(&entity, 0, sizeof(entity));
+            entity.id = num_entities++;
+            rc = ioctl(dev_fd, MEDIA_IOC_ENUM_ENTITIES, &entity);
+  
+  			// 7. 遍历 V4L2 下camear 的个数
+            if(entity.type == MEDIA_ENT_T_DEVNODE_V4L && entity.group_id == QCAMERA_VNODE_GROUP_ID) {
+                strlcpy(g_cam_ctrl.video_dev_name[num_cameras], entity.name, sizeof(entity.name));
+                LOGI("dev_info[id=%d,name='%s']\n", (int)num_cameras, g_cam_ctrl.video_dev_name[num_cameras]);
+                num_cameras++;
+                break;
+            }
+        }
+        close(dev_fd);
+        dev_fd = -1;
+        if (num_cameras >= MM_CAMERA_MAX_NUM_SENSORS) {
+            LOGW("Maximum number of camera reached %d", num_cameras);
+            break;
+        }
+    }
+    
+    g_cam_ctrl.num_cam = num_cameras;
+
+	// 8. 获取所有信息，保存在 g_cam_ctrl 中
+    get_sensor_info();
+    // 9. 重新整理 g_cam_ctrl 中的camear 顺序，确保 后摄inx 比前摄大
+        /* Order of the camera exposed is
+        0  - Back Main Camera
+        1  - Front Main Camera
+        ++  - Back Aux Camera
+        ++  - Front Aux Camera
+        ++  - Back Main + Back Aux camera
+        ++  - Front Main + Front Aux camera
+        ++  - Secure Camera
+       */
+    sort_camera_info(g_cam_ctrl.num_cam);
+    /* unlock the mutex */
+
+    LOGI("num_cameras=%d\n", (int)g_cam_ctrl.num_cam);
+    return(uint8_t)g_cam_ctrl.num_cam;
+}
+```
+
+## 2.8 Camera Init 初始化流程总结
+
+在*Init* 整个过程中，主要做了如下事情：
+
+1. 定义全局 *CameraService* 指针对象 *gCameraService*。
+2. 加载 *hal* 层 *camera module*，保存在 *rawModule* 中 ，*module*定义在*hardware/libhardware/include/hardware/camera_common.h*。
+3. 调用*Camera hardware module* 的`mModule->get_number_of_cameras()`，获得*Camera Number*。
+4. 调用 *MEDIA_IOC_DEVICE_INFO* 获取驱动层 *Camera V4L2* 的所有设备信息。
+5. 同时初始化 *hardware* 层的 *mHalDescriptors* 数组，更新每个Camera 使用的 *camera hal1* 还是 *hal3*。
+
+## 三、hw_get_module()
+
+在前面代码中，主要是通过 `hw_get_module(CAMERA_HARDWARE_MODULE_ID,(const hw_module_t **)&rawModule)` 来获取到驱动层的相关接口。
+
+接下来，我们来看下 `hw_get_module` 具体做了什么操作：
+
+```c
+@ hardware/libhardware/hardware.c
+
+int hw_get_module(const char *id, const struct hw_module_t **module)
+{
+    return hw_get_module_by_class(id, NULL, module);
+}
+```
+
+由此可知，`CameraService.cpp` 中调用`hw_get_module`，传递的参数为 `CAMERA_HARDWARE_MODULE_ID` 和 `&rawModule`
+`#define CAMERA_HARDWARE_MODULE_ID "camera"`
+
+进入 `hw_get_module_by_class()` 分析下:
+
+1. `id = "camera"`、`inst = NULL`、`module = &rawModule`
+2. `拼凑出 PATH_MAX = "camera"`
+
+```c
+hardware/libhardware/hardware.c
+
+int hw_get_module_by_class(const char *class_id, const char *inst,  const struct hw_module_t **module)
+{
+    int i = 0;
+    char prop[PATH_MAX] = {0};
+    char path[PATH_MAX] = {0};
+    char name[PATH_MAX] = {0};
+    char prop_name[PATH_MAX] = {0};
+
+	// 1. 拼凑出 PATH_MAX = "camera"
+    if (inst)
+        snprintf(name, PATH_MAX, "%s.%s", class_id, inst);
+    else
+        strlcpy(name, class_id, PATH_MAX);
+
+	// 2. 拼凑出 prop_name = "ro.hardware.camera"
+    /* First try a property specific to the class and possibly instance */
+    snprintf(prop_name, sizeof(prop_name), "ro.hardware.%s", name);
+    if (property_get(prop_name, prop, NULL) > 0) {
+        if (hw_module_exists(path, sizeof(path), name, prop) == 0) {
+            goto found;
+        }
+    }
+    /* Loop through the configuration variants looking for a module */
+    for (i=0 ; i<HAL_VARIANT_KEYS_COUNT; i++) {
+        if (property_get(variant_keys[i], prop, NULL) == 0) {
+            continue;
+        }
+        if (hw_module_exists(path, sizeof(path), name, prop) == 0) {
+            goto found;
+        }
+    }
+    /* Nothing found, try the default */
+    if (hw_module_exists(path, sizeof(path), name, "default") == 0) {
+        goto found;
+    }
+    return -ENOENT;
+found:
+    /* load the module, if this fails, we're doomed, and we should not try
+     * to load a different variant. */
+    return load(class_id, path, module);
+}
+```
+
+可以看出，在*hardware.c* 中，在如下三个目录依次查找 ”*camera.sdm660.so*“ ，找到后，接下来*load* 库文件
+
+```c
+// @ hardware/libhardware/hardware.c
+#define HAL_LIBRARY_PATH1 "/system/lib64/hw"
+#define HAL_LIBRARY_PATH2 "/vendor/lib64/hw"
+#define HAL_LIBRARY_PATH3 "/odm/lib64/hw"
+
+/*
+ * Check if a HAL with given name and subname exists, if so return 0, otherwise
+ * otherwise return negative.  On success path will contain the path to the HAL.
+ */
+static int hw_module_exists(char *path, size_t path_len, const char *name, const char *subname)
+{
+    snprintf(path, path_len, "%s/%s.%s.so", HAL_LIBRARY_PATH3, name, subname);
+    if (access(path, R_OK) == 0)
+        return 0;
+
+    snprintf(path, path_len, "%s/%s.%s.so",  HAL_LIBRARY_PATH2, name, subname);
+    if (access(path, R_OK) == 0)
+        return 0;
+
+    snprintf(path, path_len, "%s/%s.%s.so",  HAL_LIBRARY_PATH1, name, subname);
+    if (access(path, R_OK) == 0)
+        return 0;
+
+    return -ENOENT;
+}
+```
+
+## 3.1 camera.sdm660.so
+
+camera.sdm660.so 文件代码位于 hardware/qcom/camera/QCamera2/
+
+```c 
+# Enable SDLLVM compiler option for build flavour >= N flavour
+PLATFORM_SDK_NPDK = 24
+
+LOCAL_COPY_HEADERS_TO := qcom/camera
+LOCAL_COPY_HEADERS := QCameraFormat.h
+
+LOCAL_SRC_FILES := \
+        util/QCameraBufferMaps.cpp \
+        util/QCameraCmdThread.cpp \
+        util/QCameraFlash.cpp \
+        util/QCameraPerf.cpp \
+        util/QCameraQueue.cpp \
+        util/QCameraCommon.cpp \
+        util/QCameraTrace.cpp \
+        util/camscope_packet_type.cpp \
+        QCamera2Hal.cpp \
+        QCamera2Factory.cpp
+
+#HAL 3.0 source
+LOCAL_SRC_FILES += \
+        HAL3/QCamera3HWI.cpp \
+        HAL3/QCamera3Mem.cpp \
+        HAL3/QCamera3Stream.cpp \
+        HAL3/QCamera3Channel.cpp \
+        HAL3/QCamera3VendorTags.cpp \
+        HAL3/QCamera3PostProc.cpp \
+        HAL3/QCamera3CropRegionMapper.cpp \
+        HAL3/QCamera3StreamMem.cpp
+
+LOCAL_CFLAGS := -Wall -Wextra -Werror
+
+#HAL 1.0 source
+
+ifeq ($(TARGET_SUPPORT_HAL1),false)
+LOCAL_CFLAGS += -DQCAMERA_HAL3_SUPPORT
+else
+LOCAL_CFLAGS += -DQCAMERA_HAL1_SUPPORT
+LOCAL_SRC_FILES += \
+        HAL/QCamera2HWI.cpp \
+        HAL/QCameraMuxer.cpp \
+        HAL/QCameraMem.cpp \
+        HAL/QCameraStateMachine.cpp \
+        util/QCameraDisplay.cpp \
+        HAL/QCameraChannel.cpp \
+        HAL/QCameraStream.cpp \
+        HAL/QCameraPostProc.cpp \
+        HAL/QCamera2HWICallbacks.cpp \
+        HAL/QCameraParameters.cpp \
+        HAL/QCameraParametersIntf.cpp \
+        HAL/QCameraThermalAdapter.cpp \
+        util/QCameraFOVControl.cpp \
+        util/QCameraHALPP.cpp \
+        util/QCameraDualFOVPP.cpp \
+        util/QCameraExtZoomTranslator.cpp \
+        util/QCameraPprocManager.cpp \
+        util/QCameraBokeh.cpp \
+        util/QCameraClearSight.cpp
+endif
+
+LOCAL_MODULE_RELATIVE_PATH := hw
+LOCAL_MODULE := camera.$(TARGET_BOARD_PLATFORM)
+LOCAL_MODULE_TAGS := optional
+
+LOCAL_32_BIT_ONLY := $(BOARD_QTI_CAMERA_32BIT_ONLY)
+include $(BUILD_SHARED_LIBRARY)
+```
+

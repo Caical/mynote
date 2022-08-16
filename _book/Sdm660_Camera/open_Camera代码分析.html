@@ -1,0 +1,445 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>5.1 open_Camera 流程 · 6.S081 All-In-One</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="DuGuoSheng">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code-optimize/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-pageview-count/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-flexible-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="open_Camera流程.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="SC66_Camera介绍.html">
+            
+                <a href="SC66_Camera介绍.html">
+            
+                    
+                    第 1 章：SC66_Camera 介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="SC66_Camera使用流程.html">
+            
+                <a href="SC66_Camera使用流程.html">
+            
+                    
+                    第 2 章：SC66_Camera 使用流程
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="Camera_driver移植流程.html">
+            
+                <a href="Camera_driver移植流程.html">
+            
+                    
+                    2.1 Camera_driver 移植流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="additional.html">
+            
+                <a href="additional.html">
+            
+                    
+                    2.2 附加知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="kernel层初始化流程.html">
+            
+                <a href="kernel层初始化流程.html">
+            
+                    
+                    第 3 章：kernel 层初始化流程
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="V4L2分析.html">
+            
+                <a href="V4L2分析.html">
+            
+                    
+                    3.1 V4L2 框架分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="kernel代码分析.html">
+            
+                <a href="kernel代码分析.html">
+            
+                    
+                    3.2 kernel 层代码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Camera_init流程.html">
+            
+                <a href="Camera_init流程.html">
+            
+                    
+                    第 4 章：Camera Init 初始化流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="open_Camera流程.html">
+            
+                <a href="open_Camera流程.html">
+            
+                    
+                    第 5 章：open_Camera 流程
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.6.1" data-path="open_Camera代码分析.html">
+            
+                <a href="open_Camera代码分析.html">
+            
+                    
+                    5.1 open_Camera 流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >5.1 open_Camera 流程</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="camera-open-&#x603B;&#x7ED3;">Camera Open &#x603B;&#x7ED3;</h1>
+<p>&#x6574;&#x4E2A;<em>Camera Open</em> &#x8FC7;&#x7A0B;&#x603B;&#x7ED3;&#x5982;&#x4E0B;&#xFF1A;</p>
+<h2 id="&#x4E00;&#x3001;java-app-&#x5C42;">&#x4E00;&#x3001;<em>Java APP</em> &#x5C42;</h2>
+<ul>
+<li>&#x8C03;&#x7528; <em>Frameworks</em> &#x5C42; <em>Camera.java</em> &#x4E2D;&#x7684; <code>open()</code> &#x65B9;&#x6CD5;&#xFF1B;</li>
+<li>&#x5728;<em>open camera</em> &#x540E;&#xFF0C;&#x624D;&#x5F00;&#x59CB;&#x8C03;&#x7528;&#x5BF9;&#x5E94;&#x7684; <code>getParameters()</code>&#xFF0C;<code>setParameters()</code>&#xFF0C; <code>startPreview()</code> &#x7B49; &#x51FD;&#x6570;&#xFF1B;</li>
+</ul>
+<h2 id="&#x4E8C;&#x3001;framework&#x5C42;-camerajava-&#x4E2D;&#x7684;-open">&#x4E8C;&#x3001;<em>Framework</em>&#x5C42; <em>Camera.java</em> &#x4E2D;&#x7684; <em>open()</em></h2>
+<ul>
+<li>&#x5728;<code>Camera open()</code> &#x51FD;&#x6570;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x6307;&#x5B9A;<em>open</em> &#x5BF9;&#x5E94;&#x7684;<em>camera id</em>&#xFF0C;&#x5219;&#x9ED8;&#x8BA4;&#x6253;&#x5F00;&#x540E;&#x6444;</li>
+<li>&#x6839;&#x636E;&#x4F20;&#x5165;&#x7684; <em>camera id</em> &#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;</li>
+<li>&#x6CE8;&#x518C; <em>EventHandler</em> &#x5FAA;&#x73AF;&#x76D1;&#x542C;<em>Camera</em> &#x4E8B;&#x4EF6;</li>
+<li>&#x8C03;&#x7528; <code>native_setup() JNI &#x51FD;&#x6570;</code>&#xFF0C;&#x5E76;&#x4E0B;&#x53D1; <em>camera id</em> &#x3001;&#x5F53;&#x524D;&#x5305;&#x540D;&#x3001;<em>hal</em>&#x5C42;&#x7248;&#x672C;&#x53F7;</li>
+</ul>
+<h2 id="&#x4E09;&#x3001;jni-&#x5C42;-androidhardwarecameranativesetup">&#x4E09;&#x3001;JNI &#x5C42; <em>android_hardware_Camera_native_setup</em></h2>
+<ul>
+<li>&#x8C03;&#x7528; <code>Camera::connect()</code> &#x51FD;&#x6570;&#xFF0C;<em>connect</em> &#x4E3A; <em>AIDL</em> &#x65B9;&#x6CD5;&#xFF0C;&#x901A;&#x8FC7;<em>binder</em> &#x8C03;&#x7528;&#x5230;&#x670D;&#x52A1;&#x7AEF;CameraService.cpp&#x4E2D;&#x7684; <code>CameraService::connect()</code> &#x65B9;&#x6CD5;&#x4E2D;</li>
+<li>&#x83B7;&#x53D6; <em>Camera</em> <em>Class</em>&#xFF0C;&#x5EFA;&#x7ACB;&#x4E13;&#x95E8;&#x8D1F;&#x8D23;&#x4E0E;<em>java</em> <em>Camera</em>&#x5BF9;&#x8C61;&#x901A;&#x4FE1;&#x7684;&#x5BF9;&#x8C61;</li>
+<li>&#x5982;&#x679C;&#x6CA1;&#x6709;&#x8BBE;&#x7F6E;&#x5C4F;&#x5E55;&#x663E;&#x793A;&#x65B9;&#x5411;&#xFF0C;&#x5219;&#x9ED8;&#x8BA4;&#x4E3A;0&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x4E3A;0&#xFF0C;&#x8C03;&#x7528;<code>sendCommand</code> &#x4E0B;&#x53D1;&#x5C4F;&#x5E55;&#x663E;&#x793A;&#x65B9;&#x5411;</li>
+</ul>
+<h2 id="&#x56DB;&#x3001;c-native-&#x5C42;-cameraservicecpp-&#x4E2D;">&#x56DB;&#x3001;<em>C++</em> <em>Native</em> &#x5C42; <em>CameraService.cpp</em> &#x4E2D;</h2>
+<ul>
+<li><em>CameraService.cpp</em> &#x662F;camera &#x521D;&#x59CB;&#x5316;&#x4E2D;&#x8BB2;&#x8FC7;&#x4E86;&#xFF0C;&#x5728;&#x5F00;&#x673A;&#x65F6;&#x4F1A;&#x6CE8;&#x518C;&#x597D;&#x5BF9;&#x5E94;&#x7684; <em>cameraservice</em> &#x670D;&#x52A1;</li>
+<li>&#x524D;&#x9762;AIDL&#x4E2D;&#xFF0C;&#x8C03;&#x7528;&#x5230; <em>CameraService.cpp</em>&#x4E2D;&#x7684; <code>CameraService::connect()</code> &#x65B9;&#x6CD5; &#x5728;&#x8BE5;&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;</li>
+<li>&#x9996;&#x5148;&#x68C0;&#x67E5;&#x662F;&#x5426;&#x5B58;&#x5728; <em>client</em> &#xFF0C;&#x5982;&#x679C;&#x5B58;&#x5728;&#x7684;&#x8BDD;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;</li>
+<li>&#x5173;&#x95ED;&#x6240;&#x6709;&#x7684; <em>flashlight</em> &#x5BF9;&#x8C61;</li>
+<li>&#x8C03;&#x7528;<code>makeClient()</code> &#x521B;&#x5EFA; <em>Camera Client</em> &#x5BF9;&#x8C61;&#x3002; <em>client</em>&#x662F;&#x901A;&#x8FC7; <code>Camera2ClientBase()</code> &#x8FDB;&#x884C;&#x521B;&#x5EFA;&#x7684;&#xFF0C;&#x540C;&#x65F6;&#x521B;&#x5EFA;<em>Camera3Device</em> &#x5BF9;&#x8C61;</li>
+<li>&#x8C03;&#x7528;<code>client-&gt;initialize</code>&#x5BF9;&#x524D;&#x9762;&#x521B;&#x5EFA;&#x597D;&#x7684; <em>Camera client</em> &#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;</li>
+<li>&#x521D;&#x59CB;&#x5316;&#x524D;&#x5148;&#x5BF9;<em>device</em> &#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316; &#xFF0C;&#x5728;<code>Camera3Device-&gt;initialize()</code>&#x4E2D;&#x6253;&#x5F00;&#x5BF9;&#x5E94;&#x7684; <em>Camera</em> &#x8282;&#x70B9;<em>/dev/videox</em>&#xFF0C;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x83B7;&#x53D6;&#x5230; <em>Camera</em> &#x7684;&#x64CD;&#x4F5C;&#x65B9;&#x6CD5;</li>
+<li>&#x521D;&#x59CB;&#x5316; <em>Camera</em> &#x9ED8;&#x8BA4;&#x53C2;&#x6570;</li>
+<li>&#x63A5;&#x7740;&#x5BF9;&#x521B;&#x5EFA; <em>Camera</em> &#x8FD0;&#x884C;&#x65F6;&#x7684;&#x516D;&#x5927;&#x7EBF;&#x7A0B;&#xFF0C;&#x5904;&#x7406;<em>preview</em>&#x548C;&#x5F55;&#x50CF; <em>stream</em>&#x7684;&#x7EBF;&#x7A0B;&#x3001;&#x5904;&#x7406;<em>3A</em>&#x548C;&#x4EBA;&#x8138;&#x8BC6;&#x522B;&#x7684;&#x7EBF;&#x7A0B;&#x3001;&#x62CD;&#x7167;&#x6D41;&#x7A0B;&#x72B6;&#x6001;&#x673A;&#x7EBF;&#x7A0B;&#x3001;&#x5904;&#x7406;&#x62CD;&#x7167; <em>jpeg stream</em> &#x7EBF;&#x7A0B;&#x3001;&#x5904;&#x7406;&#x96F6;&#x5EF6;&#x65F6;<em>zsl stream</em>&#x4F7F;&#x7528;&#x7684;&#x7EBF;&#x7A0B;&#x3001;&#x5904;&#x7406;callback&#x7684;&#x7EBF;&#x7A0B; </li>
+</ul>
+<footer class="page-footer"><span class="copyright">copyright by duguosheng all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x4EF6;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
+2022-08-15 16:24:21
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="open_Camera流程.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: 第 5 章：open_Camera 流程">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"5.1 open_Camera 流程","level":"1.6.1","depth":2,"previous":{"title":"第 5 章：open_Camera 流程","level":"1.6","depth":1,"path":"Sdm660_Camera/open_Camera流程.md","ref":"Sdm660_Camera/open_Camera流程.md","articles":[{"title":"5.1 open_Camera 流程","level":"1.6.1","depth":2,"path":"Sdm660_Camera/open_Camera代码分析.md","ref":"Sdm660_Camera/open_Camera代码分析.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-pro","expandable-chapters","code-optimize","splitter","pageview-count","tbfed-pagefooter","flexible-alerts","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"copyright by duguosheng","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"livereload":{},"splitter":{},"search-pro":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"pageview-count":{},"flexible-alerts":{"danger":{"className":"danger","icon":"fa fa-ban","label":"Attention"},"note":{"className":"info","icon":"fa fa-info-circle","label":"Note"},"style":"flat","tip":{"className":"tip","icon":"fa fa-lightbulb-o","label":"Tip"},"warning":{"className":"warning","icon":"fa fa-exclamation-triangle","label":"Warning"}},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"code-optimize":{"copyButtons":true,"showLines":false},"expandable-chapters":{}},"theme":"default","author":"DuGuoSheng","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"6.S081 All-In-One","gitbook":"*"},"file":{"path":"Sdm660_Camera/open_Camera代码分析.md","mtime":"2022-08-15T08:24:21.364Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-08-16T06:12:58.617Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code-optimize/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-pageview-count/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-flexible-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

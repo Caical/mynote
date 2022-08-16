@@ -1,0 +1,438 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>第 3 章：kernel 层初始化流程 · 6.S081 All-In-One</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="DuGuoSheng">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code-optimize/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-pageview-count/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-flexible-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="V4L2分析.html" />
+    
+    
+    <link rel="prev" href="additional.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="SC66_Camera介绍.html">
+            
+                <a href="SC66_Camera介绍.html">
+            
+                    
+                    第 1 章：SC66_Camera 介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="SC66_Camera使用流程.html">
+            
+                <a href="SC66_Camera使用流程.html">
+            
+                    
+                    第 2 章：SC66_Camera 使用流程
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="Camera_driver移植流程.html">
+            
+                <a href="Camera_driver移植流程.html">
+            
+                    
+                    2.1 Camera_driver 移植流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="additional.html">
+            
+                <a href="additional.html">
+            
+                    
+                    2.2 附加知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4" data-path="kernel层初始化流程.html">
+            
+                <a href="kernel层初始化流程.html">
+            
+                    
+                    第 3 章：kernel 层初始化流程
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="V4L2分析.html">
+            
+                <a href="V4L2分析.html">
+            
+                    
+                    3.1 V4L2 框架分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="kernel代码分析.html">
+            
+                <a href="kernel代码分析.html">
+            
+                    
+                    3.2 kernel 层代码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Camera_init流程.html">
+            
+                <a href="Camera_init流程.html">
+            
+                    
+                    第 4 章：Camera Init 初始化流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="open_Camera流程.html">
+            
+                <a href="open_Camera流程.html">
+            
+                    
+                    第 5 章：open_Camera 流程
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="open_Camera代码分析.html">
+            
+                <a href="open_Camera代码分析.html">
+            
+                    
+                    5.1 open_Camera 流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >第 3 章：kernel 层初始化流程</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="&#x4E00;&#x3001;camera-kernel-&#x9A71;&#x52A8;">&#x4E00;&#x3001;Camera Kernel &#x9A71;&#x52A8;</h2>
+<p><em>Kernel</em>&#x9A71;&#x52A8;&#x4E2D;&#x9AD8;&#x901A;&#x628A;<em>Camera</em>&#x7CFB;&#x7EDF;&#x5206;&#x4E3A;<em>Camera</em>&#x548C;<em>Sensor</em>&#x4E24;&#x90E8;&#x5206;&#xFF1A;</p>
+<ul>
+<li><p><em>Camera</em>&#x90E8;&#x5206;&#x662F;&#x901A;&#x7528;&#x7684;&#x4EE3;&#x7801;&#x903B;&#x8F91;&#xFF0C;&#x8BE5;&#x90E8;&#x5206;&#x7531;<em>msm_cam</em> &#x8BBE;&#x5907;&#x4F5C;&#x4E3A; <em>video</em>&#x8BBE;&#x5907; &#x4E0E; <em>userspace</em> &#x8FDB;&#x884C;&#x4EA4;&#x4E92;&#xFF0C;<em>Qcom</em>&#x81EA;&#x5DF2;&#x7684;<em>MIPI</em>&#xFF0C;<em>ISP</em>&#xFF0C;<em>CPP</em> &#x7B49;&#x786C;&#x4EF6;&#x8BBE;&#x5907;&#x90FD;&#x5C5E;&#x4E8E;<em>Camera</em>&#x90E8;&#x5206;&#x3002;</p>
+</li>
+<li><p><em>Sensor</em> &#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x5916;&#x90E8;&#x8BBE;&#x5907;&#xFF0C;&#x662F;&#x4E0D;&#x540C;&#x4EA7;&#x5546;&#x751F;&#x4EA7;&#x7684;<em>Camera sensor</em>&#x6A21;&#x7EC4;&#x3002;&#x5F00;&#x53D1;&#x8005;&#x5206;&#x53EA;&#x9700;&#x8981;&#x914D;&#x7F6E;&#x4E0D;&#x540C;&#x7684;<em>Sensor</em>&#x6A21;&#x7EC4;&#xFF0C;&#x5C06;&#x5176;&#x6CE8;&#x518C;&#x5230;<em>msm_cam</em>&#x8BBE;&#x5907;&#x4E0A;&#xFF0C;&#x521B;&#x5EFA;&#x597D;&#x5BF9;&#x5E94;&#x7684;<em>video</em> &#x8BBE;&#x5907;&#xFF0C;&#x5176;&#x4ED6;&#x5177;&#x4F53;&#x7684;&#x63A5;&#x53E3;&#x903B;&#x8F91;&#x5747;&#x7531;<em>Camera</em>&#x90E8;&#x5206;&#x6765;&#x5B9E;&#x73B0;&#x3002;</p>
+</li>
+</ul>
+<p>&#x5728;&#x5B9E;&#x9645;&#x5DE5;&#x4F5C;&#x65F6;&#xFF0C;<em>camera video</em>&#x8BBE;&#x5907;&#x4E3B;&#x8981;&#x662F;&#x63D0;&#x4F9B;&#x4E00;&#x4E2A;<em>v4l2</em>&#x63A5;&#x53E3;&#xFF0C;<em>Camera</em> &#x9A71;&#x52A8;&#x5728;&#x63A5;&#x6536;&#x5230;<em>event</em>&#x6D88;&#x606F;&#x540E;&#xFF0C;&#x4F1A;&#x628A;&#x8BE5;<em>event</em>&#x6D88;&#x606F;&#x53CA;&#x5176;&#x53C2;&#x6570;&#x4EE5;<em>Post</em> <em>event</em>&#x5F62;&#x5F0F;&#x53D1;&#x51FA;&#x5230;<em>hal</em> &#x5C42;&#x4E2D;&#xFF0C;<em>hal</em>&#x5C42;&#x63A5;&#x6536;&#x5230;<em>camera</em> &#x9A71;&#x52A8;<em>post</em> &#x4E0A;&#x6765;&#x7684;<em>event</em>&#xFF0C;&#x6765;&#x8C03;&#x7528;&#x5BF9;&#x5E94;&#x7684;&#x903B;&#x8F91;&#xFF0C;&#x5982;&#x679C;&#x8981;&#x64CD;&#x4F5C;<em>sensor</em> &#xFF0C;&#x521A;&#x8C03;&#x7528;&#x5BF9;&#x5E94;&#x7684; <em>video</em>&#x8BBE;&#x5907;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#x3002;</p>
+<h2 id="&#x4E8C;&#x3001;&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;">&#x4E8C;&#x3001;&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;</h2>
+<ol>
+<li><p><em>Camera</em> &#x90E8;&#x5206;
+&#x901A;&#x8FC7;&#x89E3;&#x6790;<em>compatible = &quot;qcom,msm-cam&quot;</em>;&#x6765;&#x521D;&#x59CB;&#x5316;&#x5E76;&#x6CE8;&#x518C;&#x597D;<em>media_device</em> &#x3001;<em>v4l2_device</em>&#x3001;<em>video_device</em> &#x8BBE;&#x5907;&#xFF0C;&#x540C;&#x65F6;&#x751F;&#x6210;<em>/dev/media0</em>&#x8282;&#x70B9;&#x3002;</p>
+</li>
+<li><p><em>Sensor</em> &#x90E8;&#x5206;
+&#x901A;&#x8FC7;&#x89E3;&#x6790;<em>compatible = &quot;qcom,camera&quot;</em>;&#x6765;&#x521D;&#x59CB;&#x5316;&#x8C03;&#x7528;probe&#x89E3;&#x6790;<em>camera sensor</em>&#x7684;<em>dts</em>&#x8282;&#x70B9;&#x4FE1;&#x606F;&#xFF0C;&#x4FDD;&#x5B58;&#x5728;&#x5168;&#x5C40;<em>g_sctrl</em> &#x6570;&#x7EC4;&#x4E2D;&#x3002;
+&#x7136;&#x540E;&#xFF0C;&#x4E0A;&#x5C42;&#x5728;&#x521D;&#x59CB;&#x5316;&#x65F6;&#xFF0C;&#x4F9D;&#x6B21;&#x5BF9;&#x6BCF;&#x4E2A;<em>sensor</em>&#x4E0B;&#x53D1; <em>ioctl</em> &#x53C2;&#x6570;&#xFF0C;&#x89E6;&#x53D1;&#x5176;&#x4F5C;&#x521D;&#x59CB;&#x5316;<em>probe</em> &#xFF0C;&#x4E0A;&#x7535;<em>check_sensor_id</em> &#x53CA; &#x521B;&#x5EFA;&#x5BF9;&#x5E94;&#x7684; /dev/<em>videoX</em> &#x8282;&#x70B9; &#x53CA; /dev/<em>mediaX</em> &#x7684;&#x8282;&#x70B9; </p>
+</li>
+</ol>
+<footer class="page-footer"><span class="copyright">copyright by duguosheng all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x4EF6;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
+2022-08-16 13:41:26
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="additional.html" class="navigation navigation-prev " aria-label="Previous page: 2.2 附加知识">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="V4L2分析.html" class="navigation navigation-next " aria-label="Next page: 3.1 V4L2 框架分析">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第 3 章：kernel 层初始化流程","level":"1.4","depth":1,"next":{"title":"3.1 V4L2 框架分析","level":"1.4.1","depth":2,"path":"Sdm660_Camera/V4L2分析.md","ref":"Sdm660_Camera/V4L2分析.md","articles":[]},"previous":{"title":"2.2 附加知识","level":"1.3.2","depth":2,"path":"Sdm660_Camera/additional.md","ref":"Sdm660_Camera/additional.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-pro","expandable-chapters","code-optimize","splitter","pageview-count","tbfed-pagefooter","flexible-alerts","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"copyright by duguosheng","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"livereload":{},"splitter":{},"search-pro":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"pageview-count":{},"flexible-alerts":{"danger":{"className":"danger","icon":"fa fa-ban","label":"Attention"},"note":{"className":"info","icon":"fa fa-info-circle","label":"Note"},"style":"flat","tip":{"className":"tip","icon":"fa fa-lightbulb-o","label":"Tip"},"warning":{"className":"warning","icon":"fa fa-exclamation-triangle","label":"Warning"}},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"code-optimize":{"copyButtons":true,"showLines":false},"expandable-chapters":{}},"theme":"default","author":"DuGuoSheng","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"6.S081 All-In-One","gitbook":"*"},"file":{"path":"Sdm660_Camera/kernel层初始化流程.md","mtime":"2022-08-16T05:41:26.338Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-08-16T06:12:58.617Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code-optimize/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-pageview-count/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-flexible-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,484 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>第 1 章：SC66_Camera 介绍 · 6.S081 All-In-One</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="DuGuoSheng">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code-optimize/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-pageview-count/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-flexible-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="SC66_Camera使用流程.html" />
+    
+    
+    <link rel="prev" href="../" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2" data-path="SC66_Camera介绍.html">
+            
+                <a href="SC66_Camera介绍.html">
+            
+                    
+                    第 1 章：SC66_Camera 介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="SC66_Camera使用流程.html">
+            
+                <a href="SC66_Camera使用流程.html">
+            
+                    
+                    第 2 章：SC66_Camera 使用流程
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="Camera_driver移植流程.html">
+            
+                <a href="Camera_driver移植流程.html">
+            
+                    
+                    2.1 Camera_driver 移植流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="additional.html">
+            
+                <a href="additional.html">
+            
+                    
+                    2.2 附加知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="kernel层初始化流程.html">
+            
+                <a href="kernel层初始化流程.html">
+            
+                    
+                    第 3 章：kernel 层初始化流程
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="V4L2分析.html">
+            
+                <a href="V4L2分析.html">
+            
+                    
+                    3.1 V4L2 框架分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="kernel代码分析.html">
+            
+                <a href="kernel代码分析.html">
+            
+                    
+                    3.2 kernel 层代码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Camera_init流程.html">
+            
+                <a href="Camera_init流程.html">
+            
+                    
+                    第 4 章：Camera Init 初始化流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="open_Camera流程.html">
+            
+                <a href="open_Camera流程.html">
+            
+                    
+                    第 5 章：open_Camera 流程
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="open_Camera代码分析.html">
+            
+                <a href="open_Camera代码分析.html">
+            
+                    
+                    5.1 open_Camera 流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >第 1 章：SC66_Camera 介绍</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="&#x9AD8;&#x901A;camera&#x67B6;&#x6784;">&#x9AD8;&#x901A;Camera&#x67B6;&#x6784;</h2>
+<h3 id="&#x8BBE;&#x8BA1;&#x539F;&#x7406;&#xFF1A;">&#x8BBE;&#x8BA1;&#x539F;&#x7406;&#xFF1A;</h3>
+<ul>
+<li>Camera&#x7684;&#x6240;&#x6709;&#x529F;&#x80FD;&#x88AB;&#x5212;&#x5206;&#x4E3A;&#x4E0D;&#x540C;&#x7684;&#x6A21;&#x5757;&#xFF0C;&#x8BA9;&#x6A21;&#x5757;&#x81EA;&#x5DF1;&#x6765;&#x51B3;&#x5B9A;&#x81EA;&#x5DF1;&#x7684;&#x4E8B;&#x60C5;&#xFF08;&#x9AD8;&#x5185;&#x805A;&#xFF0C;&#x4F4E;&#x8026;&#x5408;&#xFF09;&#xFF1B;</li>
+<li>&#x6A21;&#x5757;&#x6709;&#x7EDF;&#x4E00;&#x7684;&#x63A5;&#x53E3;&#x548C;&#x683C;&#x5F0F;&#xFF1B;</li>
+<li>&#x6A21;&#x5757;&#x4E2D;&#x6709;&#x7AEF;&#x53E3;&#xFF0C;&#x901A;&#x8FC7;&#x7AEF;&#x53E3;&#x628A;&#x6A21;&#x5757;&#x8FDE;&#x63A5;&#x8D77;&#x6765;&#xFF0C;&#x53C8;&#x628A;&#x6A21;&#x5757;&#x6302;&#x5728;&#x603B;&#x7EBF;&#x4E0A;&#xFF1B;</li>
+<li>&#x6BCF;&#x4E00;&#x4E2A;&#x7AEF;&#x53E3;&#x7684;&#x8FDE;&#x63A5;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x6D41;&#xFF0C;&#x8FD9;&#x4E9B;&#x6D41;&#x901A;&#x8FC7;pipeline&#x6765;&#x7BA1;&#x7406;&#xFF1B;</li>
+<li>&#x6BCF;&#x6B21;&#x542F;&#x52A8;&#x4E00;&#x4E2A;camera&#x5C31;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x4F1A;&#x8BDD;&#xFF0C;&#x7531;&#x8FD9;&#x4E2A;&#x4F1A;&#x8BDD;&#x6765;&#x7BA1;&#x7406;&#x6B64;camera&#x7684;&#x4E00;&#x5207;&#x4E8B;&#x7269;&#x3002;&#x5BF9;&#x4E8E;&#x6BCF;&#x4E00;&#x4E2A;&#x4F1A;&#x8BDD;&#xFF0C;&#x6A21;&#x5757;&#x662F;&#x5171;&#x4EAB;&#x7684;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x662F;camera&#x7684;&#x786C;&#x4EF6;&#x8D44;&#x6E90;&#x4E5F;&#x53EF;&#x4EE5;&#x662F;&#x5176;&#x5B83;&#x8D44;&#x6E90;&#xFF08;&#x5982;&#x4E00;&#x4E9B;&#x8F6F;&#x4EF6;&#x7B97;&#x6CD5;&#x7B49;&#x8D44;&#x6E90;&#xFF09; &#xFF1B;</li>
+</ul>
+<h3 id="camera&#x6A21;&#x5757;&#x7ED3;&#x6784;&#xFF1A;">Camera&#x6A21;&#x5757;&#x7ED3;&#x6784;&#xFF1A;</h3>
+<ol>
+<li>&#x7AEF;&#x53E3;&#xFF0C;&#x7AEF;&#x53E3;&#x5206;&#x4E3A;src&#x3001;sink&#x3001;inter&#xFF0C;&#x5982;&#x679C;&#x8FD9;&#x4E2A;&#x6A21;&#x5757;&#x53EA;&#x6709;source&#x7AEF;&#x53E3;&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x5C31;&#x662F;&#x4E00;&#x4E2A;src&#x6A21;&#x5757;&#xFF1B;&#x5982;&#x679C;&#x53EA;&#x6709;sink&#x7AEF;&#x53E3;&#x5C31;&#x662F;sink&#x6A21;&#x5757;&#xFF0C;&#x5982;&#x679C;&#x90FD;&#x6709;&#x5C31;&#x662F;&#x4E2D;&#x95F4;&#x6A21;&#x5757;&#xFF08;ISP&#x6A21;&#x5757;&#x5373;&#x5C5E;&#x4E8E;inter&#x6A21;&#x5757;&#xFF09;&#x3002;&#x6CA1;&#x6709;&#x7AEF;&#x53E3;&#x7684;&#x6A21;&#x5757;&#x662F;&#x4E0D;&#x80FD;&#x8FDE;&#x63A5;&#x5230;&#x6D41;&#x4E2D;&#x7684;&#xFF0C;&#x4F46;&#x4ED6;&#x53EF;&#x4EE5;&#x5B8C;&#x6210;&#x4E00;&#x4E9B;&#x5176;&#x4ED6;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x6BD4;&#x5982;&#x63A5;&#x6536;&#x5F15;&#x64CE;&#x7684;&#x8BBE;&#x7F6E;&#xFF0C;&#x62A5;&#x544A;&#x4E8B;&#x4EF6;&#x5230;bus&#x7B49;&#x3002;</li>
+<li>&#x6A21;&#x5757;&#x7EBF;&#x7A0B;&#xFF0C;&#x6BCF;&#x4E2A;&#x6A21;&#x5757;&#x53EF;&#x4EE5;&#x6709;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x6765;&#x5904;&#x7406;&#x6A21;&#x5757;&#x7684;&#x4E8B;&#x60C5;&#x3002;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x5BF9;&#x5E94;&#x4E00;&#x4E2A;&#x961F;&#x5217;&#xFF0C;&#x7EBF;&#x7A0B;&#x5C31;&#x662F;&#x4ECE;&#x961F;&#x5217;&#x4E2D;&#x53D6;&#x51FA;&#x6570;&#x636E;&#x5904;&#x7406;&#xFF0C;&#x7136;&#x540E;&#x5E94;&#x7B54;&#x56DE;&#x53BB;&#xFF1B;</li>
+<li>&#x603B;&#x7EBF;&#x56DE;&#x8C03;&#xFF0C;&#x5F53;&#x4E00;&#x4E2A;&#x6A21;&#x5757;&#x5411;&#x603B;&#x7EBF;&#x6CE8;&#x518C;&#x65F6;&#xFF0C;&#x603B;&#x7EBF;&#x5411;&#x5176;&#x63D0;&#x4F9B;&#x4E00;&#x4E2A;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF0C;&#x5F53;&#x6A21;&#x5757;&#x6709;&#x4E8B;&#x4EF6;&#x53D1;&#x751F;&#x65F6;&#xFF0C;&#x8C03;&#x7528;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x5411;bus&#x53D1;&#x6D88;&#x606F;&#xFF0C;&#x7136;&#x540E;&#x603B;&#x7EBF;&#x628A;&#x8FD9;&#x4E2A;&#x6D88;&#x606F;&#x63D0;&#x4EA4;&#x7ED9;&#x7BA1;&#x9053;&#xFF0C;&#x7BA1;&#x9053;&#x628A;&#x8FD9;&#x4E2A;&#x6D88;&#x606F;&#x987A;&#x7740;&#x6D41;&#x53D1;&#x4E0B;&#x53BB;&#xFF1B;</li>
+<li>&#x6A21;&#x5757;&#x7684;get&#x3001;set&#x4EE5;&#x53CA;process&#x51FD;&#x6570;&#xFF0C;&#x53EF;&#x4EE5;&#x53C2;&#x770B;aecawb_thread_handler()&#x51FD;&#x6570;awb &#x548C;aec &#x76F8;&#x5173;&#x7684;&#x5904;&#x7406;&#x3002;</li>
+</ol>
+<h3 id="&#x4EE3;&#x7801;&#x7ED3;&#x6784;&#xFF1A;&#xFF08;&#x4E0B;&#x5217;&#x76EE;&#x5F55;&#x672A;&#x5217;&#x51FA;&#x5B8C;&#x6574;&#x76EE;&#x5F55;&#xFF0C;&#x4EC5;&#x8BA8;&#x8BBA;&#x5173;&#x952E;&#x6587;&#x4EF6;&#xFF09;">&#x4EE3;&#x7801;&#x7ED3;&#x6784;&#xFF1A;&#xFF08;&#x4E0B;&#x5217;&#x76EE;&#x5F55;&#x672A;&#x5217;&#x51FA;&#x5B8C;&#x6574;&#x76EE;&#x5F55;&#xFF0C;&#x4EC5;&#x8BA8;&#x8BBA;&#x5173;&#x952E;&#x6587;&#x4EF6;&#xFF09;</h3>
+<p>&#x9AD8;&#x901A;camera&#x628A;sensor&#x7AEF;&#x5E95;&#x5C42;&#x8BBE;&#x7F6E;&#x3001;ISP&#x6548;&#x679C;&#x53C2;&#x6570;&#x3001;chomatix&#x7B49;&#x8FDB;&#x884C;&#x4E86;&#x5355;&#x72EC;&#x7684;&#x5265;&#x79BB;&#xFF0C;&#x653E;&#x5728;<strong>daemon</strong>&#x8FDB;&#x7A0B;&#x4E2D;&#x8FDB;&#x884C;&#x3002;</p>
+<p>daemon&#x8FDB;&#x7A0B;&#xFF1A;</p>
+<blockquote>
+<p>daemon &#x8FDB;&#x7A0B;&#x53C8;&#x540D;&#x5B88;&#x62A4;&#x8FDB;&#x7A0B;&#xFF0C;&#x56E0;&#x4E3A;&#x6CA1;&#x6709;&#x63A7;&#x5236;&#x7EC8;&#x7AEF;&#xFF0C;&#x6240;&#x4EE5;&#x8BF4;&#x4ED6;&#x4EEC;&#x8FD0;&#x884C;&#x5728;&#x540E;&#x53F0;&#x3002;&#x5B88;&#x62A4;&#x8FDB;&#x7A0B;&#x4E00;&#x822C;&#x5728;&#x7CFB;&#x7EDF;&#x542F;&#x52A8;&#x65F6;&#x5F00;&#x59CB;&#x8FD0;&#x884C;&#xFF0C;&#x5728;&#x7CFB;&#x7EDF;&#x5173;&#x95ED;&#x65F6;&#x6D88;&#x4EA1;&#x3002;&#x8FDB;&#x7A0B;&#x4E0D;&#x56E0;&#x4E3A;&#x7528;&#x6237;&#x6216;&#x8005;&#x5176;&#x4ED6;&#x53D8;&#x5316;&#x800C;&#x53D7;&#x5230;&#x5F71;&#x54CD;&#x3002;</p>
+</blockquote>
+<p><em>camera deamon</em>&#x4EE3;&#x7801;&#x653E;&#x7F6E;&#x5728;<em>vendor/qcom/proprietary/mm-camera</em>&#x76EE;&#x5F55;&#x4E0B;&#xFF0C;&#x800C;&#x6B64;&#x76EE;&#x5F55;&#x4E0B;&#x7684;<strong><em>mm-camera2</em></strong>&#x5C31;&#x662F;&#x6700;&#x65B0;&#x7684;camera&#x67B6;&#x6784;&#x4F4D;&#x7F6E;&#x3002;</p>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;<em>media-controller&#x3001;server-imaging&#x3001;server-tuning</em>&#x53CA;&#x5176;&#x5B83;&#x51E0;&#x4E2A;&#x76EE;&#x5F55;&#xFF0C;&#x91CD;&#x70B9;&#x4E3B;&#x8981;&#x5728;&#x4E8E;<strong><em>media-controller</em></strong>&#x76EE;&#x5F55;&#x3002;</p>
+<pre><code class="lang-shell">media-controller
+    |- mct    &#x2014;&#x2014;&#x5305;&#x542B;&#x4E86;camera&#x5F15;&#x64CE;&#x3001;pipiline&#x3001;bus&#x3001;module&#x3001;stream&#x53CA;event&#x7B49;&#x5B9A;&#x4E49;&#x53CA;&#x5C01;&#x88C5;&#x3002;
+    |- modules    &#x2014;&#x2014;&#x8FDB;&#x7A0B;&#x9700;&#x52A0;&#x8F7D;&#x7684;&#x516D;&#x5927;&#x6A21;&#x5757;
+        |- sensors &#x2014;&#x2014; sensor &#x7684;&#x9A71;&#x52A8;&#x6A21;&#x5757;                                    &#x2014;&#x2014; src&#x6A21;&#x5757;
+        |- iface &#x2014;&#x2014; ISP interface&#x6A21;&#x5757;                                 &#x2014;&#x2014; inter&#x6A21;&#x5757;
+        |- isp &#x2014;&#x2014; &#x4E3B;&#x8981;&#x662F;ISP&#x7684;&#x5904;&#x7406;&#xFF0C;&#x5185;&#x90E8;&#x5305;&#x542B;&#x4F17;&#x591A;&#x7684;&#x6A21;&#x5757;                     &#x2014;&#x2014; inter&#x6A21;&#x5757;
+        |- stats &#x2014;&#x2014; &#x7EDF;&#x8BA1;&#x7B97;&#x6CD5;&#x6A21;&#x5757;&#xFF0C;&#x5982;3A&#xFF0C;ASD,AFD,IS,GRRO&#x7B49;&#x6570;&#x636E;&#x7EDF;&#x8BA1;&#x7684;&#x5904;&#x7406;     &#x2014;&#x2014; sink&#x6A21;&#x5757;
+        |- pproc &#x2014;&#x2014; post process&#x5904;&#x7406;&#xFF0C;&#x5982;flip&#xFF0C;rotate&#x7B49;                 &#x2014;&#x2014; inter&#x6A21;&#x5757;
+        |- imglib &#x2014;&#x2014; &#x4E3B;&#x8981;&#x662F;&#x56FE;&#x7247;&#x7684;&#x4E00;&#x4E9B;&#x540E;&#x7AEF;&#x5904;&#x7406;&#xFF0C;&#x5982;HDR&#xFF0C;&#x4EBA;&#x8138;&#x8BC6;&#x522B;&#x7B49;                &#x2014;&#x2014; sink&#x6A21;&#x5757;
+</code></pre>
+<p>&#x4EE5;&#x4E0A;&#x5404;&#x6A21;&#x5757;&#x5185;&#x90E8;&#x53C8;&#x5305;&#x542B;&#x4E86;&#x4F17;&#x591A;&#x7684;&#x6A21;&#x5757;&#xFF0C;&#x5177;&#x4F53;&#x9700;&#x8981;&#x770B;&#x4EE3;&#x7801;&#x5206;&#x6790;&#x3002;</p>
+<p><em>sensors</em>&#x76EE;&#x5F55;&#x4E0B;&#xFF1A;</p>
+<pre><code>sensors
+    &#x251C;&#x2500;configs        &#x4E0D;&#x540C;&#x578B;&#x53F7;&#x7684;camera&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4EE5;&#x53CA;&#x5BF9;&#x5E94;&#x7684;chromatix&#x914D;&#x7F6E;&#x6587;&#x4EF6;
+    &#x251C;&#x2500;sensor        sensor&#x7A0B;&#x5E8F;
+    &#x251C;&#x2500;actuator        actuator&#x7A0B;&#x5E8F;
+    &#x251C;&#x2500;flash            flash&#x7A0B;&#x5E8F;
+    &#x251C;&#x2500;eeprom        eeprom&#x7A0B;&#x5E8F;
+    &#x2514;&#x2500;chromatix        chromatix&#x4EE3;&#x7801;
+</code></pre><p><em>sensor&#x3001;actuator&#x3001;flash&#x3001;eeprom</em>&#x76EE;&#x5F55;&#x4E0B;&#x7684;lib&#x6587;&#x4EF6;&#x5939;&#x91CC;&#x5305;&#x542B;&#x4E0D;&#x540C;&#x578B;&#x53F7;&#x786C;&#x4EF6;&#x7684;&#x9A71;&#x52A8;&#x7A0B;&#x5E8F;</p>
+<p><em>chromatix</em>&#x4E0B;&#x7684;<em>code</em>&#x6839;&#x636E;&#x8F6F;&#x4EF6;&#x8C03;&#x8BD5;&#x7684;&#x7ED3;&#x679C;&#x5BFC;&#x51FA;&#xFF0C;&#x5728;&#x8FDB;&#x5165;&#x76EE;&#x5F55;&#x524D;&#xFF0C;&#x6211;&#x4EEC;&#x4F1A;&#x770B;&#x5230; 0309 &#x548C; 0310 &#x8FD9;&#x4E24;&#x4E2A;&#x76EE;&#x5F55;&#xFF0C;&#x5176;&#x4E3B;&#x8981;&#x662F;&#x6839;&#x636E;&#x5E73;&#x53F0;&#x6765;&#x51B3;&#x5B9A;&#xFF0C;&#x5177;&#x4F53;&#x7684;&#x5B9A;&#x4F4D;&#x6587;&#x4EF6; &#x5728;<em>/vendor/qcom/proprietary/mm-camera/Android.mk</em>&#x4E0B;&#x3002;</p>
+<p>&#x4EE5;<em>chromatix_imx230</em>&#x4E3A;&#x4F8B;&#xFF08;&#x4EC5;&#x622A;&#x53D6;&#x90E8;&#x5206;&#xFF09;&#xFF0C;<em>chromatix</em>&#x4E2D;&#x6BCF;&#x4E2A;&#x76EE;&#x5F55;&#x7EA7;&#x5BF9;&#x5E94;&#x4E00;&#x4E2A;&#x5E93;&#xFF0C;&#x6700;&#x540E;&#x90FD;&#x4F1A;&#x6620;&#x5C04;&#x5230;<em>configs</em>&#x4E0B;&#x7684;<em>chromatix</em>&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E0B;&#x3002;</p>
+<pre><code>&#x251C;&#x2500;3A
+&#x2502;  &#x251C;&#x2500;4k_preview
+&#x2502;  &#x251C;&#x2500;hdr_snapshot
+&#x2502;  &#x251C;&#x2500;1080p_preview
+&#x2502;  &#x251C;&#x2500;hfr_60
+&#x2502;  &#x251C;&#x2500;video_16M
+&#x251C;&#x2500;cpp
+&#x2502;  &#x251C;&#x2500;cpp_hfr_60
+&#x2502;  &#x251C;&#x2500;cpp_video_4k
+&#x2502;  &#x251C;&#x2500;cpp_snapshot_hdr
+&#x2502;  &#x251C;&#x2500;cpp_video
+&#x251C;&#x2500;common
+&#x251C;&#x2500;postproc
+&#x2514;&#x2500;isp
+    &#x251C;&#x2500;snapshot
+    &#x251C;&#x2500;hfr_60
+    &#x251C;&#x2500;video_4k
+    &#x251C;&#x2500;preview
+    &#x2514;&#x2500;hfr_120
+</code></pre><footer class="page-footer"><span class="copyright">copyright by duguosheng all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x4EF6;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
+2022-08-15 09:55:16
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../" class="navigation navigation-prev " aria-label="Previous page: 介绍">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="SC66_Camera使用流程.html" class="navigation navigation-next " aria-label="Next page: 第 2 章：SC66_Camera 使用流程">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第 1 章：SC66_Camera 介绍","level":"1.2","depth":1,"next":{"title":"第 2 章：SC66_Camera 使用流程","level":"1.3","depth":1,"path":"Sdm660_Camera/SC66_Camera使用流程.md","ref":"Sdm660_Camera/SC66_Camera使用流程.md","articles":[{"title":"2.1 Camera_driver 移植流程","level":"1.3.1","depth":2,"path":"Sdm660_Camera/Camera_driver移植流程.md","ref":"Sdm660_Camera/Camera_driver移植流程.md","articles":[]},{"title":"2.2 附加知识","level":"1.3.2","depth":2,"path":"Sdm660_Camera/additional.md","ref":"Sdm660_Camera/additional.md","articles":[]}]},"previous":{"title":"介绍","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-pro","expandable-chapters","code-optimize","splitter","pageview-count","tbfed-pagefooter","flexible-alerts","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"copyright by duguosheng","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"livereload":{},"splitter":{},"search-pro":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"pageview-count":{},"flexible-alerts":{"danger":{"className":"danger","icon":"fa fa-ban","label":"Attention"},"note":{"className":"info","icon":"fa fa-info-circle","label":"Note"},"style":"flat","tip":{"className":"tip","icon":"fa fa-lightbulb-o","label":"Tip"},"warning":{"className":"warning","icon":"fa fa-exclamation-triangle","label":"Warning"}},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"code-optimize":{"copyButtons":true,"showLines":false},"expandable-chapters":{}},"theme":"default","author":"DuGuoSheng","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"6.S081 All-In-One","gitbook":"*"},"file":{"path":"Sdm660_Camera/SC66_Camera介绍.md","mtime":"2022-08-15T01:55:16.860Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-08-16T06:12:58.617Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code-optimize/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-pageview-count/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-flexible-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
