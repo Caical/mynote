@@ -1,0 +1,1496 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>3.2 kernel 层代码分析 · 6.S081 All-In-One</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="DuGuoSheng">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code-optimize/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-pageview-count/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-flexible-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="Camera_init流程.html" />
+    
+    
+    <link rel="prev" href="V4L2分析.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="SC66_Camera介绍.html">
+            
+                <a href="SC66_Camera介绍.html">
+            
+                    
+                    第 1 章：SC66_Camera 介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="SC66_Camera使用流程.html">
+            
+                <a href="SC66_Camera使用流程.html">
+            
+                    
+                    第 2 章：SC66_Camera 使用流程
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="Camera_driver移植流程.html">
+            
+                <a href="Camera_driver移植流程.html">
+            
+                    
+                    2.1 Camera_driver 移植流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="additional.html">
+            
+                <a href="additional.html">
+            
+                    
+                    2.2 附加知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="kernel层初始化流程.html">
+            
+                <a href="kernel层初始化流程.html">
+            
+                    
+                    第 3 章：kernel 层初始化流程
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="V4L2分析.html">
+            
+                <a href="V4L2分析.html">
+            
+                    
+                    3.1 V4L2 框架分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.2" data-path="kernel代码分析.html">
+            
+                <a href="kernel代码分析.html">
+            
+                    
+                    3.2 kernel 层代码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="Camera_init流程.html">
+            
+                <a href="Camera_init流程.html">
+            
+                    
+                    第 4 章：Camera Init 初始化流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="open_Camera流程.html">
+            
+                <a href="open_Camera流程.html">
+            
+                    
+                    第 5 章：open_Camera 流程
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="open_Camera代码分析.html">
+            
+                <a href="open_Camera代码分析.html">
+            
+                    
+                    5.1 open_Camera 流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >3.2 kernel 层代码分析</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="kernel&#x4EE3;&#x7801;&#x5206;&#x6790;">kernel&#x4EE3;&#x7801;&#x5206;&#x6790;</h1>
+<p>&#x63A5;&#x4E0B;&#x6765;&#xFF0C;&#x6211;&#x4EEC;&#x4F9D;&#x6B21;&#x6765;&#x770B;&#x770B; <em>msm_cam</em>&#x3001;<em>sensor</em>&#x3001;<em>v4l2</em> &#x8FD9;&#x51E0;&#x90E8;&#x5206;&#x7684;&#x4EE3;&#x7801;&#x903B;&#x8F91;&#xFF1A;</p>
+<h2 id="1-msm-cam-&#x9A71;&#x52A8;">1. msm-cam &#x9A71;&#x52A8;</h2>
+<p><em>msm-cam</em>&#x662F;&#x5728;dts &#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#xFF0C;&#x5728;<em>\kernel\msm-4.4\arch\arm\boot\dts\qcom\sdm660-camera.dtsi&#x4E2D;</em>&#xFF1A;</p>
+<pre><code class="lang-c">    qcom,msm-cam@ca00000 {
+        compatible = <span class="hljs-string">&quot;qcom,msm-cam&quot;</span>;
+        reg = &lt;<span class="hljs-number">0xca00000</span> <span class="hljs-number">0x4000</span>&gt;;
+        reg-names = <span class="hljs-string">&quot;msm-cam&quot;</span>;
+        status = <span class="hljs-string">&quot;ok&quot;</span>;
+        bus-vectors = <span class="hljs-string">&quot;suspend&quot;</span>, <span class="hljs-string">&quot;svs&quot;</span>, <span class="hljs-string">&quot;nominal&quot;</span>, <span class="hljs-string">&quot;turbo&quot;</span>;
+        qcom,bus-votes = &lt;<span class="hljs-number">0</span> <span class="hljs-number">150000000</span> <span class="hljs-number">320000000</span> <span class="hljs-number">320000000</span>&gt;;
+        qcom,gpu-limit = &lt;<span class="hljs-number">700000000</span>&gt;;
+    };
+</code></pre>
+<p>&#x67E5;&#x627E;&#x4EE3;&#x7801;&#xFF0C;&#x5176;&#x6CE8;&#x518C;&#x7684;&#x5730;&#x65B9;&#x5728;<em>\kernel\msm-4.4\drivers\media\platform\msm\camera_v2\msm.c</em>&#x3002;</p>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;msm-cam &#x662F;&#x4EE5;&#x5E73;&#x53F0;&#x9A71;&#x52A8;&#x7684;&#x5F62;&#x5F0F;&#x6CE8;&#x518C;&#x5728;kernel &#x4E2D;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> of_device_id msm_dt_match[] = {
+    {.compatible = <span class="hljs-string">&quot;qcom,msm-cam&quot;</span>},
+    {}
+};
+MODULE_DEVICE_TABLE(of, msm_dt_match);
+
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">struct</span> platform_driver msm_driver = {
+    .probe = msm_probe,
+    .driver = {
+        .name = <span class="hljs-string">&quot;msm&quot;</span>,
+        .owner = THIS_MODULE,
+        .of_match_table = msm_dt_match,
+    },
+};
+
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> __<span class="hljs-function">init <span class="hljs-title">msm_init</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span>
+</span>{
+    <span class="hljs-keyword">return</span> platform_driver_register(&amp;msm_driver);
+}
+</code></pre>
+<p>&#x521D;&#x59CB;&#x5316;&#x6CE8;&#x518C;&#x6210;&#x529F;&#x540E;&#xFF0C;&#x4F1A;&#x8C03;&#x7528;<code>msm_probe</code>&#x51FD;&#x6570;&#xFF0C;&#x5728;&#x8BE5;&#x51FD;&#x6570;&#x4E2D;&#xFF0C;&#x4E3B;&#x8981;&#x5DE5;&#x4F5C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol>
+<li>&#x521D;&#x59CB;&#x5316; <em>v4l2_device</em>&#x3001;<em>video_device</em> &#x3001;<em>media_device</em> &#x7ED3;&#x6784;&#x4F53;&#x5E76;&#x5206;&#x914D;&#x597D;<em>KERNEL</em> &#x5185;&#x5B58;&#x3002;</li>
+<li>&#x6CE8;&#x518C; <em>media_device</em> &#x3001;<em>v4l2_device</em>&#x3001;<em>video_device</em> &#x8BBE;&#x5907;&#x3002;</li>
+<li>&#x521B;&#x5EFA;&#x597D; <em>camera</em> <em>debug</em> <em>root</em> <em>fs</em></li>
+</ol>
+<p>&#x5173;&#x4E8E;&#x8FD9;&#x90E8;&#x5206;&#x5EFA;&#x8BAE;&#x5148;&#x770B;&#x4E00;&#x4E0B;<strong>3.1&#x8282;&#x7684;V4L2&#x5206;&#x6790;</strong>&#x3002;</p>
+<pre><code class="lang-c">\kernel\msm<span class="hljs-number">-4.4</span>\drivers\media\platform\msm\camera_v2\msm.c
+
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">struct</span> v4l2_device *msm_v4l2_dev;  <span class="hljs-comment">// &#x521D;&#x59CB;&#x5316;&#x4E00;&#x4E2A; v4l2_device &#x7C7B;&#x578B;&#x7684;&#x7ED3;&#x6784;&#x4F53;</span>
+
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">msm_probe</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> platform_device *pdev)</span>
+</span>{
+    <span class="hljs-keyword">struct</span> msm_video_device *pvdev = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">struct</span> dentry *cam_debugfs_root;
+
+    <span class="hljs-comment">// 1. &#x521D;&#x59CB;&#x5316;&#x4E00;&#x4E2A; v4l2_device &#x7C7B;&#x578B;&#x7684;&#x7ED3;&#x6784;&#x4F53;&#xFF0C;&#x5E76;&#x5206;&#x914D;&#x597D;&#x7ED3;&#x6784;&#x4F53;&#x5185;&#x5B58;</span>
+    msm_v4l2_dev = kzalloc(<span class="hljs-keyword">sizeof</span>(*msm_v4l2_dev), GFP_KERNEL);
+    pvdev = kzalloc(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> msm_video_device), GFP_KERNEL);
+
+    <span class="hljs-comment">// 2. &#x5206;&#x914D; video_device &#x7ED3;&#x6784;&#x4F53;&#x5185;&#x5B58;</span>
+    pvdev-&gt;vdev = video_device_alloc(); 
+    <span class="hljs-comment">// ---&gt; kzalloc(sizeof(struct video_device), GFP_KERNEL); </span>
+
+    <span class="hljs-comment">// 3. &#x5206;&#x914D; media_device &#x7ED3;&#x6784;&#x4F53;&#x5185;&#x5B58;</span>
+    msm_v4l2_dev-&gt;mdev = kzalloc(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> media_device), GFP_KERNEL);
+
+    strlcpy(msm_v4l2_dev-&gt;mdev-&gt;model, MSM_CONFIGURATION_NAME, <span class="hljs-keyword">sizeof</span>(msm_v4l2_dev-&gt;mdev-&gt;model)); <span class="hljs-comment">// msm_config</span>
+    msm_v4l2_dev-&gt;mdev-&gt;dev = &amp;(pdev-&gt;dev);
+
+    <span class="hljs-comment">// 4. &#x6CE8;&#x518C; media_device , &#x4F7F;&#x7528;&#x7684; v4l2 </span>
+    rc = media_device_register(msm_v4l2_dev-&gt;mdev);
+    pvdev-&gt;vdev-&gt;entity.type = MEDIA_ENT_T_DEVNODE_V4L;         <span class="hljs-comment">// V4L</span>
+    pvdev-&gt;vdev-&gt;entity.group_id = QCAMERA_VNODE_GROUP_ID;   <span class="hljs-comment">// #define QCAMERA_VNODE_GROUP_ID 2</span>
+
+    msm_v4l2_dev-&gt;notify = msm_sd_notify;  <span class="hljs-comment">// &#x7528;&#x4E8E;&#x53D1;&#x73B0;&#x5BF9;&#x5E94;&#x7684; subdev</span>
+    pvdev-&gt;vdev-&gt;v4l2_dev = msm_v4l2_dev;
+
+    <span class="hljs-comment">// 5. &#x8BBE;&#x7F6E;&#x7236;&#x8BBE;&#x5907;&#x4E3A; pdev-&gt;dev &#xFF08;&#x4E5F;&#x5C31;&#x662F; qcom,msm-cam &#x7684;&#x8BBE;&#x5907;&#x4FE1;&#x606F;&#xFF09;</span>
+    rc = v4l2_device_register(&amp;(pdev-&gt;dev), pvdev-&gt;vdev-&gt;v4l2_dev);
+
+    <span class="hljs-comment">// 6. &#x6CE8;&#x518C; video_device&#x8BBE;&#x5907; </span>
+    strlcpy(pvdev-&gt;vdev-&gt;name, <span class="hljs-string">&quot;msm-config&quot;</span>, <span class="hljs-keyword">sizeof</span>(pvdev-&gt;vdev-&gt;name));
+    pvdev-&gt;vdev-&gt;release  = video_device_release;
+    pvdev-&gt;vdev-&gt;fops     = &amp;msm_fops;            <span class="hljs-comment">// &#x914D;&#x7F6E; video_device &#x7684;&#x5B57;&#x7B26;&#x8BBE;&#x5907;&#x64CD;&#x4F5C;&#x51FD;&#x6570;</span>
+    pvdev-&gt;vdev-&gt;ioctl_ops = &amp;g_msm_ioctl_ops;    <span class="hljs-comment">// &#x914D;&#x7F6E; v4l2 IOCTRL</span>
+    pvdev-&gt;vdev-&gt;minor     = <span class="hljs-number">-1</span>;
+    pvdev-&gt;vdev-&gt;vfl_type  = VFL_TYPE_GRABBER;
+    rc = video_register_device(pvdev-&gt;vdev, VFL_TYPE_GRABBER, <span class="hljs-number">-1</span>);
+
+    <span class="hljs-comment">// 7. &#x5C06;&#x5F53;&#x524D; msm_video_device &#x7ED3;&#x6784;&#x4F53;&#x8BBE;&#x4E3A;&#x79C1;&#x6709;&#x6570;&#x636E; </span>
+    video_set_drvdata(pvdev-&gt;vdev, pvdev);
+
+    <span class="hljs-comment">// 8. &#x5206;&#x914D;  msm_queue_head &#x7ED3;&#x6784;&#x4F53;&#x5185;&#x5B58;</span>
+    msm_session_q = kzalloc(<span class="hljs-keyword">sizeof</span>(*msm_session_q), GFP_KERNEL);
+    msm_init_queue(msm_session_q);
+
+    <span class="hljs-comment">// 9. &#x521B;&#x5EFA; camera &#x8C03;&#x8BD5;&#x76EE;&#x5F55;</span>
+    cam_debugfs_root = debugfs_create_dir(MSM_CAM_LOGSYNC_FILE_BASEDIR, <span class="hljs-literal">NULL</span>);
+
+    rc = cam_ahb_clk_init(pdev);
+
+    of_property_read_u32(pdev-&gt;dev.of_node,
+        <span class="hljs-string">&quot;qcom,gpu-limit&quot;</span>, &amp;gpu_limit);
+
+    <span class="hljs-keyword">goto</span> probe_end;
+
+}
+</code></pre>
+<h3 id="11-struct-v4l2device-&#x7ED3;&#x6784;&#x4F53;&#x63CF;&#x8FF0;">1.1 struct v4l2_device &#x7ED3;&#x6784;&#x4F53;&#x63CF;&#x8FF0;</h3>
+<pre><code class="lang-c">\kernel\msm<span class="hljs-number">-4.4</span>\include\media\v4l2-device.h
+
+<span class="hljs-keyword">struct</span> v4l2_device {
+    <span class="hljs-comment">/* dev-&gt;driver_data points to this struct.
+       Note: dev might be NULL if there is no parent device
+       as is the case with e.g. ISA devices. */</span>
+    <span class="hljs-keyword">struct</span> device *dev;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">if</span> defined(CONFIG_MEDIA_CONTROLLER)</span>
+    <span class="hljs-keyword">struct</span> media_device *mdev;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+    <span class="hljs-comment">/* used to keep track of the registered subdevs */</span>
+    <span class="hljs-keyword">struct</span> list_head subdevs;
+    <span class="hljs-comment">/* lock this struct; can be used by the driver as well if this
+       struct is embedded into a larger struct. */</span>
+    <span class="hljs-keyword">spinlock_t</span> lock;
+    <span class="hljs-comment">/* unique device name, by default the driver name + bus ID */</span>
+    <span class="hljs-keyword">char</span> name[V4L2_DEVICE_NAME_SIZE];
+    <span class="hljs-comment">/* notify callback called by some sub-devices. */</span>
+    <span class="hljs-keyword">void</span> (*notify)(<span class="hljs-keyword">struct</span> v4l2_subdev *sd,
+            <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> notification, <span class="hljs-keyword">void</span> *arg);
+    <span class="hljs-comment">/* The control handler. May be NULL. */</span>
+    <span class="hljs-keyword">struct</span> v4l2_ctrl_handler *ctrl_handler;
+    <span class="hljs-comment">/* Device&apos;s priority state */</span>
+    <span class="hljs-keyword">struct</span> v4l2_prio_state prio;
+    <span class="hljs-comment">/* Keep track of the references to this struct. */</span>
+    <span class="hljs-keyword">struct</span> kref ref;
+    <span class="hljs-comment">/* Release function that is called when the ref count goes to 0. */</span>
+    <span class="hljs-keyword">void</span> (*release)(<span class="hljs-keyword">struct</span> v4l2_device *v4l2_dev);
+};
+</code></pre>
+<h3 id="12-struct-msmvideodevice-&#x7ED3;&#x6784;&#x4F53;&#x63CF;&#x8FF0;">1.2 struct msm_video_device &#x7ED3;&#x6784;&#x4F53;&#x63CF;&#x8FF0;</h3>
+<pre><code class="lang-c">\kernel\msm<span class="hljs-number">-4.4</span>\drivers\media\platform\msm\camera_v2\msm.h
+
+<span class="hljs-keyword">struct</span> msm_video_device {
+    <span class="hljs-keyword">struct</span> video_device *vdev;
+    <span class="hljs-keyword">atomic_t</span> opened;
+    <span class="hljs-keyword">struct</span> mutex video_drvdata_mutex;
+};
+</code></pre>
+<h3 id="13-struct-mediadevice-&#x7ED3;&#x6784;&#x4F53;&#x63CF;&#x8FF0;">1.3 struct media_device &#x7ED3;&#x6784;&#x4F53;&#x63CF;&#x8FF0;</h3>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> media_device {
+    <span class="hljs-comment">/* dev-&gt;driver_data points to this struct. */</span>
+    <span class="hljs-keyword">struct</span> device *dev;                <span class="hljs-comment">// Parent device</span>
+    <span class="hljs-keyword">struct</span> media_devnode devnode;    <span class="hljs-comment">// Media device node</span>
+
+    <span class="hljs-keyword">char</span> model[<span class="hljs-number">32</span>];                    <span class="hljs-comment">// Device model name</span>
+    <span class="hljs-keyword">char</span> serial[<span class="hljs-number">40</span>];                <span class="hljs-comment">// Device serial number (optional)</span>
+    <span class="hljs-keyword">char</span> bus_info[<span class="hljs-number">32</span>];                <span class="hljs-comment">// Unique and stable device location identifier</span>
+    u32 hw_revision;                <span class="hljs-comment">// Hardware device revision</span>
+    u32 driver_version;                <span class="hljs-comment">// Device driver version</span>
+
+    u32 entity_id;                    <span class="hljs-comment">// ID of the next entity to be registered</span>
+    <span class="hljs-keyword">struct</span> list_head entities;        <span class="hljs-comment">// List of registered entities</span>
+
+    <span class="hljs-comment">/* Protects the entities list */</span>
+    <span class="hljs-keyword">spinlock_t</span> lock;                <span class="hljs-comment">// Entities list lock</span>
+    <span class="hljs-comment">/* Serializes graph operations. */</span>
+    <span class="hljs-keyword">struct</span> mutex graph_mutex;        <span class="hljs-comment">// Entities graph operation lock</span>
+
+    <span class="hljs-keyword">int</span> (*link_notify)(<span class="hljs-keyword">struct</span> media_link *link, u32 flags, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> notification); <span class="hljs-comment">// Link state change notification callback</span>
+};
+</code></pre>
+<h2 id="2-sensor-&#x9A71;&#x52A8;">2. Sensor &#x9A71;&#x52A8;</h2>
+<p>&#x8FD8;&#x662F;&#x4ECE; <em>dts</em> &#x5F00;&#x59CB;&#x770B;&#xFF0C;&#x524D;&#x9762;&#x6211;&#x4EEC;&#x914D;&#x7F6E;<em>camera</em> <em>sensor</em>&#x65F6;&#xFF0C;&#x8282;&#x70B9;&#x4E3A; <em>compatible = &quot;qcom,camera&quot;</em>;&#x5BF9;&#x5E94;&#x4EE3;&#x7801;&#x5728;<em>\kernel\msm-4.4\drivers\media\platform\msm\camera_v2\sensor\msm_sensor_driver.c</em>&#x3002;</p>
+<p>&#x5C06; <em>qcom</em>,<em>camera</em>&#x6CE8;&#x518C;&#x5728;&#x5E73;&#x53F0;&#x9A71;&#x52A8;&#x4E2D;&#xFF0C;&#x5E76;&#x6CE8;&#x518C;&#x5BF9;&#x5E94;&#x7684;<em>sensor</em> <em>i2c</em> &#x9A71;&#x52A8;&#x3002;</p>
+<pre><code class="lang-c">\kernel\msm<span class="hljs-number">-4.4</span>\drivers\media\platform\msm\camera_v2\sensor\msm_sensor_driver.c
+
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> of_device_id msm_sensor_driver_dt_match[] = {
+    {.compatible = <span class="hljs-string">&quot;qcom,camera&quot;</span>},
+    {}
+};
+
+MODULE_DEVICE_TABLE(of, msm_sensor_driver_dt_match);
+
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">struct</span> platform_driver msm_sensor_platform_driver = {
+    .probe = msm_sensor_driver_platform_probe,
+    .driver = {
+        .name = <span class="hljs-string">&quot;qcom,camera&quot;</span>,
+        .owner = THIS_MODULE,
+        .of_match_table = msm_sensor_driver_dt_match,
+    },
+    .remove = msm_sensor_platform_remove,
+};
+
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">struct</span> i2c_driver msm_sensor_driver_i2c = {
+    .id_table = i2c_id,
+    .probe  = msm_sensor_driver_i2c_probe,
+    .remove = msm_sensor_driver_i2c_remove,
+    .driver = {
+        .name = SENSOR_DRIVER_I2C,
+    },
+};
+
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> __<span class="hljs-function">init <span class="hljs-title">msm_sensor_driver_init</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span>
+</span>{
+    rc = platform_driver_register(&amp;msm_sensor_platform_driver);
+    rc = i2c_add_driver(&amp;msm_sensor_driver_i2c);
+    <span class="hljs-keyword">return</span> rc;
+}
+</code></pre>
+<h3 id="21-&#x5E73;&#x53F0;&#x9A71;&#x52A8;probe&#x51FD;&#x6570;-msmsensordriverplatformprobe">2.1 &#x5E73;&#x53F0;&#x9A71;&#x52A8;probe&#x51FD;&#x6570; msm_sensor_driver_platform_probe()</h3>
+<p>&#x5728; <code>msm_sensor_driver_platform_probe</code>&#x51FD;&#x6570;&#x4E2D;&#xFF0C;&#x5176;&#x4E3B;&#x8981;&#x5DE5;&#x4F5C;&#x5982;&#x4E0B;:</p>
+<ol>
+<li>&#x521B;&#x5EFA;&#x5E76;&#x5206;&#x914D; <code>msm_sensor_ctrl_t</code>&#x7ED3;&#x6784;&#x4F53;&#x5185;&#x5B58;&#x3002;</li>
+<li>&#x5C06;<code>sensor device type</code>&#x521D;&#x59CB;&#x5316;&#x4E3A; <code>MSM_CAMERA_PLATFORM_DEVICE</code></li>
+<li>&#x89E3;&#x6790; &#x8282;&#x70B9;&#x4E3A; <code>compatible = &quot;qcom,camera&quot;;</code>&#x7684; dts &#x5185;&#x5BB9;</li>
+<li>&#x89E3;&#x6790;dts &#x4E2D;&#x914D;&#x7F6E;&#x7684;camera clk &#x4FE1;&#x606F;
+<code>clock-names = &quot;cam_src_clk&quot;, &quot;cam_clk&quot;;</code>
+<code>qcom,clock-rates = &lt;24000000 0&gt;;</code></li>
+</ol>
+<pre><code class="lang-c">\kernel\msm-4.4\drivers\media\platform\msm\camera_v2\sensor\msm_sensor_driver.c
+
+static int32_t msm_sensor_driver_platform_probe(struct platform_device *pdev)
+{
+    int32_t rc = 0;
+    struct msm_sensor_ctrl_t *s_ctrl = NULL;
+
+    // 1. &#x521B;&#x5EFA;&#x5E76;&#x5206;&#x914D; msm_sensor_ctrl_t &#x7ED3;&#x6784;&#x4F53;&#x5185;&#x5B58;&#x3002;
+    /* Create sensor control structure */
+    s_ctrl = kzalloc(sizeof(*s_ctrl), GFP_KERNEL);
+    platform_set_drvdata(pdev, s_ctrl);
+
+    // 2. &#x5C06;sensor device type &#x521D;&#x59CB;&#x5316;&#x4E3A; MSM_CAMERA_PLATFORM_DEVICE
+    /* Initialize sensor device type */
+    s_ctrl-&gt;sensor_device_type = MSM_CAMERA_PLATFORM_DEVICE;
+    s_ctrl-&gt;of_node = pdev-&gt;dev.of_node;
+
+    /*fill in platform device*/
+    s_ctrl-&gt;pdev = pdev;
+
+    // 3. &#x89E3;&#x6790; &#x8282;&#x70B9;&#x4E3A;  compatible = &quot;qcom,camera&quot;; &#x7684; dts &#x5185;&#x5BB9;
+    rc = msm_sensor_driver_parse(s_ctrl);
+    ==========================&gt;
+    |    static int32_t msm_sensor_driver_parse(struct msm_sensor_ctrl_t *s_ctrl)
+    |    {
+    |        /* Allocate memory for sensor_i2c_client */
+    |        s_ctrl-&gt;sensor_i2c_client = kzalloc(sizeof(*s_ctrl-&gt;sensor_i2c_client), GFP_KERNEL);
+    |    
+    |        /* Parse dt information and store in sensor control structure */
+    |        rc = msm_sensor_driver_get_dt_data(s_ctrl);  // &#x89E3;&#x6790;Camera DTS &#x8282;&#x70B9;&#xFF0C;&#x8BE6;&#x89C1; Chapter 3.2
+    |
+    |        /* Initilize v4l2 subdev info */
+    |        s_ctrl-&gt;sensor_v4l2_subdev_info = msm_sensor_driver_subdev_info;
+    |        s_ctrl-&gt;sensor_v4l2_subdev_info_size = ARRAY_SIZE(msm_sensor_driver_subdev_info);
+    |    
+    |        /* Initialize default parameters */
+    |        rc = msm_sensor_init_default_params(s_ctrl);  // &#x521D;&#x59CB;&#x5316;&#x9ED8;&#x8BA4;&#x53C2;&#x6570;
+    |
+    |        // &#x5C06; sensor ctrl &#x8282;&#x6784;&#x4F53;&#x4FDD;&#x5B58;&#x5728; g_sctrl &#x6570;&#x7EC4;&#x4E2D;&#x3002;
+    |        /* Store sensor control structure in static database */
+    |        g_sctrl[s_ctrl-&gt;id] = s_ctrl;
+    |        CDBG(&quot;g_sctrl[%d] %pK&quot;, s_ctrl-&gt;id, g_sctrl[s_ctrl-&gt;id]);
+    |        return rc;
+    |    }
+    &lt;==========================
+
+    // 4. &#x89E3;&#x6790;dts &#x4E2D;&#x914D;&#x7F6E;&#x7684;camera clk &#x4FE1;&#x606F;
+    // &#x89E3;&#x6790; clock-names = &quot;cam_src_clk&quot;, &quot;cam_clk&quot;;
+    // &#x89E3;&#x6790; qcom,clock-rates = &lt;24000000 0&gt;;
+    /* Get clocks information */
+    rc = msm_camera_get_clk_info(s_ctrl-&gt;pdev, &amp;s_ctrl-&gt;sensordata-&gt;power_info.clk_info,
+        &amp;s_ctrl-&gt;sensordata-&gt;power_info.clk_ptr, &amp;s_ctrl-&gt;sensordata-&gt;power_info.clk_info_size);
+    ===========================&gt;
+    |    // @\kernel\msm-4.4\drivers\media\platform\msm\camera_v2\common\cam_soc_api.c
+    |    rc = msm_camera_get_clk_info_internal(&amp;pdev-&gt;dev, clk_info, clk_ptr, num_clk);
+    &lt;==========================
+
+    /* Fill platform device id*/
+    pdev-&gt;id = s_ctrl-&gt;id;
+
+    /* Fill device in power info */
+    s_ctrl-&gt;sensordata-&gt;power_info.dev = &amp;pdev-&gt;dev;
+    return rc;
+}
+</code></pre>
+<h3 id="22-&#x89E3;&#x6790;camera-dts-&#x8282;&#x70B9;-msmsensordrivergetdtdata">2.2 &#x89E3;&#x6790;Camera DTS &#x8282;&#x70B9; msm_sensor_driver_get_dt_data()</h3>
+<p>&#x5728;&#x8BE5;&#x51FD;&#x6570;&#x4E2D;&#x4E3B;&#x8981;&#x662F;&#x5BF9;<em>dts</em> &#x4E2D;&#x914D;&#x7F6E;&#x7684;<em>camera</em> &#x8282;&#x70B9;&#x89E3;&#x6790;&#xFF0C;&#x5DE5;&#x4F5C;&#x5982;&#x4E0B;:</p>
+<ol>
+<li>&#x521D;&#x59CB;&#x5316; <em>msm_camera_sensor_board_info</em>&#x7ED3;&#x6784;&#x4F53;&#x5E76;&#x5206;&#x914D;&#x5BF9;&#x5E94;&#x7684;&#x5185;&#x5B58;</li>
+<li>&#x89E3;&#x6790; <em>cell-index = <0></0></em>&#xFF0C;&#x4EE5;&#x6B64;&#x4E3A;<em>camera</em> &#x6570;&#x7EC4;&#x8BA1;&#x6570; <em>id</em></li>
+<li>&#x68C0;&#x6D4B; <em>camera id</em> &#x662F;&#x5426;&#x5927;&#x4E8E;&#x7CFB;&#x7EDF;&#x6700;&#x5927;&#x652F;&#x6301;&#x6570;&#x91CF;</li>
+<li>&#x5224;&#x65AD; <em>msm_sensor_ctrl</em> &#x5168;&#x5C40;&#x6570;&#x7EC4;&#x4E2D;&#x5F53;&#x524D;<em>id</em> &#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x521D;&#x59CB;&#x5316;</li>
+<li>&#x89E3;&#x6790;<em>Camera</em> &#x5916;&#x8BBE;&#x4FE1;&#x606F;&#xFF0C;&#x5305;&#x62EC; &quot;<em>qcom,actuator-src&quot;&#x3001;&quot;qcom,ois-src&quot;&#x3001;&quot;qcom,eeprom-src&quot;&#x3001;&quot;qcom,led-flash-src&quot;&#x3001;&quot;qcom,csiphy-sd-index&quot;</em></li>
+<li>&#x89E3;&#x6790;<em>Camera</em> &#x7535;&#x538B;&#x914D;&#x7F6E;<em>&#xFF0C;qcom,cam-vreg-name = &quot;cam_vio&quot;, &quot;cam_vana&quot;, &quot;cam_vdig&quot;, &quot;cam_vaf&quot;;</em></li>
+<li>&#x89E3;&#x6790;<em>Camera GPIO</em>&#x914D;&#x7F6E;&#x89E3;&#x6790; <em>&quot;qcom,gpio-req-tbl-num&quot;&#x3001;&quot;qcom,gpio-req-tbl-flags&quot;&#x3001;&quot;qcom,gpio-req-tbl-label&quot;</em>
+&#x5982;&#x679C;&#x914D;&#x7F6E;&#x4E86;&#x4F7F;&#x7528;<em>gpio</em> &#x4F9B;&#x7535;&#x7684;&#x8BDD;&#xFF0C;&#x5219;&#x5728;&#x6B64;&#x521D;&#x5316;&#x59CB;&#x5316;&#xFF0C;<em>&quot;qcom,gpio-vana&quot;&#x3001;&quot;qcom,gpio-vio&quot;&#x3001;&quot;qcom,gpio-vaf&quot;&#x3001;&quot;qcom,gpio-vdig&quot;&#x3001;&quot;qcom,gpio-reset&quot;&#x3001;&quot;qcom,gpio-standby&quot;&#x3001;&quot;qcom,gpio-flash-en&quot;</em></li>
+<li>&#x89E3;&#x6790;<em>I2C master</em> &#xFF0C;<em>&quot;qcom,cci-master = <0>;&quot;</0></em></li>
+<li>&#x89E3;&#x6790;&#x6444;&#x50CF;&#x5934;&#x65CB;&#x8F6C;&#x89D2;&#x5EA6;&quot;<em>qcom,mount-angle&quot;</em>&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x914D;&#x7F6E;&#x9ED8;&#x8BA4;&#x8BBE;&#x7F6E;&#x4E3A;0</li>
+<li>&#x89E3;&#x6790;<em>sensor</em> &#x524D;&#x540E;&#x6444;&quot;<em>qcom,sensor-position&quot;</em></li>
+<li>&#x89E3;&#x6790;<em>&quot;qcom,sensor-mode&quot;</em></li>
+</ol>
+<pre><code class="lang-c">\kernel\msm-4.4\drivers\media\platform\msm\camera_v2\sensor\msm_sensor_driver.c
+
+static int32_t msm_sensor_driver_get_dt_data(struct msm_sensor_ctrl_t *s_ctrl)
+{
+    int32_t                              rc = 0, i = 0;
+    struct msm_camera_sensor_board_info *sensordata = NULL;
+    struct device_node                  *of_node = s_ctrl-&gt;of_node;
+    uint32_t    cell_id;
+
+    // 1. &#x521D;&#x59CB;&#x5316; msm_camera_sensor_board_info &#x7ED3;&#x6784;&#x4F53;&#x5E76;&#x5206;&#x914D;&#x5BF9;&#x5E94;&#x7684;&#x5185;&#x5B58;
+    s_ctrl-&gt;sensordata = kzalloc(sizeof(*sensordata), GFP_KERNEL);
+    sensordata = s_ctrl-&gt;sensordata;
+
+    // 2. &#x89E3;&#x6790; cell-index = &lt;0&gt;&#xFF0C;&#x4EE5;&#x6B64;&#x4E3A;camera &#x6570;&#x7EC4;&#x8BA1;&#x6570; id
+    /** Read cell index - this cell index will be the camera slot where this camera will be mounted */
+    rc = of_property_read_u32(of_node, &quot;cell-index&quot;, &amp;cell_id);
+    s_ctrl-&gt;id = cell_id;
+
+    // 3. &#x68C0;&#x6D4B;camera id&#x662F;&#x5426;&#x5927;&#x4E8E;&#x7CFB;&#x7EDF;&#x6700;&#x5927;&#x652F;&#x6301;&#x6570;&#x91CF;
+    if (cell_id &gt;= MAX_CAMERAS) {
+        pr_err(&quot;failed: invalid cell_id %d&quot;, cell_id);
+        rc = -EINVAL;
+        goto FREE_SENSOR_DATA;
+    }
+    // 4. &#x5224;&#x65AD;&#x5168;msm_sensor_ctrl &#x5168;&#x5C40;&#x6570;&#x7EC4;&#x4E2D;&#x5F53;&#x524D;id &#x662F;&#x5426;&#x5DF2;&#x7ECF;&#x521D;&#x59CB;&#x5316;
+    /* Check whether g_sctrl is already filled for this cell_id */
+    if (g_sctrl[cell_id]) {
+        pr_err(&quot;failed: sctrl already filled for cell_id %d&quot;, cell_id);
+        rc = -EINVAL;
+        goto FREE_SENSOR_DATA;
+    }
+
+    // 5. &#x89E3;&#x6790;Camera &#x5916;&#x8BBE;&#x4FE1;&#x606F;&#xFF0C;&#x5305;&#x62EC; &quot;qcom,actuator-src&quot;&#x3001;&quot;qcom,ois-src&quot;&#x3001;&quot;qcom,eeprom-src&quot;&#x3001;
+    //             &quot;qcom,led-flash-src&quot;&#x3001;&quot;qcom,csiphy-sd-index&quot;
+    /* Read subdev info */
+    rc = msm_sensor_get_sub_module_index(of_node, &amp;sensordata-&gt;sensor_info);
+    ==================&gt;
+    +    //@\kernel\msm-4.4\drivers\media\platform\msm\camera_v2\sensor\io\msm_camera_dt_util.c
+    +    int msm_sensor_get_sub_module_index(struct device_node *of_node, struct  msm_sensor_info_t **s_info)
+    +    {
+    +        struct msm_sensor_info_t *sensor_info;
+    +        sensor_info = kzalloc(sizeof(*sensor_info), GFP_KERNEL);
+    +        
+    +        for (i = 0; i &lt; SUB_MODULE_MAX; i++) {
+    +            sensor_info-&gt;subdev_id[i] = -1; /* Subdev expose additional interface for same sub module*/
+    +            sensor_info-&gt;subdev_intf[i] = -1;
+    +        }
+    +        src_node = of_parse_phandle(of_node, &quot;qcom,actuator-src&quot;, 0);
+    +        sensor_info-&gt;subdev_id[SUB_MODULE_ACTUATOR] = val;
+    +        
+    +        src_node = of_parse_phandle(of_node, &quot;qcom,ois-src&quot;, 0);
+    +        sensor_info-&gt;subdev_id[SUB_MODULE_OIS] = val;
+    +        
+    +        src_node = of_parse_phandle(of_node, &quot;qcom,eeprom-src&quot;, 0);
+    +        sensor_info-&gt;subdev_id[SUB_MODULE_EEPROM] = val;
+    +    
+    +        src_node = of_parse_phandle(of_node, &quot;qcom,led-flash-src&quot;, 0);
+    +        sensor_info-&gt;subdev_id[SUB_MODULE_LED_FLASH] = val;
+    +        
+    +        if (of_get_property(of_node, &quot;qcom,csiphy-sd-index&quot;, &amp;count)) {
+    +            count /= sizeof(uint32_t);
+    +            val_array = kzalloc(sizeof(uint32_t) * count, GFP_KERNEL);
+    +            rc = of_property_read_u32_array(of_node, &quot;qcom,csiphy-sd-index&quot;, val_array, count);
+    +            for (i = 0; i &lt; count; i++) {
+    +                sensor_info-&gt;subdev_id[SUB_MODULE_CSIPHY + i] = val_array[i];
+    +                CDBG(&quot;%s csiphy_core[%d] = %d\n&quot;, __func__, i, val_array[i]);
+    +            }
+    +        //.... &#x7701;&#x7565;&#x4E00;&#x90E8;&#x5206;&#x89E3;&#x6790;&#x4EE3;&#x7801;
+    &lt;==================
+
+    // 6. &#x89E3;&#x6790;Camera &#x7535;&#x538B;&#x914D;&#x7F6E;&#xFF0C; qcom,cam-vreg-name = &quot;cam_vio&quot;, &quot;cam_vana&quot;, &quot;cam_vdig&quot;, &quot;cam_vaf&quot;;
+    /* Read vreg information */
+    rc = msm_camera_get_dt_vreg_data(of_node, &amp;sensordata-&gt;power_info.cam_vreg, &amp;sensordata-&gt;power_info.num_vreg);
+    ==================&gt;
+    +    //@\kernel\msm-4.4\drivers\media\platform\msm\camera_v2\sensor\io\msm_camera_dt_util.c
+    +    int msm_camera_get_dt_vreg_data(struct device_node *of_node, struct camera_vreg_t **cam_vreg, int *num_vreg)
+    +    {
+    +        count = of_property_count_strings(of_node, &quot;qcom,cam-vreg-name&quot;);
+    +        CDBG(&quot;%s qcom,cam-vreg-name count %d\n&quot;, __func__, count);
+    +        vreg = kzalloc(sizeof(*vreg) * count, GFP_KERNEL);
+    +        *cam_vreg = vreg;
+    +        *num_vreg = count;
+    +        for (i = 0; i &lt; count; i++) {
+    +            rc = of_property_read_string_index(of_node, &quot;qcom,cam-vreg-name&quot;, i, &amp;vreg[i].reg_name);
+    +            CDBG(&quot;%s reg_name[%d] = %s\n&quot;, __func__, i,vreg[i].reg_name);
+    +        }
+    +        //.... &#x7701;&#x7565;&#x4E00;&#x90E8;&#x5206;&#x89E3;&#x6790;&#x4EE3;&#x7801;
+    +    }
+    &lt;==================
+
+    // 7. &#x89E3;&#x6790;Camera GPIO&#x914D;&#x7F6E;
+    /* Read gpio information */
+    rc = msm_sensor_driver_get_gpio_data(&amp;(sensordata-&gt;power_info.gpio_conf), of_node);
+    ==================&gt;
+    +    //@\kernel\msm-4.4\drivers\media\platform\msm\camera_v2\sensor\io\msm_camera_dt_util.c
+    +    int32_t msm_sensor_driver_get_gpio_data(struct msm_camera_gpio_conf **gpio_conf, struct device_node *of_node)
+    +    {
+    +        uint16_t                    *gpio_array = NULL;
+    +        struct msm_camera_gpio_conf *gconf = NULL;
+    +        gpio_array_size = of_gpio_count(of_node);
+    +        gconf = kzalloc(sizeof(struct msm_camera_gpio_conf),
+    +        *gpio_conf = gconf;
+    +    
+    +        // &#x89E3;&#x6790; &quot;qcom,gpio-req-tbl-num&quot;&#x3001;&quot;qcom,gpio-req-tbl-flags&quot;&#x3001;&quot;qcom,gpio-req-tbl-label&quot;
+    +        rc = msm_camera_get_dt_gpio_req_tbl(of_node, gconf, gpio_array, gpio_array_size);
+    +        ============&gt;
+    +        +    of_get_property(of_node, &quot;qcom,gpio-req-tbl-num&quot;, &amp;count)
+    +        +    rc = of_property_read_u32_array(of_node, &quot;qcom,gpio-req-tbl-num&quot;, val_array, count);
+    +        +    rc = of_property_read_u32_array(of_node, &quot;qcom,gpio-req-tbl-flags&quot;, val_array, count);
+    +        +    for (i = 0; i &lt; count; i++) {
+    +        +        rc = of_property_read_string_index(of_node,&quot;qcom,gpio-req-tbl-label&quot;, i,&amp;gconf-&gt;cam_gpio_req_tbl[i].label);
+    +        +        CDBG(&quot;%s cam_gpio_req_tbl[%d].label = %s\n&quot;, __func__, i,gconf-&gt;cam_gpio_req_tbl[i].label);
+    +        +    }
+    +        &lt;===========
+    +        +    &#x5982;&#x679C;&#x914D;&#x7F6E;&#x4E86;&#x4F7F;&#x7528;gpio &#x4F9B;&#x7535;&#x7684;&#x8BDD;&#xFF0C;&#x5219;&#x5728;&#x6B64;&#x521D;&#x5316;&#x59CB;&#x5316;&#xFF0C; &quot;qcom,gpio-vana&quot;&#x3001;&quot;qcom,gpio-vio&quot;&#x3001;&quot;qcom,gpio-vaf&quot;&#x3001;&quot;qcom,gpio-vdig&quot;&#x3001;&quot;qcom,gpio-reset&quot;&#x3001;&quot;qcom,gpio-standby&quot;&#x3001;&quot;qcom,gpio-flash-en&quot;
+    +        rc = msm_camera_init_gpio_pin_tbl(of_node, gconf, gpio_array,gpio_array_size);
+    +        ============&gt;
+    +            rc = of_property_read_u32(of_node, &quot;qcom,gpio-vana&quot;, &amp;val);
+    +            gconf-&gt;gpio_num_info-&gt;gpio_num[SENSOR_GPIO_VANA] = gpio_array[val];
+    +            rc = of_property_read_u32(of_node, &quot;qcom,gpio-vio&quot;, &amp;val);
+    +            gconf-&gt;gpio_num_info-&gt;gpio_num[SENSOR_GPIO_VIO] = gpio_array[val];
+    +            rc = of_property_read_u32(of_node, &quot;qcom,gpio-vaf&quot;, &amp;val);
+    +            gconf-&gt;gpio_num_info-&gt;gpio_num[SENSOR_GPIO_VAF] = gpio_array[val];
+    +            rc = of_property_read_u32(of_node, &quot;qcom,gpio-vdig&quot;, &amp;val);
+    +            gconf-&gt;gpio_num_info-&gt;gpio_num[SENSOR_GPIO_VDIG] = gpio_array[val];
+    +            rc = of_property_read_u32(of_node, &quot;qcom,gpio-reset&quot;, &amp;val);
+    +            gconf-&gt;gpio_num_info-&gt;gpio_num[SENSOR_GPIO_RESET] = gpio_array[val];
+    +            rc = of_property_read_u32(of_node, &quot;qcom,gpio-standby&quot;, &amp;val);
+    +            gconf-&gt;gpio_num_info-&gt;gpio_num[SENSOR_GPIO_STANDBY] =gpio_array[val];
+    +            rc = of_property_read_u32(of_node, &quot;qcom,gpio-af-pwdm&quot;, &amp;val);
+    +            gconf-&gt;gpio_num_info-&gt;gpio_num[SENSOR_GPIO_AF_PWDM] = gpio_array[val];
+    +            rc = of_property_read_u32(of_node, &quot;qcom,gpio-flash-en&quot;, &amp;val);
+    +            gconf-&gt;gpio_num_info-&gt;gpio_num[SENSOR_GPIO_FL_EN] = gpio_array[val];
+    +            //.... &#x7701;&#x7565;&#x4E00;&#x90E8;&#x5206;&#x89E3;&#x6790;&#x4EE3;&#x7801;
+    +        &lt;===========
+    +    }
+    &lt;==================
+
+    // 8. &#x89E3;&#x6790;I2C master &#xFF0C;&quot;qcom,cci-master = &lt;0&gt;;&quot;
+    /* Get CCI master */
+    rc = of_property_read_u32(of_node, &quot;qcom,cci-master&quot;, &amp;s_ctrl-&gt;cci_i2c_master);
+    CDBG(&quot;qcom,cci-master %d, rc %d&quot;, s_ctrl-&gt;cci_i2c_master, rc);
+
+    // 9. &#x89E3;&#x6790;&#x6444;&#x50CF;&#x5934;&#x65CB;&#x8F6C;&#x89D2;&#x5EA6;&quot;qcom,mount-angle&quot;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x914D;&#x7F6E;&#x9ED8;&#x8BA4;&#x8BBE;&#x7F6E;&#x4E3A;0
+    /* Get mount angle */
+    if (0 &gt; of_property_read_u32(of_node, &quot;qcom,mount-angle&quot;, &amp;sensordata-&gt;sensor_info-&gt;sensor_mount_angle)) {
+        /* Invalidate mount angle flag */
+        sensordata-&gt;sensor_info-&gt;is_mount_angle_valid = 0;
+        sensordata-&gt;sensor_info-&gt;sensor_mount_angle = 0;
+    } else {
+        sensordata-&gt;sensor_info-&gt;is_mount_angle_valid = 1;
+    }
+    CDBG(&quot;%s qcom,mount-angle %d\n&quot;, __func__,sensordata-&gt;sensor_info-&gt;sensor_mount_angle);
+
+    // 10. &#x89E3;&#x6790;sensor &#x524D;&#x540E;&#x6444;&quot;qcom,sensor-position&quot;
+    if (0 &gt; of_property_read_u32(of_node, &quot;qcom,sensor-position&quot;,&amp;sensordata-&gt;sensor_info-&gt;position)) {
+        CDBG(&quot;%s:%d Invalid sensor position\n&quot;, __func__, __LINE__);
+        sensordata-&gt;sensor_info-&gt;position = INVALID_CAMERA_B;
+    }
+    // 11. &#x89E3;&#x6790;sensor-mode
+    if (0 &gt; of_property_read_u32(of_node, &quot;qcom,sensor-mode&quot;,
+        &amp;sensordata-&gt;sensor_info-&gt;modes_supported)) {
+        CDBG(&quot;%s:%d Invalid sensor mode supported\n&quot;, __func__, __LINE__);
+        sensordata-&gt;sensor_info-&gt;modes_supported = CAMERA_MODE_INVALID;
+    }
+    /* Get vdd-cx regulator */
+    /*Optional property, don&apos;t return error if absent */
+    of_property_read_string(of_node, &quot;qcom,vdd-cx-name&quot;,&amp;sensordata-&gt;misc_regulator);
+    CDBG(&quot;qcom,misc_regulator %s&quot;, sensordata-&gt;misc_regulator);
+
+    s_ctrl-&gt;set_mclk_23880000 = of_property_read_bool(of_node,&quot;qcom,mclk-23880000&quot;);
+    CDBG(&quot;%s qcom,mclk-23880000 = %d\n&quot;, __func__,s_ctrl-&gt;set_mclk_23880000);
+    return rc;
+}
+</code></pre>
+<h4 id="221-msmcamerasensorboardinfo-&#x7ED3;&#x6784;&#x4F53;&#x63CF;&#x8FF0;">2.2.1 msm_camera_sensor_board_info &#x7ED3;&#x6784;&#x4F53;&#x63CF;&#x8FF0;</h4>
+<p>&#x5728;<em>msm_camera_sensor_board_info</em> &#x4E2D;&#x4FDD;&#x5B58;&#x4E86;&#x6240;&#x6709;<em>camera</em> &#x53CA;&#x786C;&#x4EF6;&#x76F8;&#x5173;&#x7684;<em>name</em>&#x53CA;&#x53C2;&#x6570;&#x3002;</p>
+<pre><code class="lang-c">\kernel\msm<span class="hljs-number">-4.4</span>\include\soc\qcom\camera2.h
+<span class="hljs-keyword">struct</span> msm_camera_sensor_board_info {
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *sensor_name;        <span class="hljs-comment">// camera sensor name</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *eeprom_name;        <span class="hljs-comment">// eeprom name</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *actuator_name;        <span class="hljs-comment">// actuator name</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *ois_name;            <span class="hljs-comment">// ois name</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *flash_name;            <span class="hljs-comment">// flashlight name</span>
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *special_support_sensors[MAX_SPECIAL_SUPPORT_SIZE];
+    <span class="hljs-keyword">int32_t</span> special_support_size;
+    <span class="hljs-keyword">struct</span> msm_camera_slave_info *slave_info;    <span class="hljs-comment">// i2c addr</span>
+    <span class="hljs-keyword">struct</span> msm_camera_csi_lane_params *csi_lane_params;
+    <span class="hljs-keyword">struct</span> msm_camera_sensor_strobe_flash_data *strobe_flash_data;    
+    <span class="hljs-keyword">struct</span> msm_actuator_info *actuator_info;
+    <span class="hljs-keyword">struct</span> <span class="hljs-keyword">msm_sensor_info_t</span> *sensor_info;
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *misc_regulator;
+    <span class="hljs-keyword">struct</span> <span class="hljs-keyword">msm_camera_power_ctrl_t</span> power_info;
+    <span class="hljs-keyword">struct</span> msm_camera_sensor_slave_info *cam_slave_info;
+};
+</code></pre>
+<h4 id="222-camera-&#x652F;&#x6301;&#x7684;&#x5916;&#x8BBE;&#x7C7B;&#x578B;-sensorsubmodulet">2.2.2 Camera &#x652F;&#x6301;&#x7684;&#x5916;&#x8BBE;&#x7C7B;&#x578B; sensor_sub_module_t</h4>
+<pre><code class="lang-c">\kernel\msm<span class="hljs-number">-4.4</span>\include\uapi\media\msm_cam_sensor.h
+<span class="hljs-keyword">enum</span> <span class="hljs-keyword">sensor_sub_module_t</span> {
+    SUB_MODULE_SENSOR,
+    SUB_MODULE_CHROMATIX,
+    SUB_MODULE_ACTUATOR,
+    SUB_MODULE_EEPROM,
+    SUB_MODULE_LED_FLASH,
+    SUB_MODULE_STROBE_FLASH,
+    SUB_MODULE_CSID,
+    SUB_MODULE_CSID_3D,
+    SUB_MODULE_CSIPHY,
+    SUB_MODULE_CSIPHY_3D,
+    SUB_MODULE_OIS,
+    SUB_MODULE_EXT,
+    SUB_MODULE_IR_LED,
+    SUB_MODULE_IR_CUT,
+    SUB_MODULE_MAX,
+};
+</code></pre>
+<h3 id="23-&#x3010;&#x91CD;&#x70B9;&#x3011;&#x5168;&#x5C40;camerasensorctrol&#x6570;&#x7EC4;gsctrl">2.3 &#x3010;&#x91CD;&#x70B9;&#x3011;&#x5168;&#x5C40;CameraSensorCtrol&#x6570;&#x7EC4;g_sctrl</h3>
+<p><em>g_sctrl</em> &#x662F;&#x9759;&#x6001;&#x5168;&#x5C40;&#x7684;&#x4E00;&#x4E2A;<em>msm_sensor_ctrl_t</em> * &#x7ED3;&#x6784;&#x4F53;&#x6307;&#x9488;&#x6570;&#x7EC4;&#xFF0C;&#x5176;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-comment">/* Static declaration */</span>
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">struct</span> <span class="hljs-keyword">msm_sensor_ctrl_t</span> *g_sctrl[MAX_CAMERAS];
+</code></pre>
+<p>&#x524D;&#x9762;&#x6211;&#x4EEC;&#x5728;&#x914D;&#x7F6E;<em>dts</em> &#x65F6;&#x4E5F;&#x53D1;&#x73B0;&#x4E86;&#xFF0C;&#x901A;&#x5E38;&#x6211;&#x4EEC;&#x8981;&#x914D;&#x7F6E;&#x7684;<em>camera</em>&#x6570;&#x91CF;&#x662F;&#x5927;&#x4E8E;1&#x7684;&#xFF0C;&#x524D;&#x9762;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x914D;&#x7F6E;&#x4E86;3&#x4E2A;<em>Camera</em>&#xFF0C;&#x4E24;&#x4E2A;&#x540E;&#x6444;&#xFF0C;&#x4E00;&#x4E2A;&#x524D;&#x6444;&#x3002;&#x800C;&#x8FD9;&#x4E09;&#x4E2A;<em>camera</em> <em>dts</em> &#x4E2D;&#x7684;&#x8282;&#x70B9;&#x90FD;&#x662F;&#x4E00;&#x6837;&#x7684;<em>&quot;qcom,camera&quot;&#x3002;</em>
+&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x9A71;&#x52A8;&#x548C;&#x8BBE;&#x5907;&#x4F1A;&#x5339;&#x914D;&#x4E09;&#x6B21;&#xFF0C;&#x6362;&#x53E5;&#x8BDD;&#x8BF4;&#xFF0C;&#x4E5F;&#x5C31;&#x662F; <code>msm_sensor_driver_platform_probe()</code>&#x51FD;&#x6570;&#x4F1A;&#x8D70;&#x4E09;&#x6B21;&#xFF0C;&#x6BCF;&#x6B21;&#x4F20;&#x9012;&#x7684;<em>dts</em>&#x8282;&#x70B9;&#x5185;&#x5BB9;&#x662F;&#x4E0D;&#x4E00;&#x6837;&#x7684;&#xFF0C;&#x4E09;&#x4E2A;<em>camera</em>&#x90FD;&#x4F1A;&#x4F9D;&#x6B21;<em>probe</em> &#x4E00;&#x6B21;&#xFF0C;
+&#x4ECE;&#x800C;&#xFF0C;&#x5F53;<em>probe</em> &#x5B8C;&#x6BD5;&#x540E;&#xFF0C;&#x4F1A;&#x4FDD;&#x5B58;&#x4E09;&#x4E2A;<code>struct msm_sensor_ctrl_t *</code>&#x7ED3;&#x6784;&#x4F53;&#x7684;&#x6570;&#x636E;&#x4FDD;&#x5B58;&#x5728;&#x5168;&#x5C40; <em>g_sctrl</em> &#x4E2D;&#x3002;</p>
+<p>&#x81F3;&#x6B64;&#xFF0C;&#x6211;&#x4EEC;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x5C31;&#x628A;<em>dts</em> &#x7684;&#x5185;&#x5BB9;&#x6210;&#x529F;&#x7684;&#x8F6C;&#x5316;&#x4E3A;&#x4E86;<code>msm_sensor_ctrl_t</code>&#x7ED3;&#x6784;&#x4F53;&#x4FDD;&#x5B58;&#x5728; &#x5168;&#x5C40; <em>g_sctrl</em> &#x4E2D;&#x3002;</p>
+<h3 id="24-&#x3010;&#x91CD;&#x70B9;&#x3011;&#x6444;&#x50CF;&#x5934;probe-&#x51FD;&#x6570;-msmsensordriverprobe">2.4 &#x3010;&#x91CD;&#x70B9;&#x3011;&#x6444;&#x50CF;&#x5934;probe &#x51FD;&#x6570; msm_sensor_driver_probe()</h3>
+<p>3.1 &#x4E2D;&#x6211;&#x4EEC;&#x5206;&#x6790;&#x8FC7;&#x4E86; &#x5E73;&#x53F0;&#x9A71;&#x52A8;probe&#x51FD;&#x6570; <code>msm_sensor_driver_platform_probe()</code>&#xFF0C;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x4E3B;&#x8981;&#x4F5C;&#x7528;&#x8FD8;&#x662F;&#x89E3;&#x6790;<em>DTS</em>&#xFF0C;&#x4F46;&#x5E76;&#x4E0D;&#x4F1A;&#x771F;&#x6B63;<em>probe camera sensor</em>&#x3002;&#x90A3;&#xFF0C;<em>camera sensor probe</em> &#x662F;&#x5728;&#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x5462;&#xFF1F;</p>
+<p>&#x5176;&#x5B9E;&#xFF0C;<em>camera probe</em> &#x5E76;&#x4E0D;&#x662F;&#x548C;&#x5176;&#x4ED6;<em>kernerl</em> &#x9A71;&#x52A8;&#x4E00;&#x6837;&#xFF0C;&#x5728;&#x521D;&#x59CB;&#x5316;&#x65F6;&#x5C31;<em>probe</em>&#xFF0C;&#x800C;&#x662F;&#x901A;&#x8FC7;<em>hal</em> &#x5C42;&#x4E0B;&#x53D1; <em>probe</em> &#x6307;&#x4EE4;&#x6765;&#x63A7;&#x5236;<em>probe</em> &#x7684;&#x3002;</p>
+<h4 id="241-hal&#x5C42;&#x51FD;&#x6570;-modulesensorinit">2.4.1 hal&#x5C42;&#x51FD;&#x6570; module_sensor_init()</h4>
+<p>hal&#x5C42;&#x4EE3;&#x7801;&#x4F4D;&#x4E8E; <em>\vendor\qcom\proprietary\mm-camera\mm-camera2\media-controller\modules\sensors\module\module_sensor.c</em></p>
+<pre><code class="lang-c">\vendor\qcom\proprietary\mm-camera\mm-camera2\media-controller\modules\sensors\module\module_sensor.<span class="hljs-function">c
+mct_module_t *<span class="hljs-title">module_sensor_init</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *name)</span>
+</span>{
+    ......
+    <span class="hljs-comment">/* module_sensor_probe_sensors */</span>
+     ret = sensor_init_probe(module_ctrl);
+
+    <span class="hljs-comment">/* find all the actuator, etc with sensor */</span>
+      ret = module_sensor_find_other_subdev(module_ctrl);
+
+    <span class="hljs-comment">/* Init sensor modules */</span>
+      ret = mct_list_traverse(module_ctrl-&gt;sensor_bundle, module_sensors_subinit,<span class="hljs-literal">NULL</span>);
+
+    <span class="hljs-comment">/* intiialize the eeprom */</span>
+      ret = mct_list_traverse(module_ctrl-&gt;sensor_bundle, module_sensor_init_eeprom,module_ctrl-&gt;eebin_hdl);
+
+    <span class="hljs-comment">/* Create chromatix manager */</span>
+      ret = mct_list_traverse(module_ctrl-&gt;sensor_bundle, module_sensor_init_chromatix, module_ctrl-&gt;eebin_hdl);
+
+    <span class="hljs-comment">/* Initialize dual cam stream mutex */</span>
+      pthread_mutex_init(&amp;module_ctrl-&gt;dual_cam_mutex, <span class="hljs-literal">NULL</span>);
+ }
+</code></pre>
+<h4 id="242-hal&#x5C42;&#x51FD;&#x6570;-sensorinitprobe">2.4.2 hal&#x5C42;&#x51FD;&#x6570; sensor_init_probe()</h4>
+<p>&#x4E0A;&#x5C42;&#x4EE3;&#x7801;&#x903B;&#x8F91;&#x6211;&#x4EEC;&#x540E;&#x7EED;&#x4F1A;&#x8BE6;&#x7EC6;&#x5206;&#x6790;&#xFF0C;&#x5E76;&#x4E0D;&#x662F;&#x6211;&#x4EEC;&#x672C;&#x7AE0;&#x7684;&#x91CD;&#x70B9;&#xFF0C;&#x6211;&#x4EEC;&#x91CD;&#x70B9;&#x5173;&#x6CE8;<code>sensor_init_probe()</code>&#xFF0C;&#x5176;&#x5185;&#x5BB9;&#x5982;&#x4E0B;:</p>
+<p>&#x5728; <code>sensor_init_eebin_probe()</code>&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x77E5;&#x9053;<em>camera</em> &#x6570;&#x91CF;&#x540E;&#xFF0C;&#x5728;<em>for</em>&#x5FAA;&#x73AF;&#x4E2D;&#xFF0C;&#x4F9D;&#x6B21;&#x8C03;&#x7528; <code>sensor_probe()</code>&#x51FD;&#x6570;&#x521D;&#x59CB;&#x5316;&#x6BCF;&#x4E2A;<em>camera</em>&#xFF0C;&#x6211;&#x4EEC;&#x5F53;&#x524D;&#x4EE3;&#x7801;&#x4E2D;&#x6709;&#x4E09;&#x4E2A;<em>camera</em>&#xFF0C;&#x8FD9;&#x9762;&#x5C31;&#x4F1A;&#x8C03;&#x7528;&#x4E09;&#x6B21;<code>sensor_probe()</code>&#x3002;
+&#x81F3;&#x4E8E; <em>hal</em> &#x5C42;&#x4E2D;&#x53C8;&#x662F;&#x5982;&#x4F55;&#x77E5;&#x9053;&#x6211;&#x4EEC;&#x662F;&#x4E09;&#x4E2A;<em>camera</em>&#x7684;&#xFF0C;&#x540E;&#x7EED;&#x6211;&#x4EEC;&#x5206;&#x6790;&#x5230;<em>hal</em> &#x5C42;&#x518D;&#x8BF4;&#x5427;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-comment">/** sensor_init_probe: probe available sensors
+ *
+ *  @module_ctrl: sensor ctrl pointer
+ *
+ *  Return: 0 for success and negative error on failure
+ *
+ *  1) Find sensor_init subdev and it
+ *  2) Open EEPROM subdev and check whether any sensor library
+ *  is present in EEPROM
+ *  3) Open sensor libraries present in dumped firware location
+ *  4) Check library version of EEPROM and dumped firmware
+ *  5) Load latest of both
+ *  6) Pass slave information, power up and probe sensors
+ *  7) If probe succeeds, create video node and sensor subdev
+ *  8) Repeat step 2-8 for all sensor libraries present in
+ *  EEPROM
+ *  9) Repeat step 6-8 for all sensor libraries present in
+ *  absolute path
+ **/</span>
+
+<span class="hljs-function">boolean <span class="hljs-title">sensor_init_probe</span><span class="hljs-params">(module_sensor_ctrl_t *module_ctrl)</span>
+</span>{
+    ......
+     ret = sensor_init_eebin_probe(module_ctrl, sd_fd);
+    ......
+    RETURN_ON_FALSE(sensor_init_xml_probe(module_ctrl, sd_fd));
+}
+
+<span class="hljs-function"><span class="hljs-keyword">static</span> boolean <span class="hljs-title">sensor_init_eebin_probe</span><span class="hljs-params">(module_sensor_ctrl_t *module_ctrl,int32_t sd_fd)</span>
+</span>{
+    SLOW(<span class="hljs-string">&quot;Enter&quot;</span>);
+    bin_ctl.cmd = EEPROM_BIN_GET_NUM_DEV;
+      bin_ctl.ctl.q_num.type = EEPROM_BIN_LIB_SENSOR;
+      bin_ctl.ctl.q_num.num_devs = <span class="hljs-number">0</span>;
+      eebin_interface_control(module_ctrl-&gt;eebin_hdl, &amp;bin_ctl);
+
+     num_devs = bin_ctl.ctl.q_num.num_devs;
+
+      SLOW(<span class="hljs-string">&quot;num_devs:%d&quot;</span>, num_devs);
+
+      <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; num_devs; i++ ) {
+        bin_ctl.cmd = EEPROM_BIN_GET_DEV_DATA;
+        bin_ctl.ctl.dev_data.type = EEPROM_BIN_LIB_SENSOR;
+        bin_ctl.ctl.dev_data.num = i;
+        rc = eebin_interface_control(module_ctrl-&gt;eebin_hdl, &amp;bin_ctl);
+        <span class="hljs-keyword">if</span> (rc &lt; <span class="hljs-number">0</span>)
+              <span class="hljs-keyword">continue</span>;
+        ret = sensor_probe(module_ctrl,
+                       sd_fd,
+                       bin_ctl.ctl.dev_data.name,
+                       bin_ctl.ctl.dev_data.path,
+                       <span class="hljs-literal">NULL</span>,
+                       FALSE,
+                       FALSE);
+
+        <span class="hljs-keyword">if</span> (ret == FALSE) {
+              SINFO(<span class="hljs-string">&quot;failed: to load %s&quot;</span>, bin_ctl.ctl.dev_data.name);
+        }
+  }
+
+  SLOW(<span class="hljs-string">&quot;Exit&quot;</span>);
+  <span class="hljs-keyword">return</span> TRUE;
+}
+</code></pre>
+<p>&#x867D;&#x7136;&#x524D;&#x9762;&#x4E5F;&#x6709; <em>sensor_probe</em>,&#x4F46;&#x6B63;&#x5E38;&#x6D41;&#x7A0B;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x8D70;&#x7684;&#x4E0D;&#x662F;<em>eebin</em>,&#x800C;&#x662F;&#x901A;&#x8FC7; <code>sensor_init_xml_probe(module_ctrl, sd_fd)</code> &#x6765;&#x89E3;&#x6790;
+<em>vendor/qcom/proprietary/mm-camera/mm-camera2/media-controller/modules/sensors/configs/sdm660_camera.xml</em> &#x6587;&#x4EF6;&#xFF0C;
+&#x901A;&#x8FC7; <em>xml</em> &#x4E2D; &#x914D;&#x7F6E;&#x7684;<em>sensor name</em> &#x548C; <em>subdev name</em>&#xFF0C;&#x6765;&#x4E0B;&#x53D1;&#x53C2;&#x6570;&#x3002;</p>
+<p>&#x8BE6;&#x7EC6;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol>
+<li>&#x9996;&#x5148;&#x62FC;&#x51D1; sdm660_camera.xml &#x7684;&#x5B57;&#x7B26;&#x4E32;&#x8DEF;&#x5F84;</li>
+<li>odm &#x516C;&#x53F8;&#x5982;&#x679C;&#x8981;&#x81EA;&#x5DF2;&#x5B9A;&#x5236;&#x8DEF;&#x5F84;&#x7684;&#x8BDD;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; &#x5C5E;&#x6027; persist.vendor.camera.customer.config &#x6765;&#x914D;&#x7F6E;</li>
+<li>&#x5F00;&#x59CB;&#x89E3;&#x6790; sdm660_camera.xml&#x6587;&#x4EF6;&#x4E2D;&#x7684; CameraConfigurationRoot &#x8282;&#x70B9;</li>
+<li>&#x901A;&#x8FC7; CameraModuleConfig &#x7684;&#x6570;&#x91CF;&#x53EF;&#x4EE5;&#x77E5;&#x9053; &#xFF0C;&#x5F53;&#x524D;&#x652F;&#x6301;&#x591A;&#x5C11;&#x4E2A;camera</li>
+<li>&#x89E3;&#x6790;&#x6BCF;&#x4E2A;camera &#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x5E76;&#x4E14;&#x5728; sensor_probe[]&#x6570;&#x7EC4;&#x4E2D;&#x68C0;&#x67E5;&#x5F53;&#x524D;sensor &#x662F;&#x5426;&#x5DF2;&#x7ECF;probe &#x8FC7;&#x4E86;</li>
+<li>&#x6839;&#x636E;xml &#x4E2D;&#x89E3;&#x6790;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x8C03;&#x7528; sensor_probe &#x5F00;&#x59CB;&#x6B63;&#x5F0F;probe</li>
+<li>&#x5F53;&#x6240;&#x6709;xml &#x4E2D;&#x7684;&#x9879;&#x90FD;&#x904D;&#x5386;&#x5B8C;&#x6210;&#x540E;&#xFF0C;&#x5173;&#x95ED;xml</li>
+</ol>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">static</span> boolean <span class="hljs-title">sensor_init_xml_probe</span><span class="hljs-params">(module_sensor_ctrl_t *module_ctrl, int32_t sd_fd)</span>
+</span>{
+    <span class="hljs-comment">// &#x9996;&#x5148;&#x62FC;&#x51D1; sdm660_camera.xml &#x7684;&#x5B57;&#x7B26;&#x4E32;&#x8DEF;&#x5F84;</span>
+  <span class="hljs-comment">/* Create the xml path from data partition */</span>
+  <span class="hljs-built_in">snprintf</span>(config_xml_name, BUFF_SIZE_255, <span class="hljs-string">&quot;%s%s&quot;</span>, CONFIG_XML_PATH, CONFIG_XML);
+    <span class="hljs-comment">// odm &#x516C;&#x53F8;&#x5982;&#x679C;&#x8981;&#x81EA;&#x5DF2;&#x5B9A;&#x5236;&#x8DEF;&#x5F84;&#x7684;&#x8BDD;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7; &#x5C5E;&#x6027; persist.vendor.camera.customer.config &#x6765;&#x914D;&#x7F6E;</span>
+  <span class="hljs-keyword">if</span> (access(config_xml_name, R_OK)) {
+    SHIGH(<span class="hljs-string">&quot; read fail (non-fatal) %s. Trying from system partition&quot;</span>,config_xml_name);
+
+    <span class="hljs-keyword">if</span> (csidtg_enable) {
+      <span class="hljs-comment">/* Create the CSIDTG xml path from system partition */</span>
+      <span class="hljs-built_in">snprintf</span>(config_xml_name, BUFF_SIZE_255, <span class="hljs-string">&quot;%s%s&quot;</span>, CONFIG_XML_SYSTEM_PATH, CSIDTG_CONFIG_XML);
+    } <span class="hljs-keyword">else</span> {
+      property_get(<span class="hljs-string">&quot;persist.vendor.camera.customer.config&quot;</span>, custom_xml_name, CONFIG_XML);
+      <span class="hljs-comment">/* Create the xml path from system partition */</span>
+      <span class="hljs-built_in">snprintf</span>(config_xml_name, BUFF_SIZE_255, <span class="hljs-string">&quot;%s%s&quot;</span>,
+        CONFIG_XML_SYSTEM_PATH, custom_xml_name);
+    }
+  }
+
+  SHIGH(<span class="hljs-string">&quot;reading from file %s&quot;</span>, config_xml_name);
+
+    <span class="hljs-comment">// &#x5F00;&#x59CB;&#x89E3;&#x6790; sdm660_camera.xml&#x6587;&#x4EF6;&#x4E2D;&#x7684; CameraConfigurationRoot &#x8282;&#x70B9;</span>
+  <span class="hljs-comment">/* Get the Root pointer and Document pointer of XMl file */</span>
+  ret = sensor_xml_util_load_file(config_xml_name, &amp;docPtr, &amp;rootPtr, <span class="hljs-string">&quot;CameraConfigurationRoot&quot;</span>);
+    <span class="hljs-comment">// &#x901A;&#x8FC7; CameraModuleConfig &#x7684;&#x6570;&#x91CF;&#x53EF;&#x4EE5;&#x77E5;&#x9053; &#xFF0C;&#x5F53;&#x524D;&#x652F;&#x6301;&#x591A;&#x5C11;&#x4E2A;camera</span>
+  <span class="hljs-comment">/* Get number of camera module configurations */</span>
+  num_cam_config = sensor_xml_util_get_num_nodes(rootPtr, <span class="hljs-string">&quot;CameraModuleConfig&quot;</span>);
+  SLOW(<span class="hljs-string">&quot;num_cam_config = %d&quot;</span>, num_cam_config);
+
+
+  xmlConfig.docPtr = docPtr;
+  xmlConfig.configPtr = &amp;camera_cfg;
+
+    <span class="hljs-comment">// &#x89E3;&#x6790;&#x6BCF;&#x4E2A;camera &#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x5E76;&#x4E14;&#x5728; sensor_probe[]&#x6570;&#x7EC4;&#x4E2D;&#x68C0;&#x67E5;&#x5F53;&#x524D;sensor &#x662F;&#x5426;&#x5DF2;&#x7ECF;probe &#x8FC7;&#x4E86;</span>
+  <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; num_cam_config; i++) {
+    nodePtr = sensor_xml_util_get_node(rootPtr, <span class="hljs-string">&quot;CameraModuleConfig&quot;</span>, i);
+    RETURN_ON_NULL(nodePtr);
+
+    xmlConfig.nodePtr = nodePtr;
+    ret = sensor_xml_util_get_camera_probe_config(&amp;xmlConfig, <span class="hljs-string">&quot;CameraModuleConfig&quot;</span>);
+    <span class="hljs-keyword">if</span> (slot_probed[camera_cfg.camera_id]) {
+      SHIGH(<span class="hljs-string">&quot;slot %d already probed&quot;</span>, camera_cfg.camera_id);
+      <span class="hljs-keyword">continue</span>;
+    }
+    <span class="hljs-comment">// &#x6839;&#x636E;xml &#x4E2D;&#x89E3;&#x6790;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x8C03;&#x7528; sensor_probe &#x5F00;&#x59CB;&#x6B63;&#x5F0F;probe</span>
+    rc = sensor_probe(module_ctrl,
+                      sd_fd,
+                      camera_cfg.sensor_name,
+                      <span class="hljs-literal">NULL</span>,
+                      &amp;xmlConfig,
+                      FALSE,
+                      FALSE);
+    } <span class="hljs-keyword">else</span> {
+      slot_probed[camera_cfg.camera_id] = TRUE;
+    }
+  }
+    <span class="hljs-comment">// &#x5173;&#x95ED;xml &#x6587;&#x4EF6;</span>
+XML_PROBE_EXIT:
+  sensor_xml_util_unload_file(docPtr);
+  <span class="hljs-keyword">return</span> ret;
+}
+</code></pre>
+<h4 id="243-hal&#x5C42;&#x51FD;&#x6570;-sensorprobe-&#x4E0B;&#x53D1;-cfgsinitprobe">2.4.3 hal&#x5C42;&#x51FD;&#x6570; sensor_probe() &#x4E0B;&#x53D1; CFG_SINIT_PROBE</h4>
+<p>&#x8FDB;&#x5165; <code>sensor_probe()</code>&#x51FD;&#x6570;&#xFF1A;
+&#x5728;&#x51FD;&#x6570;&#x4E2D;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x9996;&#x5148;&#x4F1A;&#x8C03;&#x7528; <code>sensor_load_library()</code>&#x52A0;&#x8F7D;<em>vendor</em> &#x4E2D;<em>camera sensor</em>&#x7684;&#x5E93;&#x6587;&#x4EF6;&#x3002;
+&#x63A5;&#x7740;&#x901A;&#x8FC7; <em>IOCTRL</em> &#x5411;&#x901A;&#x8FC7;&#x4E0B;&#x53D1; <code>CFG_SINIT_PROBE</code>&#x6D88;&#x606F;&#xFF0C;&#x901A;&#x77E5;&#x9A71;&#x52A8;&#x5C42;&#x4F5C;<em>probe</em> &#x521D;&#x59CB;&#x5316;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-comment">/** sensor_probe: probe available sensors
+ *  @fd: sensor_init fd
+ *  @sensor_name: sensor name
+ *  Return: TRUE for success and FALSE for failure
+ *  1) Open sensor library
+ *  2) Pass slave information, probe sensor
+ *  3) If probe succeeds, create video node and sensor subdev is
+ *  created in kernel
+ **/</span>
+<span class="hljs-function"><span class="hljs-keyword">static</span> boolean <span class="hljs-title">sensor_probe</span><span class="hljs-params">(module_sensor_ctrl_t *module_ctrl, int32_t fd, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *sensor_name, <span class="hljs-keyword">char</span> *path, <span class="hljs-keyword">struct</span> xmlCameraConfigInfo *xmlConfig, boolean is_stereo_config, boolean bypass_video_node_creation)</span>
+</span>{
+    <span class="hljs-comment">/* Load sensor library */</span>
+    rc = sensor_load_library(sensor_name, sensor_lib_params, path);
+    ......
+     <span class="hljs-comment">/* Pass slave information to kernel and probe */</span>
+      <span class="hljs-built_in">memset</span>(&amp;cfg, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(cfg));
+      cfg.cfgtype = CFG_SINIT_PROBE;
+      cfg.cfg.setting = slave_info;
+      <span class="hljs-keyword">if</span> (ioctl(fd, VIDIOC_MSM_SENSOR_INIT_CFG, &amp;cfg) &lt; <span class="hljs-number">0</span>) {
+        SINFO(<span class="hljs-string">&quot;[%s]CFG_SINIT_PROBE failed&quot;</span>,sensor_name);
+        ret = FALSE;
+        <span class="hljs-keyword">goto</span> ERROR;
+      }
+
+      <span class="hljs-keyword">if</span> (cfg.probed_info.session_id == <span class="hljs-number">0</span> &amp;&amp; FALSE == bypass_video_node_creation) {
+        SINFO(<span class="hljs-string">&quot;[%s] probe failed.&quot;</span>, sensor_name);
+            ret = FALSE;
+        <span class="hljs-keyword">goto</span> ERROR;
+      }
+      SHIGH(<span class="hljs-string">&quot;[%s] probe succeeded: session_id(%d) entity_name(%s)&quot;</span>,sensor_name, cfg.probed_info.session_id, cfg.entity_name);
+    ......
+}
+</code></pre>
+<p><em>IOCTRL</em> &#x547D;&#x4EE4;&#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-comment">/* sensor init structures and enums */</span>
+<span class="hljs-keyword">enum</span> <span class="hljs-keyword">msm_sensor_init_cfg_type_t</span> {
+    CFG_SINIT_PROBE,
+    CFG_SINIT_PROBE_DONE,
+    CFG_SINIT_PROBE_WAIT_DONE,
+};
+</code></pre>
+<h4 id="244-kernel-ioctl-&#x51FD;&#x6570;-msmsensorinitsubdevioctl">2.4.4 Kernel Ioctl &#x51FD;&#x6570; msm_sensor_init_subdev_ioctl()</h4>
+<p>&#x4E0A;&#x5C42;<em>IOCTRL</em> &#x547D;&#x4EE4;&#x4E0B;&#x53D1;&#x5230;<em>kernerl</em> &#x4E2D;&#xFF0C;&#x8FDB;&#x5165;<code>msm_sensor_init_subdev_ioctl()</code>&#x4E2D;&#xFF0C;&#x63A5;&#x7740;&#x8F6C;&#x53D1;&#x5230;<code>msm_sensor_driver_cmd()</code>&#x4E2D;&#xFF0C;&#x8C03;&#x7528; <code>msm_sensor_driver_probe()</code>&#x51FD;&#x6570;</p>
+<pre><code class="lang-c">\kernel\msm<span class="hljs-number">-4.4</span>\drivers\media\platform\msm\camera_v2\sensor\msm_sensor_init.<span class="hljs-function">c
+<span class="hljs-keyword">static</span> <span class="hljs-keyword">long</span> <span class="hljs-title">msm_sensor_init_subdev_ioctl</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> v4l2_subdev *sd, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> cmd, <span class="hljs-keyword">void</span> *arg)</span>
+</span>{
+    <span class="hljs-keyword">switch</span> (cmd) {
+    <span class="hljs-keyword">case</span> VIDIOC_MSM_SENSOR_INIT_CFG:
+        rc = msm_sensor_driver_cmd(s_init, arg);
+        <span class="hljs-keyword">break</span>;
+    }
+}
+
+<span class="hljs-comment">/* Static function definition */</span>
+<span class="hljs-function"><span class="hljs-keyword">static</span> int32_t <span class="hljs-title">msm_sensor_driver_cmd</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> msm_sensor_init_t *s_init, <span class="hljs-keyword">void</span> *arg)</span>
+</span>{
+    <span class="hljs-keyword">switch</span> (cfg-&gt;cfgtype) {
+    <span class="hljs-keyword">case</span> CFG_SINIT_PROBE:
+        mutex_lock(&amp;s_init-&gt;imutex);
+        s_init-&gt;module_init_status = <span class="hljs-number">0</span>;
+        rc = msm_sensor_driver_probe(cfg-&gt;cfg.setting,
+            &amp;cfg-&gt;probed_info,
+            cfg-&gt;entity_name);
+        mutex_unlock(&amp;s_init-&gt;imutex);
+        <span class="hljs-keyword">if</span> (rc &lt; <span class="hljs-number">0</span>)
+            pr_err(<span class="hljs-string">&quot;%s failed (non-fatal) rc %d&quot;</span>, __func__, rc);
+        <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> CFG_SINIT_PROBE_DONE:
+        s_init-&gt;module_init_status = <span class="hljs-number">1</span>;
+        wake_up(&amp;s_init-&gt;state_wait);
+        <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> CFG_SINIT_PROBE_WAIT_DONE:
+        msm_sensor_wait_for_probe_done(s_init);
+        <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">return</span> rc;
+}
+</code></pre>
+<h4 id="245-probe&#x51FD;&#x6570;-msmsensordriverprobe">2.4.5 probe&#x51FD;&#x6570; msm_sensor_driver_probe()</h4>
+<p>&#x4ECE;&#x4E0A;&#x5C42;&#x5F00;&#x59CB;&#x4E0B;&#x53D1;<em>probe</em> &#x547D;&#x4EE4;&#xFF0C;&#x81F3;&#x6B64;&#x6B63;&#x5F0F;&#x5F00;&#x59CB;<em>probe</em> &#x521D;&#x59CB;&#x5316; <em>camera</em>&#xFF0C;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol>
+<li>&#x521D;&#x59CB;&#x5316;&#x5E76;&#x5206;&#x914D; <em>slave_info</em> &#x5185;&#x5B58;</li>
+<li>&#x5C06;&#x4E0A;&#x5C42;&#x4E0B;&#x53D1;&#x7684; <em>slave_info</em>&#x4FDD;&#x5B58;&#x5728; <em>slave_info32</em> &#x4E2D;</li>
+<li>&#x5C06; <em>slave_info32</em> &#x4E2D;&#x7684;&#x4FE1;&#x606F;&#x4FDD;&#x5B58;&#x5230; <em>slave_info</em>&#x4E2D;&#x3002;</li>
+<li>&#x6253;&#x5370; <em>slave info</em> &#x4FE1;&#x606F;</li>
+<li>&#x901A;&#x8FC7;<em>camera id</em> &#x83B7;&#x53D6;&#x5230;&#x5BF9;&#x5E94;&#x7684; <em>camera sensor ctrol</em> &#x4FE1;&#x606F;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5BF9;&#x5E94;&#x7684;<em>camera</em> &#x7684;<em>dts</em> &#x4FE1;&#x606F;&#x3002;</li>
+<li>&#x68C0;&#x6D4B;<em>sensor</em> &#x662F;&#x5426;&#x5DF2;&#x7ECF;<em>probe</em> &#x8FC7;&#x4E86;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x662F;&#xFF0C;&#x76F4;&#x63A5;&#x8DF3;&#x8FC7;if &#x8FDB;&#x884C;probe</li>
+<li>&#x83B7;&#x53D6;<em>camera</em>&#x7684;power settting</li>
+<li>&#x521D;&#x59CB;&#x5316; <em>msm_camera_slave_info</em> &#x7ED3;&#x6784;&#x4F53;&#x53D8;&#x91CF; <em>camera_info</em> &#xFF0C;&#x7528;&#x4E8E;&#x4FDD;&#x5B58; <em>camera</em> &#x7684;&#x4FE1;&#x606F;</li>
+<li>&#x914D;&#x7F6E;<em>camera i2c</em> &#x76F8;&#x5173;&#x4FE1;&#x606F;</li>
+<li>&#x5F80;<em>s_ctrl</em> &#x4E2D;&#x586B;&#x5145; &#x4E0A;&#x4E0B;&#x7535;&#x76F8;&#x5173;&#x4FE1;&#x606F;</li>
+<li>&#x89E3;&#x6790;&#x8BE5;<em>camera</em> &#x4E2D;&#x6240;&#x6709;&#x5916;&#x8BBE; <em>dts</em> &#x8282;&#x70B9;&#x4FE1;&#x606F; &quot;<em>qcom,eeprom-src</em>&quot;&#x3001;&quot;<em>qcom,actuator-src</em>&quot;&#x3001;&quot;<em>qcom,led-flash-src</em>&quot;</li>
+<li>&#x8C03;&#x7528; <code>sensor_power_up()</code>&#x7ED9;<em>sensor</em> &#x4E0A;&#x7535;&#xFF0C;&#x5F00;&#x59CB;<em>probe sensor</em> ,&#x4E0A;&#x7535;&#x65F6;&#x8C03;&#x7528; <code>msm_sensor_check_id()</code>&#xFF0C;&#x7136;&#x540E;&#x8C03;&#x7528;<code>msm_sensor_match_id()</code>&#x68C0;&#x6D4B; <em>sensor id</em> &#x662F;&#x5426;&#x533A;&#x914D;&#x3002;</li>
+<li>&#x521B;&#x5EFA;&#x5BF9;&#x5E94;&#x7684; <em>/dev/videox</em> &#x8282;&#x70B9; &#x53CA; <em>/dev/mediax</em> &#x7684;&#x8282;&#x70B9;</li>
+<li><em>probe</em> &#x6210;&#x529F;&#x540E;&#x4E0B;&#x7535;</li>
+<li>&#x66F4;&#x65B0;<em>s_ctrl</em> &#x7ED3;&#x6784;&#x4F53;&#x4FE1;&#x606F;</li>
+</ol>
+<pre><code class="lang-c">kernel\msm<span class="hljs-number">-4.4</span>\drivers\media\platform\msm\camera_v2\sensor\msm_sensor_driver.<span class="hljs-function">c
+int32_t <span class="hljs-title">msm_sensor_driver_probe</span><span class="hljs-params">(<span class="hljs-keyword">void</span> *setting, <span class="hljs-keyword">struct</span> msm_sensor_info_t *probed_info, <span class="hljs-keyword">char</span> *entity_name)</span>
+</span>{
+    <span class="hljs-keyword">struct</span> <span class="hljs-keyword">msm_sensor_ctrl_t</span>            *s_ctrl = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">struct</span> msm_camera_cci_client        *cci_client = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">struct</span> msm_camera_sensor_slave_info *slave_info = <span class="hljs-literal">NULL</span>;
+    <span class="hljs-keyword">struct</span> msm_camera_slave_info        *camera_info = <span class="hljs-literal">NULL</span>;
+
+    <span class="hljs-comment">// 1. &#x521D;&#x59CB;&#x5316;&#x5E76;&#x5206;&#x914D; slave_info &#x5185;&#x5B58;</span>
+    <span class="hljs-comment">/* Allocate memory for slave info */</span>
+    slave_info = kzalloc(<span class="hljs-keyword">sizeof</span>(*slave_info), GFP_KERNEL);
+
+    <span class="hljs-keyword">if</span> (is_compat_task()) {
+        <span class="hljs-comment">// 2. &#x5C06;&#x4E0A;&#x5C42;&#x4E0B;&#x53D1;&#x7684; slave_info&#x4FDD;&#x5B58;&#x5728; slave_info32 &#x4E2D;</span>
+        <span class="hljs-keyword">struct</span> msm_camera_sensor_slave_info32 *slave_info32 =kzalloc(<span class="hljs-keyword">sizeof</span>(*slave_info32), GFP_KERNEL);
+        copy_from_user((<span class="hljs-keyword">void</span> *)slave_info32, setting, <span class="hljs-keyword">sizeof</span>(*slave_info32));
+
+        <span class="hljs-comment">// 3. &#x5C06; slave_info32 &#x4E2D;&#x7684;&#x4FE1;&#x606F;&#x4FDD;&#x5B58;&#x5230; slave_info&#x4E2D;&#x3002;</span>
+        strlcpy(slave_info-&gt;actuator_name, slave_info32-&gt;actuator_name, <span class="hljs-keyword">sizeof</span>(slave_info-&gt;actuator_name));
+        strlcpy(slave_info-&gt;eeprom_name, slave_info32-&gt;eeprom_name, <span class="hljs-keyword">sizeof</span>(slave_info-&gt;eeprom_name));
+        strlcpy(slave_info-&gt;sensor_name, slave_info32-&gt;sensor_name, <span class="hljs-keyword">sizeof</span>(slave_info-&gt;sensor_name));
+        strlcpy(slave_info-&gt;ois_name, slave_info32-&gt;ois_name, <span class="hljs-keyword">sizeof</span>(slave_info-&gt;ois_name));
+        strlcpy(slave_info-&gt;flash_name, slave_info32-&gt;flash_name, <span class="hljs-keyword">sizeof</span>(slave_info-&gt;flash_name));
+
+        slave_info-&gt;addr_type = slave_info32-&gt;addr_type;
+        slave_info-&gt;camera_id = slave_info32-&gt;camera_id;
+
+        slave_info-&gt;i2c_freq_mode = slave_info32-&gt;i2c_freq_mode;
+        slave_info-&gt;sensor_id_info = slave_info32-&gt;sensor_id_info;
+
+        slave_info-&gt;slave_addr = slave_info32-&gt;slave_addr;
+        slave_info-&gt;module_id_info =  slave_info32-&gt;module_id_info;
+        slave_info-&gt;power_setting_array.size = slave_info32-&gt;power_setting_array.size;
+        slave_info-&gt;power_setting_array.size_down = slave_info32-&gt;power_setting_array.size_down;
+        slave_info-&gt;power_setting_array.size_down = slave_info32-&gt;power_setting_array.size_down;
+        slave_info-&gt;power_setting_array.power_setting = compat_ptr(slave_info32-&gt;power_setting_array.power_setting);
+        slave_info-&gt;power_setting_array.power_down_setting = compat_ptr(slave_info32-&gt;power_setting_array.power_down_setting);
+        slave_info-&gt;sensor_init_params = slave_info32-&gt;sensor_init_params;
+        slave_info-&gt;output_format =slave_ info32-&gt;output_format;
+        kfree(slave_info32);  <span class="hljs-comment">// &#x4FDD;&#x5B58;&#x5B8C;&#x6BD5;&#x5408;&#x91CA;&#x653E; slave_info32 &#x5185;&#x5B58;&#x3002;</span>
+    } <span class="hljs-keyword">else</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+    {
+        <span class="hljs-keyword">if</span> (copy_from_user(slave_info,(<span class="hljs-keyword">void</span> *)setting, <span class="hljs-keyword">sizeof</span>(*slave_info))) {
+            pr_err(<span class="hljs-string">&quot;failed: copy_from_user&quot;</span>);
+            rc = -EFAULT;
+            <span class="hljs-keyword">goto</span> free_slave_info;
+        }
+    }
+    <span class="hljs-comment">// 4. &#x6253;&#x5370; slave info &#x4FE1;&#x606F;</span>
+    <span class="hljs-comment">/* Print slave info */</span>
+    CDBG(<span class="hljs-string">&quot;camera id %d Slave addr 0x%X addr_type %d\n&quot;</span>, slave_info-&gt;camera_id, slave_info-&gt;slave_addr, slave_info-&gt;addr_type);
+    CDBG(<span class="hljs-string">&quot;sensor_id_reg_addr 0x%X sensor_id 0x%X sensor id mask %d&quot;</span>, slave_info-&gt;sensor_id_info.sensor_id_reg_addr, slave_info-&gt;sensor_id_info.sensor_id,slave_info-&gt;sensor_id_info.sensor_id_mask);
+    CDBG(<span class="hljs-string">&quot;power up size %d power down size %d\n&quot;</span>,slave_info-&gt;power_setting_array.size,slave_info-&gt;power_setting_array.size_down);
+    CDBG(<span class="hljs-string">&quot;position %d&quot;</span>,slave_info-&gt;sensor_init_params.position);
+    CDBG(<span class="hljs-string">&quot;mount %d&quot;</span>,slave_info-&gt;sensor_init_params.sensor_mount_angle);
+
+    <span class="hljs-comment">// 5. &#x901A;&#x8FC7;camera id &#x83B7;&#x53D6;&#x5230;&#x5BF9;&#x5E94;&#x7684; camera sensor ctrol &#x4FE1;&#x606F;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5BF9;&#x5E94;&#x7684;camera &#x7684;dts &#x4FE1;&#x606F;&#x3002;</span>
+    <span class="hljs-comment">/* Extract s_ctrl from camera id */</span>
+    s_ctrl = g_sctrl[slave_info-&gt;camera_id];
+    CDBG(<span class="hljs-string">&quot;s_ctrl[%d] %pK&quot;</span>, slave_info-&gt;camera_id, s_ctrl);
+    <span class="hljs-comment">// 6. &#x68C0;&#x6D4B;sensor &#x662F;&#x5426;&#x5DF2;&#x7ECF;probe &#x8FC7;&#x4E86;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x662F;&#xFF0C;&#x76F4;&#x63A5;&#x8DF3;&#x8FC7;if &#x8FDB;&#x884C;probe</span>
+    <span class="hljs-keyword">if</span> (s_ctrl-&gt;is_probe_succeed == <span class="hljs-number">1</span>) {
+        <span class="hljs-comment">/*
+         * Different sensor on this camera slot has been connected
+         * and probe already succeeded for that sensor. Ignore this
+         * probe */</span>
+        ......
+    }
+    <span class="hljs-comment">// 7. &#x83B7;&#x53D6;camera&#x7684;power settting</span>
+    rc = msm_sensor_get_power_settings(setting, slave_info,&amp;s_ctrl-&gt;sensordata-&gt;power_info);
+
+    <span class="hljs-comment">// 8. &#x521D;&#x59CB;&#x5316; msm_camera_slave_info &#x7ED3;&#x6784;&#x4F53;&#x53D8;&#x91CF; camera_info &#xFF0C;&#x7528;&#x4E8E;&#x4FDD;&#x5B58; camera &#x7684;&#x4FE1;&#x606F;</span>
+    camera_info = kzalloc(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> msm_camera_slave_info), GFP_KERNEL);
+
+    s_ctrl-&gt;sensordata-&gt;slave_info = camera_info;
+    <span class="hljs-comment">/* Fill sensor slave info */</span>
+    camera_info-&gt;sensor_slave_addr = slave_info-&gt;slave_addr;
+    camera_info-&gt;eeprom_slave_addr = slave_info-&gt;module_id_info.module_slave_id;
+    camera_info-&gt;eeprom_module_reg_addr = slave_info-&gt;module_id_info.module_id_reg_addr;
+    camera_info-&gt;eeprom_module_id =     slave_info-&gt;module_id_info.module_id;
+    camera_info-&gt;eeprom_master_id = slave_info-&gt;module_id_info.master_id;
+    camera_info-&gt;sensor_id_reg_addr =slave_info-&gt;sensor_id_info.sensor_id_reg_addr;
+    camera_info-&gt;sensor_id = slave_info-&gt;sensor_id_info.sensor_id;
+    camera_info-&gt;sensor_id_mask = slave_info-&gt;sensor_id_info.sensor_id_mask;
+
+
+    s_ctrl-&gt;sensor_i2c_client-&gt;addr_type = slave_info-&gt;addr_type;
+    <span class="hljs-keyword">if</span> (s_ctrl-&gt;sensor_i2c_client-&gt;client)
+        s_ctrl-&gt;sensor_i2c_client-&gt;client-&gt;addr =camera_info-&gt;sensor_slave_addr;
+
+    <span class="hljs-comment">// 9. &#x914D;&#x7F6E;camera i2c &#x76F8;&#x5173;&#x4FE1;&#x606F;&#x3002;</span>
+    cci_client = s_ctrl-&gt;sensor_i2c_client-&gt;cci_client;
+
+    cci_client-&gt;cci_i2c_master = s_ctrl-&gt;cci_i2c_master;
+    cci_client-&gt;sid = slave_info-&gt;slave_addr &gt;&gt; <span class="hljs-number">1</span>;
+    cci_client-&gt;retries = <span class="hljs-number">3</span>;
+    cci_client-&gt;id_map = <span class="hljs-number">0</span>;
+    cci_client-&gt;i2c_freq_mode = slave_info-&gt;i2c_freq_mode;
+
+    <span class="hljs-comment">// 10. &#x5F80;s_ctrl &#x4E2D;&#x586B;&#x5145; &#x4E0A;&#x4E0B;&#x7535;&#x76F8;&#x5173;&#x4FE1;&#x606F; </span>
+    <span class="hljs-comment">/* Parse and fill vreg params for powerup settings */</span>
+    rc = msm_camera_fill_vreg_params(
+        s_ctrl-&gt;sensordata-&gt;power_info.cam_vreg,
+        s_ctrl-&gt;sensordata-&gt;power_info.num_vreg,
+        s_ctrl-&gt;sensordata-&gt;power_info.power_setting,
+        s_ctrl-&gt;sensordata-&gt;power_info.power_setting_size);
+
+    <span class="hljs-comment">/* Parse and fill vreg params for powerdown settings*/</span>
+    rc = msm_camera_fill_vreg_params(
+        s_ctrl-&gt;sensordata-&gt;power_info.cam_vreg,
+        s_ctrl-&gt;sensordata-&gt;power_info.num_vreg,
+        s_ctrl-&gt;sensordata-&gt;power_info.power_down_setting,
+        s_ctrl-&gt;sensordata-&gt;power_info.power_down_setting_size);
+
+
+CSID_TG:
+    <span class="hljs-comment">/* Update sensor, actuator and eeprom name in
+    *  sensor control structure */</span>
+    s_ctrl-&gt;sensordata-&gt;sensor_name = slave_info-&gt;sensor_name;
+    s_ctrl-&gt;sensordata-&gt;eeprom_name = slave_info-&gt;eeprom_name;
+    s_ctrl-&gt;sensordata-&gt;actuator_name = slave_info-&gt;actuator_name;
+    s_ctrl-&gt;sensordata-&gt;ois_name = slave_info-&gt;ois_name;
+    s_ctrl-&gt;sensordata-&gt;flash_name = slave_info-&gt;flash_name;
+    <span class="hljs-comment">/*
+     * Update eeporm subdevice Id by input eeprom name
+     */</span>
+     <span class="hljs-comment">// 11. &#x89E3;&#x6790;&#x8BE5;camera &#x4E2D;&#x6240;&#x6709;&#x5916;&#x8BBE;&#x8282;&#x70B9;&#x4FE1;&#x606F; &quot;qcom,eeprom-src&quot;&#x3001;&quot;qcom,actuator-src&quot;&#x3001;&quot;qcom,led-flash-src&quot;</span>
+    rc = msm_sensor_fill_eeprom_subdevid_by_name(s_ctrl);    
+        =====&gt; src_node = of_parse_phandle(of_node, <span class="hljs-string">&quot;qcom,eeprom-src&quot;</span>, i);
+    <span class="hljs-comment">/*
+     * Update actuator subdevice Id by input actuator name
+     */</span>
+    rc = msm_sensor_fill_actuator_subdevid_by_name(s_ctrl);
+        =====&gt; src_node = of_parse_phandle(of_node, <span class="hljs-string">&quot;qcom,actuator-src&quot;</span>, <span class="hljs-number">0</span>);
+    rc = msm_sensor_fill_ois_subdevid_by_name(s_ctrl);
+    rc = msm_sensor_fill_flash_subdevid_by_name(s_ctrl);
+        =====&gt; src_node = of_parse_phandle(of_node, <span class="hljs-string">&quot;qcom,led-flash-src&quot;</span>, <span class="hljs-number">0</span>);
+
+    <span class="hljs-comment">// 12. &#x8C03;&#x7528; sensor_power_up() &#x7ED9;sensor &#x4E0A;&#x7535;&#xFF0C;&#x5F00;&#x59CB;probe sensor ,&#x4E0A;&#x7535;&#x65F6;&#x8C03;&#x7528; msm_sensor_check_id()&#xFF0C;&#x7136;&#x540E;&#x8C03;&#x7528;msm_sensor_match_id()&#x68C0;&#x6D4B;sensor id &#x662F;&#x5426;&#x533A;&#x914D;&#x3002;</span>
+    <span class="hljs-comment">/* Power up and probe sensor */</span>
+    rc = s_ctrl-&gt;func_tbl-&gt;sensor_power_up(s_ctrl);
+    ==================&gt;
+        @ \kernel\msm<span class="hljs-number">-4.4</span>\drivers\media\platform\msm\camera_v2\sensor\msm_sensor.<span class="hljs-function">c
+        <span class="hljs-title">for</span> <span class="hljs-params">(retry = <span class="hljs-number">0</span>; retry &lt; <span class="hljs-number">3</span>; retry++)</span> </span>{
+            <span class="hljs-comment">/* session is secure */</span>
+            s_ctrl-&gt;sensor_i2c_client-&gt;i2c_func_tbl =&amp;msm_sensor_secure_func_tbl;
+
+            rc = msm_camera_power_up(power_info, s_ctrl-&gt;sensor_device_type, sensor_i2c_client);
+
+            rc = msm_sensor_check_id(s_ctrl);
+                ========&gt; 
+                    rc = msm_sensor_match_id(s_ctrl);
+                &lt;=======
+            <span class="hljs-keyword">if</span> (rc &lt; <span class="hljs-number">0</span>) {
+                msm_camera_power_down(power_info,s_ctrl-&gt;sensor_device_type, sensor_i2c_client);
+                msleep(<span class="hljs-number">20</span>);
+                <span class="hljs-keyword">continue</span>;
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">break</span>;
+            }
+        }
+    &lt;==================
+
+    <span class="hljs-comment">// 13. &#x521B;&#x5EFA;&#x5BF9;&#x5E94;&#x7684; /dev/videox &#x8282;&#x70B9; &#x53CA; /dev/mediax &#x7684;&#x8282;&#x70B9;</span>
+    pr_err(<span class="hljs-string">&quot;%s probe succeeded&quot;</span>, slave_info-&gt;sensor_name);
+    <span class="hljs-comment">/*
+     * Create /dev/videoX node, comment for now until dummy /dev/videoX
+     * node is created and used by HAL
+     */</span>
+    <span class="hljs-keyword">if</span> (s_ctrl-&gt;sensor_device_type == MSM_CAMERA_PLATFORM_DEVICE)
+        rc = msm_sensor_driver_create_v4l_subdev(s_ctrl);
+
+    <span class="hljs-comment">// 14. probe &#x6210;&#x529F;&#x540E;&#x4E0B;&#x7535;</span>
+    <span class="hljs-comment">/* Power down */</span>
+    s_ctrl-&gt;func_tbl-&gt;sensor_power_down(s_ctrl);
+
+    rc = msm_sensor_fill_slave_info_init_params(slave_info,s_ctrl-&gt;sensordata-&gt;sensor_info);
+
+    rc = msm_sensor_validate_slave_info(s_ctrl-&gt;sensordata-&gt;sensor_info);
+
+    <span class="hljs-comment">/* Update sensor mount angle and position in media entity flag */</span>
+    is_yuv = (slave_info-&gt;output_format == MSM_SENSOR_YCBCR) ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>;
+    mount_pos = ((s_ctrl-&gt;is_secure &amp; <span class="hljs-number">0x1</span>) &lt;&lt; <span class="hljs-number">26</span>) | is_yuv &lt;&lt; <span class="hljs-number">25</span> |
+        (s_ctrl-&gt;sensordata-&gt;sensor_info-&gt;position &lt;&lt; <span class="hljs-number">16</span>) |
+        ((s_ctrl-&gt;sensordata-&gt;
+        sensor_info-&gt;sensor_mount_angle / <span class="hljs-number">90</span>) &lt;&lt; <span class="hljs-number">8</span>);
+
+    s_ctrl-&gt;msm_sd.sd.entity.flags = mount_pos | MEDIA_ENT_FL_DEFAULT;
+
+    <span class="hljs-comment">/*Save sensor info*/</span>
+    s_ctrl-&gt;sensordata-&gt;cam_slave_info = slave_info;
+
+    <span class="hljs-comment">// 15. &#x66F4;&#x65B0;s_ctrl &#x7ED3;&#x6784;&#x4F53;&#x4FE1;&#x606F;</span>
+    msm_sensor_fill_sensor_info(s_ctrl, probed_info, entity_name);
+
+    <span class="hljs-comment">/*
+     * Set probe succeeded flag to 1 so that no other camera shall
+     * probed on this slot
+     */</span>
+    s_ctrl-&gt;is_probe_succeed = <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">return</span> rc;
+}
+</code></pre>
+<h4 id="246-&#x521B;&#x5EFA;-devvideox&#x8282;&#x70B9;-msmsensordrivercreatev4lsubdev">2.4.6 &#x521B;&#x5EFA; /dev/videoX&#x8282;&#x70B9; msm_sensor_driver_create_v4l_subdev()</h4>
+<pre><code class="lang-c">\kernel\msm<span class="hljs-number">-4.4</span>\drivers\media\platform\msm\camera_v2\camera\camera.<span class="hljs-function">c
+<span class="hljs-keyword">static</span> int32_t <span class="hljs-title">msm_sensor_driver_create_v4l_subdev</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> msm_sensor_ctrl_t *s_ctrl)</span>
+</span>{
+    <span class="hljs-keyword">int32_t</span> rc = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">uint32_t</span> session_id = <span class="hljs-number">0</span>;
+
+    <span class="hljs-comment">// 1. &#x521D;&#x59CB;&#x5316; msm_video_device &#x7ED3;&#x6784;&#x4F53;&#xFF0C;&#x8C03;&#x7528;video_register_device() &#x6CE8;&#x518C;video &#x8282;&#x70B9;</span>
+    rc = camera_init_v4l2(&amp;s_ctrl-&gt;pdev-&gt;dev, &amp;session_id);    
+    ===============&gt;
+        pvdev = kzalloc(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> msm_video_device),GFP_KERNEL);
+        pvdev-&gt;vdev = video_device_alloc();
+        v4l2_dev = kzalloc(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">struct</span> v4l2_device), GFP_KERNEL);
+        rc = v4l2_device_register(dev, pvdev-&gt;vdev-&gt;v4l2_dev);
+        strlcpy(pvdev-&gt;vdev-&gt;name, <span class="hljs-string">&quot;msm-sensor&quot;</span>, <span class="hljs-keyword">sizeof</span>(pvdev-&gt;vdev-&gt;name));
+        pvdev-&gt;vdev-&gt;release  = video_device_release;
+        pvdev-&gt;vdev-&gt;fops     = &amp;camera_v4l2_fops;
+        pvdev-&gt;vdev-&gt;ioctl_ops = &amp;camera_v4l2_ioctl_ops;
+        pvdev-&gt;vdev-&gt;minor     = <span class="hljs-number">-1</span>;
+        pvdev-&gt;vdev-&gt;vfl_type  = VFL_TYPE_GRABBER;
+        rc = video_register_device(pvdev-&gt;vdev,VFL_TYPE_GRABBER, <span class="hljs-number">-1</span>);
+        *session = pvdev-&gt;vdev-&gt;num;
+        video_set_drvdata(pvdev-&gt;vdev, pvdev);
+    &lt;===============
+
+    CDBG(<span class="hljs-string">&quot;rc %d session_id %d&quot;</span>, rc, session_id);
+    s_ctrl-&gt;sensordata-&gt;sensor_info-&gt;session_id = session_id;
+
+    <span class="hljs-comment">/* Create /dev/v4l-subdevX device */</span>
+    v4l2_subdev_init(&amp;s_ctrl-&gt;msm_sd.sd, s_ctrl-&gt;sensor_v4l2_subdev_ops);
+    <span class="hljs-built_in">snprintf</span>(s_ctrl-&gt;msm_sd.sd.name, <span class="hljs-keyword">sizeof</span>(s_ctrl-&gt;msm_sd.sd.name), <span class="hljs-string">&quot;%s&quot;</span>,s_ctrl-&gt;sensordata-&gt;sensor_name);
+    v4l2_set_subdevdata(&amp;s_ctrl-&gt;msm_sd.sd, s_ctrl-&gt;pdev);
+    s_ctrl-&gt;msm_sd.sd.flags |= V4L2_SUBDEV_FL_HAS_DEVNODE;
+    media_entity_init(&amp;s_ctrl-&gt;msm_sd.sd.entity, <span class="hljs-number">0</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span>);
+    s_ctrl-&gt;msm_sd.sd.entity.type = MEDIA_ENT_T_V4L2_SUBDEV;
+    s_ctrl-&gt;msm_sd.sd.entity.group_id = MSM_CAMERA_SUBDEV_SENSOR;
+    s_ctrl-&gt;msm_sd.sd.entity.name = s_ctrl-&gt;msm_sd.sd.name;
+    s_ctrl-&gt;msm_sd.close_seq = MSM_SD_CLOSE_2ND_CATEGORY | <span class="hljs-number">0x3</span>;
+    rc = msm_sd_register(&amp;s_ctrl-&gt;msm_sd);
+    <span class="hljs-keyword">if</span> (rc &lt; <span class="hljs-number">0</span>) {
+        pr_err(<span class="hljs-string">&quot;failed: msm_sd_register rc %d&quot;</span>, rc);
+        <span class="hljs-keyword">return</span> rc;
+    }
+    msm_cam_copy_v4l2_subdev_fops(&amp;msm_sensor_v4l2_subdev_fops);
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> CONFIG_COMPAT</span>
+    msm_sensor_v4l2_subdev_fops.compat_ioctl32 =msm_sensor_subdev_fops_ioctl;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+    s_ctrl-&gt;msm_sd.sd.devnode-&gt;fops =&amp;msm_sensor_v4l2_subdev_fops;
+
+    <span class="hljs-keyword">return</span> rc;
+}
+</code></pre>
+<h3 id="25-struct-msmsensorctrlt-&#x7ED3;&#x6784;&#x4F53;&#x63CF;&#x8FF0;">2.5 struct msm_sensor_ctrl_t &#x7ED3;&#x6784;&#x4F53;&#x63CF;&#x8FF0;</h3>
+<pre><code class="lang-c">\kernel\msm<span class="hljs-number">-4.4</span>\drivers\media\platform\msm\camera_v2\sensor\msm_sensor.h
+<span class="hljs-keyword">struct</span> <span class="hljs-keyword">msm_sensor_ctrl_t</span> {
+    <span class="hljs-keyword">struct</span> platform_device *pdev;
+    <span class="hljs-keyword">struct</span> mutex *msm_sensor_mutex;
+
+    <span class="hljs-keyword">enum</span> <span class="hljs-keyword">msm_camera_device_type_t</span> sensor_device_type;
+    <span class="hljs-keyword">struct</span> msm_camera_sensor_board_info *sensordata;
+    <span class="hljs-keyword">struct</span> msm_sensor_power_setting_array power_setting_array;
+    <span class="hljs-keyword">struct</span> <span class="hljs-keyword">msm_sensor_packed_cfg_t</span> *cfg_override;
+    <span class="hljs-keyword">struct</span> msm_sd_subdev msm_sd;
+    <span class="hljs-keyword">enum</span> <span class="hljs-keyword">cci_i2c_master_t</span> cci_i2c_master;
+
+    <span class="hljs-keyword">struct</span> msm_camera_i2c_client *sensor_i2c_client;
+    <span class="hljs-keyword">struct</span> v4l2_subdev_info *sensor_v4l2_subdev_info;
+    <span class="hljs-keyword">uint8_t</span> sensor_v4l2_subdev_info_size;
+    <span class="hljs-keyword">struct</span> v4l2_subdev_ops *sensor_v4l2_subdev_ops;
+    <span class="hljs-keyword">struct</span> <span class="hljs-keyword">msm_sensor_fn_t</span> *func_tbl;
+    <span class="hljs-keyword">struct</span> msm_camera_i2c_reg_setting stop_setting;
+    <span class="hljs-keyword">void</span> *misc_regulator;
+    <span class="hljs-keyword">enum</span> <span class="hljs-keyword">msm_sensor_state_t</span> sensor_state;
+    <span class="hljs-keyword">uint8_t</span> is_probe_succeed;
+    <span class="hljs-keyword">uint32_t</span> id;
+    <span class="hljs-keyword">struct</span> device_node *of_node;
+    <span class="hljs-keyword">enum</span> <span class="hljs-keyword">msm_camera_stream_type_t</span> camera_stream_type;
+    <span class="hljs-keyword">uint32_t</span> set_mclk_23880000;
+    <span class="hljs-keyword">uint8_t</span> is_csid_tg_mode;
+    <span class="hljs-keyword">uint32_t</span> is_secure;
+};
+</code></pre>
+<p>&#x81F3;&#x6B64;&#xFF0C;&#x7ED9;&#x5408;&#x6211;&#x4EEC;&#x4E4B;&#x524D;&#x7684;&#x79FB;&#x690D;&#x8FC7;&#x7A0B;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x5C06;Kernel &#x4E2D;&#x7684; dts &#x76F8;&#x5173;&#x7684;&#x90E8;&#x5206;&#x901A;&#x8FC7;&#x4EE3;&#x7801;&#x6D41;&#x7A0B;&#x5206;&#x6790;&#x6E05;&#x695A;&#x4E86;&#x3002;</p>
+<footer class="page-footer"><span class="copyright">copyright by duguosheng all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x4EF6;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
+2022-08-16 13:40:50
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="V4L2分析.html" class="navigation navigation-prev " aria-label="Previous page: 3.1 V4L2 框架分析">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="Camera_init流程.html" class="navigation navigation-next " aria-label="Next page: 第 4 章：Camera Init 初始化流程">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"3.2 kernel 层代码分析","level":"1.4.2","depth":2,"next":{"title":"第 4 章：Camera Init 初始化流程","level":"1.5","depth":1,"path":"Sdm660_Camera/Camera_init流程.md","ref":"Sdm660_Camera/Camera_init流程.md","articles":[]},"previous":{"title":"3.1 V4L2 框架分析","level":"1.4.1","depth":2,"path":"Sdm660_Camera/V4L2分析.md","ref":"Sdm660_Camera/V4L2分析.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-pro","expandable-chapters","code-optimize","splitter","pageview-count","tbfed-pagefooter","flexible-alerts"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"copyright by duguosheng","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"splitter":{},"search-pro":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"pageview-count":{},"flexible-alerts":{"danger":{"className":"danger","icon":"fa fa-ban","label":"Attention"},"note":{"className":"info","icon":"fa fa-info-circle","label":"Note"},"style":"flat","tip":{"className":"tip","icon":"fa fa-lightbulb-o","label":"Tip"},"warning":{"className":"warning","icon":"fa fa-exclamation-triangle","label":"Warning"}},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"code-optimize":{"copyButtons":true,"showLines":false},"expandable-chapters":{}},"theme":"default","author":"DuGuoSheng","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"6.S081 All-In-One","gitbook":"*"},"file":{"path":"Sdm660_Camera/kernel代码分析.md","mtime":"2022-08-16T05:40:50.825Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-08-16T06:16:13.899Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code-optimize/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-pageview-count/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-flexible-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
