@@ -17,3 +17,5 @@
 2. *Sensor* 部分
    通过解析*compatible = "qcom,camera"*;来初始化调用probe解析*camera sensor*的*dts*节点信息，保存在全局*g_sctrl* 数组中。
    然后，上层在初始化时，依次对每个*sensor*下发 *ioctl* 参数，触发其作初始化*probe* ，上电*check_sensor_id* 及 创建对应的 /dev/*videoX* 节点 及 /dev/*mediaX* 的节点
+
+ <img src="image/IMG_5003(20220815-103143).JPG" alt="IMG_5003(20220815-103143)" style="zoom: 50%;" />

@@ -1,0 +1,1666 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>2.1 Camera_driver 移植流程 · 6.S081 All-In-One</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="DuGuoSheng">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code-optimize/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-pageview-count/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-flexible-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="附加内容.html" />
+    
+    
+    <link rel="prev" href="使用流程.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="相机介绍.html">
+            
+                <a href="相机介绍.html">
+            
+                    
+                    第 1 章：SC66_Camera 介绍
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="高通Camera设计.html">
+            
+                <a href="高通Camera设计.html">
+            
+                    
+                    1.1 高通 Camera 设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="代码组织.html">
+            
+                <a href="代码组织.html">
+            
+                    
+                    1.2 代码组织
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="使用流程.html">
+            
+                <a href="使用流程.html">
+            
+                    
+                    第 2 章：SC66_Camera 使用流程
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.3.1" data-path="相机驱动移植流程.html">
+            
+                <a href="相机驱动移植流程.html">
+            
+                    
+                    2.1 Camera_driver 移植流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="附加内容.html">
+            
+                <a href="附加内容.html">
+            
+                    
+                    2.2 附加知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="kernel层初始化流程.html">
+            
+                <a href="kernel层初始化流程.html">
+            
+                    
+                    第 3 章：kernel 层初始化流程
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="V4L2分析.html">
+            
+                <a href="V4L2分析.html">
+            
+                    
+                    3.1 V4L2 框架分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="kernel代码分析.html">
+            
+                <a href="kernel代码分析.html">
+            
+                    
+                    3.2 kernel 层代码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="系统架构.html">
+            
+                <a href="系统架构.html">
+            
+                    
+                    第 4 章：Camera 系统架构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="相机初始化流程.html">
+            
+                <a href="相机初始化流程.html">
+            
+                    
+                    4.1 Camera Init 初始化流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="open_Camera流程.html">
+            
+                <a href="open_Camera流程.html">
+            
+                    
+                    第 5 章：open_Camera 流程
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="open_Camera代码分析.html">
+            
+                <a href="open_Camera代码分析.html">
+            
+                    
+                    5.1 open_Camera 代码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >2.1 Camera_driver 移植流程</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="camera-&#x9A71;&#x52A8;">Camera &#x9A71;&#x52A8;</h1>
+<h2 id="&#x4E00;&#x3001;kernel-&#x4EE3;&#x7801;&#x79FB;&#x690D;">&#x4E00;&#x3001;Kernel &#x4EE3;&#x7801;&#x79FB;&#x690D;</h2>
+<h3 id="1-dts-&#x6587;&#x4EF6;&#x914D;&#x7F6E;">1. DTS &#x6587;&#x4EF6;&#x914D;&#x7F6E;</h3>
+<p>dts &#x6587;&#x4EF6;&#x76EE;&#x5F55;&#xFF1A;
+&#x9AD8;&#x901A;SDM660&#x5E73;&#x53F0;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;arm64 &#x4E0E; arm&#x8D70;&#x7684;&#x662F;&#x540C;&#x4E00;&#x4E2A;&#x76EE;&#x5F55;&#x6587;&#x4EF6;&#xFF0C;
+<em>kernel\msm-4.4\arch\arm64\boot\dts\qcom</em>&#x8FD9;&#x4E2A;&#x76EE;&#x5F55;&#x5176;&#x5B9E;&#x662F; <em>\kernel\msm-4.4\arch\arm\boot\dts\qcom</em>&#x7684;&#x8F6F;&#x94FE;&#x63A5;&#x3002;</p>
+<p>Camera &#x76F8;&#x5173;&#x7684; dts &#x6587;&#x4EF6;&#xFF1A;</p>
+<pre><code class="lang-c">kernel\msm<span class="hljs-number">-4.4</span>\arch\arm64\boot\dts\qcom\sdm660.dtsi
+kernel\msm<span class="hljs-number">-4.4</span>\arch\arm64\boot\dts\qcom\sdm660-camera.dtsi
+kernel\msm<span class="hljs-number">-4.4</span>\arch\arm64\boot\dts\qcom\sdm660-pinctrl.dtsi
+kernel\msm<span class="hljs-number">-4.4</span>\arch\arm64\boot\dts\qcom\sdm660-camera-sensor-mtp.dtsi
+</code></pre>
+<h4 id="11-sdm660dtsi">1.1 sdm660.dtsi</h4>
+<p>&#x5728;&#x8BE5;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x4E3B;&#x8981;&#x529F;&#x80FD;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol>
+<li>&#x5F15;&#x5165; <em>sdm660-camera.dtsi</em> &#x6587;&#x4EF6;</li>
+<li>&#x914D;&#x7F6E; <em>camera_focus</em> &#x548C; <em>camera_snapshot</em> &#x5BF9;&#x5E94;&#x7684; GPIO &#x53CA; &#x4E0A;&#x62A5;&#x7684; keycode&#x3002;</li>
+</ol>
+<pre><code class="lang-c">\kernel\msm<span class="hljs-number">-4.4</span>\arch\arm\boot\dts\qcom\sdm660.dtsi
+<span class="hljs-comment">// 1. &#x5F15;&#x5165; sdm660-camera.dtsi</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;sdm660-camera.dtsi&quot;</span>    </span>
+
+<span class="hljs-comment">// 2. &#x914D;&#x7F6E; camera_focus &#x548C; camera_snapshot GPIO &#x53CA;&#x5BF9;&#x5E94;&#x7684; keycode&#x3002;</span>
+&amp;soc {
+    gpio_keys {
+        status = <span class="hljs-string">&quot;okay&quot;</span>;
+        compatible = <span class="hljs-string">&quot;gpio-keys&quot;</span>;
+        input-name = <span class="hljs-string">&quot;gpio-keys&quot;</span>;
+        pinctrl-names = <span class="hljs-string">&quot;tlmm_gpio_key_active&quot;</span>,<span class="hljs-string">&quot;tlmm_gpio_key_suspend&quot;</span>;
+        pinctrl<span class="hljs-number">-0</span> = &lt;&amp;gpio_key_active&gt;;
+        pinctrl<span class="hljs-number">-1</span> = &lt;&amp;gpio_key_suspend&gt;;
+
+        camera_focus {
+            label = <span class="hljs-string">&quot;camera_focus&quot;</span>;
+            gpios = &lt;&amp;tlmm <span class="hljs-number">64</span> <span class="hljs-number">0x1</span>&gt;;
+            linux,input-type = &lt;<span class="hljs-number">1</span>&gt;;
+            linux,code = &lt;<span class="hljs-number">0x210</span>&gt;;
+            debounce-interval = &lt;<span class="hljs-number">15</span>&gt;;
+        };
+        camera_snapshot {
+            label = <span class="hljs-string">&quot;camera_snapshot&quot;</span>;
+            gpios = &lt;&amp;tlmm <span class="hljs-number">113</span> <span class="hljs-number">0x1</span>&gt;;
+            linux,input-type = &lt;<span class="hljs-number">1</span>&gt;;
+            linux,code = &lt;<span class="hljs-number">0x2fe</span>&gt;;
+            debounce-interval = &lt;<span class="hljs-number">15</span>&gt;;
+        };
+    };
+};
+</code></pre>
+<h4 id="12-sdm660-cameradtsi">1.2 sdm660-camera.dtsi</h4>
+<p>&#x5728; <em>sdm660-camera.dtsi</em> &#x4E2D;&#x4E3B;&#x8981;&#x662F;&#x914D;&#x7F6E;&#x4E86;&#x5E73;&#x53F0;&#x76F8;&#x5173;&#x7684;Camera &#x5E95;&#x5C42;&#x786C;&#x4EF6;&#x76F8;&#x5173;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x6BD4;&#x5982; CSI&#xFF0C;CS&#x3002;
+&#x5982;&#x65E0;&#x7279;&#x6B8A;&#x9700;&#x6C42;&#xFF0C;&#x4E00;&#x822C;&#x4E0D;&#x4F1A;&#x4FEE;&#x6539;&#x6B64;&#x5904;&#x7684;&#x4EE3;&#x7801;&#x3002;</p>
+<p>&#x90E8;&#x5206;&#x4EE3;&#x7801;&#x53CA;&#x5BF9;&#x5E94;&#x7684;&#x89E3;&#x91CA;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c">&#x5404;&#x53C2;&#x6570;&#x89E3;&#x6790;&#x8BE6;&#x89C1;&#xFF1A; 
+\kernel\msm<span class="hljs-number">-4.4</span>\Documentation\devicetree\bindings\media\video\msm-csid.txt
+\kernel\msm<span class="hljs-number">-4.4</span>\Documentation\devicetree\bindings\media\video\msm-csi-phy.txt
+
+&amp;soc {
+    qcom,csiphy@c824000 {                                    <span class="hljs-comment">// CSI &#x603B;&#x7EBF;&#x6620;&#x5C04;&#x7684;&#x5BC4;&#x5B58;&#x5668;&#x5730;&#x5740;</span>
+        cell-index = &lt;<span class="hljs-number">0</span>&gt;;                                    <span class="hljs-comment">// CSI &#x786C;&#x4EF6;&#x603B;&#x7EBF;&#x7D22;&#x5F15;&#x53F7; 0</span>
+        compatible = <span class="hljs-string">&quot;qcom,csiphy-v3.5&quot;</span>, <span class="hljs-string">&quot;qcom,csiphy&quot;</span>;        <span class="hljs-comment">// compatible = &#x201C;a&#x5382;&#x5546;&#xFF0C;p&#x4EA7;&#x54C1;&#x201D;, &#x201C;&#x6807;&#x51C6;bbb&#x7C7B;&#x578B;&#x8BBE;&#x5907;&#x201D;&#x3002;</span>
+        <span class="hljs-comment">// &#x90A3;&#x4E48;linux kernel&#x53EF;&#x80FD;&#x9996;&#x5148;&#x4F7F;&#x7528;&#x201C;a&#x5382;&#x5546;&#xFF0C;p&#x4EA7;&#x54C1;&#x201D;&#x6765;&#x5339;&#x914D;&#x9002;&#x5408;&#x7684;driver&#xFF0C;</span>
+        <span class="hljs-comment">// &#x5982;&#x679C;&#x6CA1;&#x6709;&#x5339;&#x914D;&#x5230;&#xFF0C;&#x90A3;&#x4E48;&#x4F7F;&#x7528;&#x5B57;&#x7B26;&#x4E32;&#x201C;&#x6807;&#x51C6;bbb&#x7C7B;&#x578B;&#x8BBE;&#x5907;&#x201D;&#x6765;&#x7EE7;&#x7EED;&#x5BFB;&#x627E;&#x9002;&#x5408;&#x7684;driver&#x3002;</span>
+
+        reg = &lt;<span class="hljs-number">0xc824000</span> <span class="hljs-number">0x1000</span>&gt;,&lt;<span class="hljs-number">0xca00120</span> <span class="hljs-number">0x4</span>&gt;;            <span class="hljs-comment">// &#x4F7F;&#x7528;&#x7684;&#x5BC4;&#x5B58;&#x5668;&#x5730;&#x5740; &#x53CA; &#x957F;&#x5EA6;</span>
+        reg-names = <span class="hljs-string">&quot;csiphy&quot;</span>, <span class="hljs-string">&quot;csiphy_clk_mux&quot;</span>;                <span class="hljs-comment">// cisphy &#x5BC4;&#x5B58;&#x5668;&#x5730;&#x5740;&#x4E3A; 0xc824000, &#x957F;&#x5EA6;&#x4E3A; 0x1000</span>
+                                                            <span class="hljs-comment">// csiphy_clk_mux &#x5BC4;&#x5B58;&#x5668;&#x5730;&#x5740;&#x4E3A; 0xca00120,&#x957F;&#x5EA6;&#x4E3A; 0x4</span>
+        interrupts = &lt;<span class="hljs-number">0</span> <span class="hljs-number">78</span> <span class="hljs-number">0</span>&gt;;    <span class="hljs-comment">// interrupt&#x7684;&#x683C;&#x5F0F;&#x662F;&lt;type, interrupt number, trigger type&gt;</span>
+        interrupt-names = <span class="hljs-string">&quot;csiphy&quot;</span>;     <span class="hljs-comment">// &#x4E2D;&#x65AD;name&#xFF0C;&#x53EF;&#x901A;&#x8FC7; cat /proc/interrupts &#x83B7;&#x53D6;</span>
+        gdscr-supply = &lt;&amp;gdsc_camss_top&gt;;    
+        bimc_smmu-supply = &lt;&amp;gdsc_bimc_smmu&gt;;
+        qcom,cam-vreg-name = <span class="hljs-string">&quot;gdscr&quot;</span>, <span class="hljs-string">&quot;bimc_smmu&quot;</span>;        <span class="hljs-comment">// voltage regulators &#x548C; name</span>
+        clocks = &lt;&amp;clock_rpmcc MMSSNOC_AXI_CLK&gt;,        <span class="hljs-comment">// clocks &#x548C; name</span>
+            &lt;&amp;clock_mmss MMSS_MNOC_AHB_CLK&gt;,
+            &lt;&amp;clock_mmss MMSS_BIMC_SMMU_AHB_CLK&gt;,
+            &lt;&amp;clock_mmss MMSS_BIMC_SMMU_AXI_CLK&gt;,
+            &lt;&amp;clock_mmss MMSS_CAMSS_AHB_CLK&gt;,
+            &lt;&amp;clock_mmss MMSS_CAMSS_TOP_AHB_CLK&gt;,
+            &lt;&amp;clock_mmss CSI0_CLK_SRC&gt;,
+            &lt;&amp;clock_mmss MMSS_CAMSS_CSI0_CLK&gt;,
+            &lt;&amp;clock_mmss MMSS_CAMSS_CPHY_CSID0_CLK&gt;,
+            &lt;&amp;clock_mmss CSI0PHYTIMER_CLK_SRC&gt;,
+            &lt;&amp;clock_mmss MMSS_CAMSS_CSI0PHYTIMER_CLK&gt;,
+            &lt;&amp;clock_mmss MMSS_CAMSS_ISPIF_AHB_CLK&gt;,
+            &lt;&amp;clock_mmss CSIPHY_CLK_SRC&gt;,
+            &lt;&amp;clock_mmss MMSS_CAMSS_CSIPHY0_CLK&gt;,
+            &lt;&amp;clock_mmss MMSS_CSIPHY_AHB2CRIF_CLK&gt;;
+        clock-names = <span class="hljs-string">&quot;mmssnoc_axi&quot;</span>, <span class="hljs-string">&quot;mnoc_ahb&quot;</span>,
+            <span class="hljs-string">&quot;bmic_smmu_ahb&quot;</span>, <span class="hljs-string">&quot;bmic_smmu_axi&quot;</span>,
+            <span class="hljs-string">&quot;camss_ahb_clk&quot;</span>, <span class="hljs-string">&quot;camss_top_ahb_clk&quot;</span>,
+            <span class="hljs-string">&quot;csi_src_clk&quot;</span>, <span class="hljs-string">&quot;csi_clk&quot;</span>, <span class="hljs-string">&quot;cphy_csid_clk&quot;</span>,
+            <span class="hljs-string">&quot;csiphy_timer_src_clk&quot;</span>, <span class="hljs-string">&quot;csiphy_timer_clk&quot;</span>,
+            <span class="hljs-string">&quot;camss_ispif_ahb_clk&quot;</span>, <span class="hljs-string">&quot;csiphy_clk_src&quot;</span>, <span class="hljs-string">&quot;csiphy_clk&quot;</span>,
+            <span class="hljs-string">&quot;csiphy_ahb2crif&quot;</span>;
+        qcom,clock-rates = &lt;<span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">310000000</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">269333333</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">200000000</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>&gt;;  <span class="hljs-comment">// &#x4E0A;&#x9762;&#x5BF9;&#x5E94;&#x6240;&#x6709;clock &#x7684;&#x901F;&#x7387;</span>
+        status = <span class="hljs-string">&quot;ok&quot;</span>;
+    };
+
+    qcom,csiphy@c825000 {
+        cell-index = &lt;<span class="hljs-number">1</span>&gt;;                                <span class="hljs-comment">// CSI &#x786C;&#x4EF6;&#x603B;&#x7EBF;&#x7D22;&#x5F15;&#x53F7; 1</span>
+        compatible = <span class="hljs-string">&quot;qcom,csiphy-v3.5&quot;</span>, <span class="hljs-string">&quot;qcom,csiphy&quot;</span>;
+        reg = &lt;<span class="hljs-number">0xc825000</span> <span class="hljs-number">0x1000</span>&gt;, &lt;<span class="hljs-number">0xca00124</span> <span class="hljs-number">0x4</span>&gt;;
+        reg-names = <span class="hljs-string">&quot;csiphy&quot;</span>, <span class="hljs-string">&quot;csiphy_clk_mux&quot;</span>;        <span class="hljs-comment">// cisphy &#x5BC4;&#x5B58;&#x5668;&#x5730;&#x5740;&#x4E3A; 0xc825000, &#x957F;&#x5EA6;&#x4E3A; 0x1000</span>
+                                                    <span class="hljs-comment">// csiphy_clk_mux &#x5BC4;&#x5B58;&#x5668;&#x5730;&#x5740;&#x4E3A; 0xca00124 ,&#x957F;&#x5EA6;&#x4E3A; 0x4</span>
+        interrupts = &lt;<span class="hljs-number">0</span> <span class="hljs-number">79</span> <span class="hljs-number">0</span>&gt;;
+        interrupt-names = <span class="hljs-string">&quot;csiphy&quot;</span>;
+        ...... <span class="hljs-comment">// &#x6B64;&#x5904;&#x7701;&#x7565;&#x4E00;&#x5927;&#x6BB5;&#x4EE3;&#x7801;&#xFF0C;&#x5185;&#x5BB9;&#x548C;&#x524D;&#x9762; CSI 0 &#x4E00;&#x6837;&#xFF0C;&#x914D;&#x7F6E;clk &#x53CA;&#x5176;&#x901F;&#x7387;</span>
+    };
+</code></pre>
+<h4 id="13-sdm660-camera-sensor-mtpdtsi">1.3 sdm660-camera-sensor-mtp.dtsi</h4>
+<p>&#x6587;&#x4EF6; <em>sdm660-pinctrl.dtsi</em>&#x548C; <em>sdm660-camera-sensor-mtp.dtsi</em>&#x662F;&#x5728; <em>sdm660-mtp.dtsi</em>&#x4E2D;&#x88AB;&#x5305;&#x542B;&#x7684;&#x3002;</p>
+<pre><code class="lang-c">\kernel\msm<span class="hljs-number">-4.4</span>\arch\arm\boot\dts\qcom\sdm660-mtp.dtsi
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;sdm660-pinctrl.dtsi&quot;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;sdm660-camera-sensor-mtp.dtsi&quot;</span></span>
+</code></pre>
+<p><em>sdm660-camera-sensor-mtp.dtsi</em>&#x662F;kernel camera &#x91CD;&#x70B9;&#x8981;&#x914D;&#x7F6E;&#x7684;&#x6587;&#x4EF6;</p>
+<p>&#x5176;&#x4E2D;&#x5305;&#x62EC;&#x4E86; camera &#x95EA;&#x5149;&#x706F;&#x7684;&#x914D;&#x7F6E;&#xFF0C;avdd/dovdd/dvdd/vaf &#x7B49;&#x7535;&#x538B;&#x7684;&#x914D;&#x7F6E;&#xFF0C;camera &#x9A6C;&#x8FBE;&#x7684;&#x914D;&#x7F6E; &#xFF0C;eeprom&#x7684;&#x914D;&#x7F6E;&#xFF0C;camera sensor&#x7684;&#x914D;&#x7F6E;&#x3002;</p>
+<h5 id="131-camera-sensor-dts&#x914D;&#x7F6E;">1.3.1 Camera Sensor DTS&#x914D;&#x7F6E;</h5>
+<pre><code class="lang-c">\kernel\msm<span class="hljs-number">-4.4</span>\arch\arm\boot\dts\qcom\sdm660-camera-sensor-mtp.dtsi
+\kernel\msm<span class="hljs-number">-4.4</span>\Documentation\devicetree\bindings\media\video\msm-cci.txt
+
+&amp;cci {
+    qcom,camera@<span class="hljs-number">0</span> {
+        cell-index = &lt;<span class="hljs-number">0</span>&gt;;            <span class="hljs-comment">// Camera&#x7D22;&#x5F15;&#x53F7; 0&#xFF0C;&#x6B64;&#x5904;&#x6CE8;&#x610F;&#x4E0D;&#x8981;&#x91CD;&#x590D;&#x4E86;</span>
+        compatible = <span class="hljs-string">&quot;qcom,camera&quot;</span>;
+        reg = &lt;<span class="hljs-number">0x0</span>&gt;;                <span class="hljs-comment">// &#x548C;&#x7D22;&#x5F15;&#x53F7;&#x4E00;&#x6837;</span>
+        qcom,csiphy-sd-index = &lt;<span class="hljs-number">0</span>&gt;;    <span class="hljs-comment">// &#x4F7F;&#x7528; CSI 0&#xFF0C;&#x5177;&#x4F53;&#x6839;&#x636E;&#x786C;&#x4EF6;&#x51B3;&#x5B9A;&#xFF0C;&#x4E00;&#x822C;&#x6765;&#x8BF4;&#xFF0C; 0&#xFF1A;&#x540E;&#x6444;&#xFF0C; 1&#xFF1A;&#x524D;&#x6444;</span>
+        qcom,csid-sd-index = &lt;<span class="hljs-number">0</span>&gt;;    <span class="hljs-comment">// &#x4F7F;&#x7528; CSI 0 </span>
+        qcom,mount-angle = &lt;<span class="hljs-number">90</span>&gt;;    <span class="hljs-comment">// Sensor &#x6210;&#x50CF;&#x65B9;&#x5411;&#x4E0E;&#x4E3B;&#x677F;&#x7684;&#x89D2;&#x5EA6;&#xFF0C;camear&#x65CB;&#x8F6C;&#x89D2;&#x5EA6;</span>
+        qcom,led-flash-src = &lt;&amp;led_flash0&gt;; <span class="hljs-comment">// &#x95EA;&#x5149;&#x706F;&#xFF0C;&#x4F7F;&#x7528; led_flash0</span>
+        qcom,actuator-src = &lt;&amp;actuator0&gt;;     <span class="hljs-comment">// &#x9A6C;&#x8FBE;&#xFF0C;&#x4F7F;&#x7528; actuator0</span>
+        qcom,ois-src = &lt;&amp;ois0&gt;;                <span class="hljs-comment">// &#x662F;&#x5426;&#x652F;&#x6301; &#x5149;&#x5B66;&#x9632;&#x6296;</span>
+        qcom,eeprom-src = &lt;&amp;eeprom1&gt;;        <span class="hljs-comment">// eeprom 1</span>
+        cam_vio-supply = &lt;&amp;pm660_l11&gt;;                        <span class="hljs-comment">// IO voltage          IO&#x53E3;&#x7535;&#x538B; VDDIO&#x2002;&#x6570;&#x5B57;&#x2002;IO&#x2002;&#x7535;&#x6E90;&#x4E3B;&#x8981;&#x7ED9;&#x2002;I2C&#x2002;&#x90E8;&#x5206;&#x4F9B;&#x7535;&#xFF1B;</span>
+        cam_vana-supply = &lt;&amp;cam_avdd_gpio_regulator&gt;;        <span class="hljs-comment">// analog voltage    &#x6A21;&#x62DF;&#x7535;&#x538B; AVDD&#x2002;&#x6A21;&#x62DF;&#x4F9B;&#x7535;&#xFF0C;&#x4E3B;&#x8981;&#x7ED9;&#x611F;&#x5149;&#x533A;&#x548C;&#x2002;ADC&#x2002;&#x90E8;&#x5206;&#x4F9B;&#x7535;&#xFF1B;</span>
+        cam_vdig-supply = &lt;&amp;cam_rear_dvdd_gpio_regulator&gt;;    <span class="hljs-comment">// digital voltage    &#x6570;&#x5B57;&#x7535;&#x538B;DVDD&#x2002;&#x6570;&#x5B57;&#x4F9B;&#x7535;&#xFF0C;&#x4E3B;&#x8981;&#x7ED9;&#x2002;ISP&#x2002;&#x4F9B;&#x7535;</span>
+        cam_vaf-supply = &lt;&amp;cam_vaf_gpio_regulator&gt;;            <span class="hljs-comment">// AF voltage        Camera&#x2002;&#x81EA;&#x52A8;&#x5BF9;&#x7126;&#x9A6C;&#x8FBE;&#x7684;&#x4F9B;&#x7535;</span>
+        cam_v_custom1-supply = &lt;&amp;cam_dovdd_gpio_regulator&gt;;
+        qcom,cam-vreg-name = <span class="hljs-string">&quot;cam_vio&quot;</span>, <span class="hljs-string">&quot;cam_vana&quot;</span>, <span class="hljs-string">&quot;cam_vdig&quot;</span>, <span class="hljs-string">&quot;cam_vaf&quot;</span>,<span class="hljs-string">&quot;cam_v_custom1&quot;</span>;   <span class="hljs-comment">// &#x4F9B;&#x7535;&#x914D;&#x7F6E; &#x53CA;&#x5BF9;&#x5E94;&#x7684; &#x7535;&#x538B;&#xFF0C;&#x8BE6;&#x89C1;&#x4E0B;</span>
+        qcom,cam-vreg-min-voltage = &lt;<span class="hljs-number">1780000</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>&gt;;
+        qcom,cam-vreg-max-voltage = &lt;<span class="hljs-number">1950000</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>&gt;;
+        qcom,cam-vreg-op-mode = &lt;<span class="hljs-number">105000</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>&gt;;
+        qcom,gpio-no-mux = &lt;<span class="hljs-number">0</span>&gt;;        <span class="hljs-comment">// 1:&#x8868;&#x793A; gpio mux &#x4E0D;&#x53EF;&#x7528;   0:&#x8868;&#x793A;&#x53EF;&#x7528;</span>
+        pinctrl-names = <span class="hljs-string">&quot;cam_default&quot;</span>, <span class="hljs-string">&quot;cam_suspend&quot;</span>;    <span class="hljs-comment">// Camera gpio clk &#x548C; reset gpio &#x914D;&#x7F6E; </span>
+        pinctrl<span class="hljs-number">-0</span> = &lt;&amp;cam_sensor_mclk0_active &amp;cam_sensor_rear_active&gt;;
+        pinctrl<span class="hljs-number">-1</span> = &lt;&amp;cam_sensor_mclk0_suspend &amp;cam_sensor_rear_suspend&gt;;
+        gpios = &lt;&amp;tlmm <span class="hljs-number">32</span> <span class="hljs-number">0</span>&gt;, &lt;&amp;tlmm <span class="hljs-number">46</span> <span class="hljs-number">0</span>&gt;;
+        qcom,gpio-reset = &lt;<span class="hljs-number">1</span>&gt;;
+        qcom,gpio-req-tbl-num = &lt;<span class="hljs-number">0</span> <span class="hljs-number">1</span>&gt;;
+        qcom,gpio-req-tbl-flags = &lt;<span class="hljs-number">1</span> <span class="hljs-number">0</span>&gt;;
+        qcom,gpio-req-tbl-label = <span class="hljs-string">&quot;CAMIF_MCLK0&quot;</span>, <span class="hljs-string">&quot;CAM_RESET0&quot;</span>;
+        qcom,sensor-position = &lt;<span class="hljs-number">0</span>&gt;;        <span class="hljs-comment">// 1:&#x524D;&#x7F6E;   0:&#x540E;&#x7F6E;</span>
+        qcom,sensor-mode = &lt;<span class="hljs-number">0</span>&gt;;            
+            ===&gt;{  @ \kernel\msm<span class="hljs-number">-4.4</span>\Documentation\devicetree\bindings\media\video\msm-cci.txt
+            - qcom,sensor-mode : should contain sensor mode supported
+                - <span class="hljs-number">0</span> -&gt; back camera <span class="hljs-number">2</span>D
+                - <span class="hljs-number">1</span> -&gt; front camera <span class="hljs-number">2</span>D
+                - <span class="hljs-number">2</span> -&gt; back camera <span class="hljs-number">3</span>D
+                - <span class="hljs-number">3</span> -&gt; back camera <span class="hljs-keyword">int</span> <span class="hljs-number">3</span>D
+            }
+        qcom,cci-master = &lt;<span class="hljs-number">0</span>&gt;;        <span class="hljs-comment">// I2C 0</span>
+        status = <span class="hljs-string">&quot;ok&quot;</span>;
+        clocks = &lt;&amp;clock_mmss MCLK0_CLK_SRC&gt;, &lt;&amp;clock_mmss MMSS_CAMSS_MCLK0_CLK&gt;;
+        clock-names = <span class="hljs-string">&quot;cam_src_clk&quot;</span>, <span class="hljs-string">&quot;cam_clk&quot;</span>;
+        qcom,clock-rates = &lt;<span class="hljs-number">24000000</span> <span class="hljs-number">0</span>&gt;;    <span class="hljs-comment">// clock rate in Hz</span>
+
+<span class="hljs-comment">//- qcom,sensor-type : should contain format of data that sensor streams</span>
+<span class="hljs-comment">//    - 0 -&gt; bayer format</span>
+<span class="hljs-comment">//    - 1 -&gt; yuv format</span>
+
+    };
+
+    qcom,camera@<span class="hljs-number">1</span> {
+        cell-index = &lt;<span class="hljs-number">1</span>&gt;;        <span class="hljs-comment">// Camera&#x7D22;&#x5F15;&#x53F7; 1&#xFF0C;&#x6B64;&#x5904;&#x6CE8;&#x610F;&#x4E0D;&#x8981;&#x91CD;&#x590D;&#x4E86;</span>
+        compatible = <span class="hljs-string">&quot;qcom,camera&quot;</span>;
+        reg = &lt;<span class="hljs-number">0x1</span>&gt;;
+        qcom,csiphy-sd-index = &lt;<span class="hljs-number">1</span>&gt;;
+        qcom,csid-sd-index = &lt;<span class="hljs-number">1</span>&gt;;
+        qcom,mount-angle = &lt;<span class="hljs-number">90</span>&gt;;
+        qcom,actuator-src = &lt;&amp;actuator1&gt;;
+        qcom,eeprom-src = &lt;&amp;eeprom1&gt;;
+        cam_vio-supply = &lt;&amp;cam_dovdd_gpio_regulator&gt;;
+        cam_vana-supply = &lt;&amp;cam_avdd_gpio_regulator&gt;;
+        cam_vdig-supply = &lt;&amp;cam_rear_dvdd_gpio_regulator&gt;;
+        cam_vaf-supply = &lt;&amp;cam_vaf_gpio_regulator&gt;;
+        qcom,cam-vreg-name = <span class="hljs-string">&quot;cam_vio&quot;</span>, <span class="hljs-string">&quot;cam_vana&quot;</span>, <span class="hljs-string">&quot;cam_vdig&quot;</span>, <span class="hljs-string">&quot;cam_vaf&quot;</span>;
+        qcom,cam-vreg-min-voltage = &lt;<span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>&gt;;
+        qcom,cam-vreg-max-voltage = &lt;<span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>&gt;;
+        qcom,cam-vreg-op-mode = &lt;<span class="hljs-number">105000</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>&gt;;
+        qcom,gpio-no-mux = &lt;<span class="hljs-number">0</span>&gt;;
+        pinctrl-names = <span class="hljs-string">&quot;cam_default&quot;</span>, <span class="hljs-string">&quot;cam_suspend&quot;</span>;
+        pinctrl<span class="hljs-number">-0</span> = &lt;&amp;cam_sensor_mclk2_active &amp;cam_sensor_rear2_active&gt;;
+        pinctrl<span class="hljs-number">-1</span> = &lt;&amp;cam_sensor_mclk2_suspend &amp;cam_sensor_rear2_suspend&gt;;
+        gpios = &lt;&amp;tlmm <span class="hljs-number">34</span> <span class="hljs-number">0</span>&gt;, &lt;&amp;tlmm <span class="hljs-number">48</span> <span class="hljs-number">0</span>&gt;;
+        qcom,gpio-reset = &lt;<span class="hljs-number">1</span>&gt;;
+        qcom,gpio-req-tbl-num = &lt;<span class="hljs-number">0</span> <span class="hljs-number">1</span>&gt;;
+        qcom,gpio-req-tbl-flags = &lt;<span class="hljs-number">1</span> <span class="hljs-number">0</span>&gt;;
+        qcom,gpio-req-tbl-label = <span class="hljs-string">&quot;CAMIF_MCLK&quot;</span>, <span class="hljs-string">&quot;CAM_RESET&quot;</span>;
+        qcom,sensor-position = &lt;<span class="hljs-number">0</span>&gt;;        <span class="hljs-comment">// 1:&#x524D;&#x7F6E;   0:&#x540E;&#x7F6E;</span>
+        qcom,sensor-mode = &lt;<span class="hljs-number">0</span>&gt;;            <span class="hljs-comment">// 0 -&gt; back camera 2D</span>
+        qcom,cci-master = &lt;<span class="hljs-number">1</span>&gt;;            <span class="hljs-comment">// I2C 1</span>
+        status = <span class="hljs-string">&quot;ok&quot;</span>;
+        clocks = &lt;&amp;clock_mmss MCLK2_CLK_SRC&gt;, &lt;&amp;clock_mmss MMSS_CAMSS_MCLK2_CLK&gt;;
+        clock-names = <span class="hljs-string">&quot;cam_src_clk&quot;</span>, <span class="hljs-string">&quot;cam_clk&quot;</span>;
+        qcom,clock-rates = &lt;<span class="hljs-number">24000000</span> <span class="hljs-number">0</span>&gt;;
+    };
+
+    qcom,camera@<span class="hljs-number">2</span> {
+        cell-index = &lt;<span class="hljs-number">2</span>&gt;;            <span class="hljs-comment">// Camera&#x7D22;&#x5F15;&#x53F7; 2&#xFF0C;&#x6B64;&#x5904;&#x6CE8;&#x610F;&#x4E0D;&#x8981;&#x91CD;&#x590D;&#x4E86;</span>
+        compatible = <span class="hljs-string">&quot;qcom,camera&quot;</span>;
+        reg = &lt;<span class="hljs-number">0x02</span>&gt;;
+        qcom,csiphy-sd-index = &lt;<span class="hljs-number">2</span>&gt;;
+        qcom,csid-sd-index = &lt;<span class="hljs-number">2</span>&gt;;
+        qcom,mount-angle = &lt;<span class="hljs-number">270</span>&gt;;
+        <span class="hljs-comment">//qcom,actuator-src = &lt;&amp;actuator2&gt;;        // &#x524D;&#x62A5;&#x4E0D;&#x9700;&#x8981;&#x9A6C;&#x8FBE;&#xFF0C;&#x6240;&#x4EE5;&#x6B64;&#x5904;&#x4E0D;&#x7528;&#x914D;&#x7F6E;&#x9A6C;&#x8FBE; &#xFF0C;&#x540C;&#x6837;&#x4E0B;&#x9762;&#x4E5F;&#x4E0D;&#x7528;&#x914D;&#x7F6E; af voltage</span>
+        qcom,eeprom-src = &lt;&amp;eeprom2&gt;;
+        cam_vio-supply = &lt;&amp;pm660_l11&gt;;
+        cam_vana-supply = &lt;&amp;cam_avdd_gpio_regulator&gt;;
+        cam_vdig-supply = &lt;&amp;cam_dvdd_gpio_regulator&gt;;
+        qcom,cam-vreg-name = <span class="hljs-string">&quot;cam_vio&quot;</span>, <span class="hljs-string">&quot;cam_vana&quot;</span>, <span class="hljs-string">&quot;cam_vdig&quot;</span>;
+        qcom,cam-vreg-min-voltage = &lt;<span class="hljs-number">1780000</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>&gt;;
+        qcom,cam-vreg-max-voltage = &lt;<span class="hljs-number">1950000</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>&gt;;
+        qcom,cam-vreg-op-mode = &lt;<span class="hljs-number">105000</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span>&gt;;
+        qcom,gpio-no-mux = &lt;<span class="hljs-number">0</span>&gt;;
+        pinctrl-names = <span class="hljs-string">&quot;cam_default&quot;</span>, <span class="hljs-string">&quot;cam_suspend&quot;</span>;
+        pinctrl<span class="hljs-number">-0</span> = &lt;&amp;cam_sensor_mclk1_active &amp;cam_sensor_front_active&gt;;
+        pinctrl<span class="hljs-number">-1</span> = &lt;&amp;cam_sensor_mclk1_suspend &amp;cam_sensor_front_suspend&gt;;
+        gpios = &lt;&amp;tlmm <span class="hljs-number">33</span> <span class="hljs-number">0</span>&gt;, &lt;&amp;tlmm <span class="hljs-number">47</span> <span class="hljs-number">0</span>&gt;;
+        qcom,gpio-reset = &lt;<span class="hljs-number">1</span>&gt;;
+        qcom,gpio-req-tbl-num = &lt;<span class="hljs-number">0</span> <span class="hljs-number">1</span>&gt;;
+        qcom,gpio-req-tbl-flags = &lt;<span class="hljs-number">1</span> <span class="hljs-number">0</span>&gt;;
+        qcom,gpio-req-tbl-label = <span class="hljs-string">&quot;CAMIF_MCLK2&quot;</span>, <span class="hljs-string">&quot;CAM_RESET2&quot;</span>;
+        qcom,sensor-position = &lt;<span class="hljs-number">1</span>&gt;;            <span class="hljs-comment">// 1:&#x524D;&#x7F6E;   0:&#x540E;&#x7F6E;</span>
+        qcom,sensor-mode = &lt;<span class="hljs-number">1</span>&gt;;                <span class="hljs-comment">// 1 -&gt; front camera 2D</span>
+        qcom,cci-master = &lt;<span class="hljs-number">1</span>&gt;;                <span class="hljs-comment">// I2C 1</span>
+        status = <span class="hljs-string">&quot;ok&quot;</span>;
+        clocks = &lt;&amp;clock_mmss MCLK1_CLK_SRC&gt;, &lt;&amp;clock_mmss MMSS_CAMSS_MCLK1_CLK&gt;;
+        clock-names = <span class="hljs-string">&quot;cam_src_clk&quot;</span>, <span class="hljs-string">&quot;cam_clk&quot;</span>;
+        qcom,clock-rates = &lt;<span class="hljs-number">24000000</span> <span class="hljs-number">0</span>&gt;;
+    };
+}
+</code></pre>
+<h5 id="132-camera-&#x4F9B;&#x7535;dts&#x914D;&#x7F6E;&#xFF08;avdddovdddvddvaf&#xFF09;">1.3.2 Camera &#x4F9B;&#x7535;DTS&#x914D;&#x7F6E;&#xFF08;avdd/dovdd/dvdd/vaf&#xFF09;</h5>
+<p>Camera &#x4F9B;&#x7535;&#x914D;&#x7F6E;&#x8981;&#x6839;&#x636E;&#x5177;&#x4F53;&#x7684;&#x786C;&#x4EF6;&#x6765;&#x914D;&#x7F6E;&#xFF0C;</p>
+<p>&#x5982;&#x679C;&#x8D70;&#x7684;&#x662F; pm &#x7535;&#x6E90;&#x5219;&#x914D;&#x7F6E;&#x5982;<em>cam_vio-supply = &lt;&amp;pm660_l11&gt;</em>;</p>
+<p>&#x5982;&#x679C;&#x8D70;&#x7684;&#x662F;&#x5177;&#x4F53;GPIO&#x4F9B;&#x7535;&#xFF0C;&#x5219;&#x8981;&#x505A;&#x5982;&#x4E0B;&#x914D;&#x7F6E; &#xFF0C;&#x8C03;&#x7528;&#x65F6;&#x914D;&#x7F6E;&#x5982;<em>cam_vana-supply = &lt;&amp;cam_avdd_gpio_regulator&gt;</em>;
+&#x5404;GPIO &#x4F9B;&#x7535;&#x914D;&#x7F6E;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c">\kernel\msm<span class="hljs-number">-4.4</span>\arch\arm\boot\dts\qcom\sdm660-camera-sensor-mtp.dtsi
+&amp;soc {
+    cam_avdd_gpio_regulator: cam_avdd_fixed_regulator {
+        compatible = <span class="hljs-string">&quot;regulator-fixed&quot;</span>;
+        regulator-name = <span class="hljs-string">&quot;cam_avdd_gpio_regulator&quot;</span>;
+        regulator-min-microvolt = &lt;<span class="hljs-number">3600000</span>&gt;;
+        regulator-max-microvolt = &lt;<span class="hljs-number">3600000</span>&gt;;
+        enable-active-high;
+        gpio = &lt;&amp;tlmm <span class="hljs-number">51</span> <span class="hljs-number">0</span>&gt;;            <span class="hljs-comment">// &#x4F7F;&#x7528; CPU&#x7684; GPIO 51 &#xFF0C;&#x4F9B;&#x7535; 3.6v</span>
+        vin-supply = &lt;&amp;pm660l_bob&gt;;
+    };
+
+    cam_dovdd_gpio_regulator: cam_dovdd_fixed_regulator {
+        compatible = <span class="hljs-string">&quot;regulator-fixed&quot;</span>;
+        regulator-name = <span class="hljs-string">&quot;cam_dovdd_gpio_regulator&quot;</span>;
+        regulator-min-microvolt = &lt;<span class="hljs-number">3600000</span>&gt;;
+        regulator-max-microvolt = &lt;<span class="hljs-number">3600000</span>&gt;;
+        enable-active-high;
+        gpio = &lt;&amp;tlmm <span class="hljs-number">0</span> <span class="hljs-number">0</span>&gt;;                <span class="hljs-comment">// &#x4F7F;&#x7528; CPU&#x7684; GPIO 0 &#xFF0C;&#x4F9B;&#x7535; 3.6v</span>
+        vin-supply = &lt;&amp;pm660l_bob&gt;;
+    };
+
+    cam_dvdd_gpio_regulator: cam_dvdd_fixed_regulator {
+        compatible = <span class="hljs-string">&quot;regulator-fixed&quot;</span>;
+        regulator-name = <span class="hljs-string">&quot;cam_dvdd_gpio_regulator&quot;</span>;
+        regulator-min-microvolt = &lt;<span class="hljs-number">3600000</span>&gt;;
+        regulator-max-microvolt = &lt;<span class="hljs-number">3600000</span>&gt;;
+        enable-active-high;
+        gpio = &lt;&amp;pm660l_gpios <span class="hljs-number">3</span> <span class="hljs-number">0</span>&gt;;            <span class="hljs-comment">// &#x4F7F;&#x7528; PM660L&#x7684; gpio 3 &#xFF0C;&#x4F9B;&#x7535; 3.6v</span>
+        vin-supply = &lt;&amp;pm660l_bob&gt;;
+    };
+
+    cam_rear_dvdd_gpio_regulator: cam_rear_dvdd_fixed_regulator {
+        compatible = <span class="hljs-string">&quot;regulator-fixed&quot;</span>;
+        regulator-name = <span class="hljs-string">&quot;cam_rear_dvdd_gpio_regulator&quot;</span>;
+        regulator-min-microvolt = &lt;<span class="hljs-number">3600000</span>&gt;;
+        regulator-max-microvolt = &lt;<span class="hljs-number">3600000</span>&gt;;
+        enable-active-high;
+        gpio = &lt;&amp;pm660l_gpios <span class="hljs-number">4</span> <span class="hljs-number">0</span>&gt;;            <span class="hljs-comment">// &#x4F7F;&#x7528; PM660L&#x7684; gpio 4 &#xFF0C;&#x4F9B;&#x7535; 3.6v</span>
+        vin-supply = &lt;&amp;pm660l_bob&gt;;
+    };
+
+    cam_vaf_gpio_regulator:cam_vaf_fixed_regulator {
+        compatible = <span class="hljs-string">&quot;regulator-fixed&quot;</span>;
+        regulator-name = <span class="hljs-string">&quot;cam_vaf_gpio_regulator&quot;</span>;
+        regulator-min-microvolt = &lt;<span class="hljs-number">3600000</span>&gt;;
+        regulator-max-microvolt = &lt;<span class="hljs-number">3600000</span>&gt;;
+        enable-active-high;
+        gpio = &lt;&amp;tlmm <span class="hljs-number">50</span> <span class="hljs-number">0</span>&gt;;                <span class="hljs-comment">// &#x4F7F;&#x7528; CPU&#x7684; gpio 50 &#xFF0C;&#x4F9B;&#x7535; 3.6v</span>
+        vin-supply = &lt;&amp;pm660l_bob&gt;;
+    };
+};
+</code></pre>
+<h5 id="133-camera-&#x95EA;&#x5149;&#x706F;dts&#x914D;&#x7F6E;">1.3.3 Camera &#x95EA;&#x5149;&#x706F;DTS&#x914D;&#x7F6E;</h5>
+<pre><code class="lang-c">\kernel\msm<span class="hljs-number">-4.4</span>\arch\arm\boot\dts\qcom\sdm660-camera-sensor-mtp.dtsi
+&amp;soc {
+    led_flash0: qcom,camera-flash@<span class="hljs-number">0</span> {
+        cell-index = &lt;<span class="hljs-number">0</span>&gt;;                    <span class="hljs-comment">// &#x95EA;&#x5149;&#x706F;&#x914D;&#x7F6E;&#x7D22;&#x5F15; 0</span>
+        compatible = <span class="hljs-string">&quot;qcom,camera-flash&quot;</span>;
+        <span class="hljs-comment">// &#x5982;&#x4E0B;&#xFF1A; &#x5982;&#x679C;&#x4E24;&#x9897;&#x706F;&#x7684;&#x8BDD;&#xFF0C;&#x5219;&#x914D;&#x7F6E;&#x5BF9;&#x5E94;&#x7684;&#x4E24;&#x4E2A;&#x4F9B;&#x7535;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x4E00;&#x9897;&#x706F;&#x7684;&#x4E3B;&#x8BDD;&#xFF0C;&#x5219;&#x914D;&#x7F6E;&#x4E00;&#x4E2A;&#x4F9B;&#x7535;</span>
+        qcom,flash-source = &lt;&amp;pm660l_flash0 &amp;pm660l_flash1&gt;;<span class="hljs-comment">//&#x95EA;&#x5149;&#x706F;&#x4F9B;&#x7535;&#x914D;&#x7F6E;</span>
+        qcom,torch-source = &lt;&amp;pm660l_torch0 &amp;pm660l_torch1&gt;;<span class="hljs-comment">//&#x624B;&#x7535;&#x7B52;&#x4F9B;&#x7535;&#x914D;&#x7F6E;</span>
+        qcom,<span class="hljs-keyword">switch</span>-source = &lt;&amp;pm660l_switch0&gt;;
+        status = <span class="hljs-string">&quot;ok&quot;</span>;
+    };
+
+    led_flash1: qcom,camera-flash@<span class="hljs-number">1</span> {
+        cell-index = &lt;<span class="hljs-number">1</span>&gt;;                    <span class="hljs-comment">// &#x95EA;&#x5149;&#x706F;&#x914D;&#x7F6E;&#x7D22;&#x5F15; 1</span>
+        compatible = <span class="hljs-string">&quot;qcom,camera-flash&quot;</span>;
+        qcom,flash-source = &lt;&amp;pm660l_flash2&gt;; <span class="hljs-comment">//&#x95EA;&#x5149;&#x706F;&#x4F9B;&#x7535;&#x914D;&#x7F6E;</span>
+        qcom,torch-source = &lt;&amp;pm660l_torch2&gt;; <span class="hljs-comment">//&#x624B;&#x7535;&#x7B52;&#x4F9B;&#x7535;&#x914D;&#x7F6E;</span>
+        qcom,<span class="hljs-keyword">switch</span>-source = &lt;&amp;pm660l_switch1&gt;;
+        status = <span class="hljs-string">&quot;ok&quot;</span>;
+    };
+</code></pre>
+<p>&#x4E0A;&#x8FF0;&#x7684;&#x76F8;&#x5173;&#x7535;&#x6E90;&#x914D;&#x7F6E;&#x5747;&#x5728; <em>msm-pm660l.dtsi</em>&#x6587;&#x4EF6;&#x4E2D;</p>
+<pre><code class="lang-c"> \kernel\msm<span class="hljs-number">-4.4</span>\arch\arm\boot\dts\qcom\msm-pm660l.dtsi
+
+        flash_led: qcom,leds@d300 {
+            compatible = <span class="hljs-string">&quot;qcom,qpnp-flash-led-v2&quot;</span>;
+            reg = &lt;<span class="hljs-number">0xd300</span> <span class="hljs-number">0x100</span>&gt;;
+            label = <span class="hljs-string">&quot;flash&quot;</span>;
+            interrupts = &lt;<span class="hljs-number">0x3</span> <span class="hljs-number">0xd3</span> <span class="hljs-number">0x0</span> IRQ_TYPE_EDGE_RISING&gt;,
+                    &lt;<span class="hljs-number">0x3</span> <span class="hljs-number">0xd3</span> <span class="hljs-number">0x3</span> IRQ_TYPE_EDGE_RISING&gt;,
+                    &lt;<span class="hljs-number">0x3</span> <span class="hljs-number">0xd3</span> <span class="hljs-number">0x4</span> IRQ_TYPE_EDGE_RISING&gt;;
+            interrupt-names = <span class="hljs-string">&quot;led-fault-irq&quot;</span>,
+                    <span class="hljs-string">&quot;all-ramp-down-done-irq&quot;</span>,
+                    <span class="hljs-string">&quot;all-ramp-up-done-irq&quot;</span>;
+            qcom,hdrm-<span class="hljs-keyword">auto</span>-mode;
+            qcom,<span class="hljs-keyword">short</span>-circuit-det;
+            qcom,open-circuit-det;
+            qcom,vph-droop-det;
+            qcom,thermal-derate-en;
+            qcom,thermal-derate-current = &lt;<span class="hljs-number">200</span> <span class="hljs-number">500</span> <span class="hljs-number">1000</span>&gt;;
+            qcom,isc-delay = &lt;<span class="hljs-number">192</span>&gt;;
+            qcom,pmic-revid = &lt;&amp;pm660l_revid&gt;;
+
+            pm660l_flash0: qcom,flash_0 {
+                label = <span class="hljs-string">&quot;flash&quot;</span>;
+                qcom,led-name = <span class="hljs-string">&quot;led:flash_0&quot;</span>;
+                qcom,max-current = &lt;<span class="hljs-number">1500</span>&gt;;    <span class="hljs-comment">// &#x6700;&#x5927;&#x7535;&#x6D41; 1.5A</span>
+                qcom,<span class="hljs-keyword">default</span>-led-trigger = <span class="hljs-string">&quot;flash0_trigger&quot;</span>;
+                qcom,id = &lt;<span class="hljs-number">0</span>&gt;;                <span class="hljs-comment">// flash0</span>
+                qcom,current-ma = &lt;<span class="hljs-number">1000</span>&gt;;    
+                qcom,duration-ms = &lt;<span class="hljs-number">1280</span>&gt;;
+                qcom,ires-ua = &lt;<span class="hljs-number">12500</span>&gt;;
+                qcom,hdrm-voltage-mv = &lt;<span class="hljs-number">325</span>&gt;;
+                qcom,hdrm-vol-hi-lo-win-mv = &lt;<span class="hljs-number">100</span>&gt;;
+            };
+
+            pm660l_flash1: qcom,flash_1 {
+                label = <span class="hljs-string">&quot;flash&quot;</span>;
+                qcom,led-name = <span class="hljs-string">&quot;led:flash_1&quot;</span>;
+                qcom,max-current = &lt;<span class="hljs-number">1500</span>&gt;;
+                qcom,<span class="hljs-keyword">default</span>-led-trigger = <span class="hljs-string">&quot;flash1_trigger&quot;</span>;
+                qcom,id = &lt;<span class="hljs-number">1</span>&gt;;
+                qcom,current-ma = &lt;<span class="hljs-number">1000</span>&gt;;
+                qcom,duration-ms = &lt;<span class="hljs-number">1280</span>&gt;;
+                qcom,ires-ua = &lt;<span class="hljs-number">12500</span>&gt;;
+                qcom,hdrm-voltage-mv = &lt;<span class="hljs-number">325</span>&gt;;
+                qcom,hdrm-vol-hi-lo-win-mv = &lt;<span class="hljs-number">100</span>&gt;;
+            };
+
+            pm660l_flash2: qcom,flash_2 {
+                label = <span class="hljs-string">&quot;flash&quot;</span>;
+                qcom,led-name = <span class="hljs-string">&quot;led:flash_2&quot;</span>;
+                qcom,max-current = &lt;<span class="hljs-number">750</span>&gt;;
+                qcom,<span class="hljs-keyword">default</span>-led-trigger = <span class="hljs-string">&quot;flash2_trigger&quot;</span>;
+                qcom,id = &lt;<span class="hljs-number">2</span>&gt;;
+                qcom,current-ma = &lt;<span class="hljs-number">500</span>&gt;;
+                qcom,duration-ms = &lt;<span class="hljs-number">1280</span>&gt;;
+                qcom,ires-ua = &lt;<span class="hljs-number">12500</span>&gt;;
+                qcom,hdrm-voltage-mv = &lt;<span class="hljs-number">325</span>&gt;;
+                qcom,hdrm-vol-hi-lo-win-mv = &lt;<span class="hljs-number">100</span>&gt;;
+            };
+            pm660l_torch0: qcom,torch_0 {
+                label = <span class="hljs-string">&quot;torch&quot;</span>;
+                qcom,led-name = <span class="hljs-string">&quot;led:torch_0&quot;</span>;
+                qcom,max-current = &lt;<span class="hljs-number">500</span>&gt;;
+                qcom,<span class="hljs-keyword">default</span>-led-trigger = <span class="hljs-string">&quot;torch0_trigger&quot;</span>;
+                qcom,id = &lt;<span class="hljs-number">0</span>&gt;;
+                qcom,current-ma = &lt;<span class="hljs-number">300</span>&gt;;
+                qcom,ires-ua = &lt;<span class="hljs-number">12500</span>&gt;;
+                qcom,hdrm-voltage-mv = &lt;<span class="hljs-number">325</span>&gt;;
+                qcom,hdrm-vol-hi-lo-win-mv = &lt;<span class="hljs-number">100</span>&gt;;
+            };
+            ......
+            pm660l_switch0: qcom,led_switch_0 {
+                label = <span class="hljs-string">&quot;switch&quot;</span>;
+                qcom,led-name = <span class="hljs-string">&quot;led:switch_0&quot;</span>;
+                qcom,led-mask = &lt;<span class="hljs-number">3</span>&gt;;
+                qcom,<span class="hljs-keyword">default</span>-led-trigger = <span class="hljs-string">&quot;switch0_trigger&quot;</span>;
+            };
+        };
+</code></pre>
+<h5 id="134-camera-&#x9A6C;&#x8FBE;dts&#x914D;&#x7F6E;">1.3.4 Camera &#x9A6C;&#x8FBE;DTS&#x914D;&#x7F6E;</h5>
+<pre><code class="lang-c">&amp;cci {
+    actuator0: qcom,actuator@<span class="hljs-number">0</span> {
+        cell-index = &lt;<span class="hljs-number">0</span>&gt;;
+        reg = &lt;<span class="hljs-number">0x0</span>&gt;;
+        compatible = <span class="hljs-string">&quot;qcom,actuator&quot;</span>;
+        qcom,cci-master = &lt;<span class="hljs-number">0</span>&gt;;        <span class="hljs-comment">// &#x9A6C;&#x8FBE;&#x4F7F;&#x7528;&#x7684; i2c master , I2C 0</span>
+        cam_vaf-supply = &lt;&amp;cam_vaf_gpio_regulator&gt;;    <span class="hljs-comment">// &#x9A6C;&#x8FBE;&#x4F9B;&#x7535;</span>
+        qcom,cam-vreg-name = <span class="hljs-string">&quot;cam_vaf&quot;</span>;
+        qcom,cam-vreg-min-voltage = &lt;<span class="hljs-number">3300000</span>&gt;;
+        qcom,cam-vreg-max-voltage = &lt;<span class="hljs-number">3600000</span>&gt;;
+        qcom,cam-vreg-op-mode = &lt;<span class="hljs-number">100000</span>&gt;;
+    };
+
+    actuator1: qcom,actuator@<span class="hljs-number">1</span> {
+        cell-index = &lt;<span class="hljs-number">1</span>&gt;;
+        reg = &lt;<span class="hljs-number">0x1</span>&gt;;
+        compatible = <span class="hljs-string">&quot;qcom,actuator&quot;</span>;
+        qcom,cci-master = &lt;<span class="hljs-number">1</span>&gt;;        <span class="hljs-comment">// &#x9A6C;&#x8FBE;&#x4F7F;&#x7528;&#x7684; i2c master , I2C 1</span>
+        cam_vaf-supply = &lt;&amp;cam_vaf_gpio_regulator&gt;;
+        qcom,cam-vreg-name = <span class="hljs-string">&quot;cam_vaf&quot;</span>;
+        qcom,cam-vreg-min-voltage = &lt;<span class="hljs-number">3300000</span>&gt;;
+        qcom,cam-vreg-max-voltage = &lt;<span class="hljs-number">3600000</span>&gt;;
+        qcom,cam-vreg-op-mode = &lt;<span class="hljs-number">100000</span>&gt;;
+    };
+</code></pre>
+<h5 id="135-camera-&#x5149;&#x5B66;&#x9632;&#x6296;-osi-dts&#x914D;&#x7F6E;">1.3.5 Camera &#x5149;&#x5B66;&#x9632;&#x6296; OSI DTS&#x914D;&#x7F6E;</h5>
+<pre><code class="lang-c">ois0: qcom,ois@<span class="hljs-number">0</span> {
+        cell-index = &lt;<span class="hljs-number">0</span>&gt;;
+        reg = &lt;<span class="hljs-number">0x0</span>&gt;;
+        compatible = <span class="hljs-string">&quot;qcom,ois&quot;</span>;
+        qcom,cci-master = &lt;<span class="hljs-number">0</span>&gt;;    <span class="hljs-comment">// &#x4F7F;&#x7528; I2C 0</span>
+        gpios = &lt;&amp;tlmm <span class="hljs-number">50</span> <span class="hljs-number">0</span>&gt;;    <span class="hljs-comment">// GPIO 50</span>
+        qcom,gpio-vaf = &lt;<span class="hljs-number">0</span>&gt;;
+        qcom,gpio-req-tbl-num = &lt;<span class="hljs-number">0</span>&gt;;
+        qcom,gpio-req-tbl-flags = &lt;<span class="hljs-number">0</span>&gt;;
+        qcom,gpio-req-tbl-label = <span class="hljs-string">&quot;CAM_VAF&quot;</span>;
+        pinctrl-names = <span class="hljs-string">&quot;cam_default&quot;</span>, <span class="hljs-string">&quot;cam_suspend&quot;</span>;
+        pinctrl<span class="hljs-number">-0</span> = &lt;&amp;cam_actuator_vaf_active&gt;;
+        pinctrl<span class="hljs-number">-1</span> = &lt;&amp;cam_actuator_vaf_suspend&gt;;
+        status = <span class="hljs-string">&quot;disabled&quot;</span>;
+    };
+</code></pre>
+<h5 id="136-camera-eeprom-dts&#x914D;&#x7F6E;">1.3.6 Camera eeprom DTS&#x914D;&#x7F6E;</h5>
+<pre><code class="lang-c">eeprom0: qcom,eeprom@<span class="hljs-number">0</span> {
+        cell-index = &lt;<span class="hljs-number">0</span>&gt;;
+        reg = &lt;<span class="hljs-number">0</span>&gt;;
+        compatible = <span class="hljs-string">&quot;qcom,eeprom&quot;</span>;
+        cam_vio-supply = &lt;&amp;pm660_l11&gt;;
+        cam_vana-supply = &lt;&amp;cam_avdd_gpio_regulator&gt;;
+        cam_vdig-supply = &lt;&amp;cam_rear_dvdd_gpio_regulator&gt;;
+        cam_vaf-supply = &lt;&amp;pm660l_l8&gt;;
+        qcom,cam-vreg-name = <span class="hljs-string">&quot;cam_vio&quot;</span>, <span class="hljs-string">&quot;cam_vana&quot;</span>, <span class="hljs-string">&quot;cam_vdig&quot;</span>, <span class="hljs-string">&quot;cam_vaf&quot;</span>;
+        qcom,cam-vreg-min-voltage = &lt;<span class="hljs-number">1780000</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">2800000</span>&gt;;
+        qcom,cam-vreg-max-voltage = &lt;<span class="hljs-number">1950000</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">3400000</span>&gt;;
+        qcom,cam-vreg-op-mode = &lt;<span class="hljs-number">105000</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-number">100000</span>&gt;;
+        qcom,gpio-no-mux = &lt;<span class="hljs-number">0</span>&gt;;
+        pinctrl-names = <span class="hljs-string">&quot;cam_default&quot;</span>, <span class="hljs-string">&quot;cam_suspend&quot;</span>;
+        pinctrl<span class="hljs-number">-0</span> = &lt;&amp;cam_sensor_mclk0_active &amp;cam_sensor_rear_active&gt;;
+        pinctrl<span class="hljs-number">-1</span> = &lt;&amp;cam_sensor_mclk0_suspend    &amp;cam_sensor_rear_suspend&gt;;
+        gpios = &lt;&amp;tlmm <span class="hljs-number">32</span> <span class="hljs-number">0</span>&gt;, &lt;&amp;tlmm <span class="hljs-number">46</span> <span class="hljs-number">0</span>&gt;;
+        qcom,gpio-reset = &lt;<span class="hljs-number">1</span>&gt;;
+        qcom,gpio-req-tbl-num = &lt;<span class="hljs-number">0</span> <span class="hljs-number">1</span>&gt;;
+        qcom,gpio-req-tbl-flags = &lt;<span class="hljs-number">1</span> <span class="hljs-number">0</span>&gt;;
+        qcom,gpio-req-tbl-label = <span class="hljs-string">&quot;CAMIF_MCLK0&quot;</span>, <span class="hljs-string">&quot;CAM_RESET0&quot;</span>;
+        qcom,sensor-position = &lt;<span class="hljs-number">0</span>&gt;;
+        qcom,sensor-mode = &lt;<span class="hljs-number">0</span>&gt;;
+        qcom,cci-master = &lt;<span class="hljs-number">0</span>&gt;;
+        status = <span class="hljs-string">&quot;ok&quot;</span>;
+        clocks = &lt;&amp;clock_mmss MCLK0_CLK_SRC&gt;, &lt;&amp;clock_mmss MMSS_CAMSS_MCLK0_CLK&gt;;
+        clock-names = <span class="hljs-string">&quot;cam_src_clk&quot;</span>, <span class="hljs-string">&quot;cam_clk&quot;</span>;
+        qcom,clock-rates = &lt;<span class="hljs-number">24000000</span> <span class="hljs-number">0</span>&gt;;
+    };
+</code></pre>
+<h5 id="137-camera-pm660l-gpio-dts&#x914D;&#x7F6E;">1.3.7 Camera PM660L GPIO DTS&#x914D;&#x7F6E;</h5>
+<p>&#x524D;&#x9762;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x5230;&#x4E86;&#x4E24;&#x4E2A; PM660L &#x7684;GPIO&#xFF1A;</p>
+<p><em>gpio = &lt;&amp;pm660l_gpios 3 0&gt;;</em></p>
+<p><em>gpio = &lt;&amp;pm660l_gpios 4 0&gt;;</em></p>
+<p>&#x4E0D;&#x540C;&#x4E8E; CPU&#x7684;gpio &#xFF0C;&#x5176;&#x9700;&#x8981;&#x4F5C;&#x5355;&#x72EC;&#x914D;&#x7F6E;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c">@\kernel\msm<span class="hljs-number">-4.4</span>\arch\arm\boot\dts\qcom\sdm660-camera-sensor-mtp.dtsi
+&amp;pm660l_gpios {
+    gpio@c300 { <span class="hljs-comment">/* GPIO4 -CAMERA SENSOR 0 VDIG*/</span>
+        qcom,mode = &lt;<span class="hljs-number">1</span>&gt;;                <span class="hljs-comment">/* Output */</span>
+        qcom,pull = &lt;<span class="hljs-number">5</span>&gt;;                <span class="hljs-comment">/* No Pull */</span>
+        qcom,vin-sel = &lt;<span class="hljs-number">0</span>&gt;;             <span class="hljs-comment">/* VIN1 GPIO_LV */</span>
+        qcom,src-sel = &lt;<span class="hljs-number">0</span>&gt;;             <span class="hljs-comment">/* GPIO */</span>
+        qcom,invert = &lt;<span class="hljs-number">0</span>&gt;;              <span class="hljs-comment">/* Invert */</span>
+        qcom,master-en = &lt;<span class="hljs-number">1</span>&gt;;           <span class="hljs-comment">/* Enable GPIO */</span>
+        status = <span class="hljs-string">&quot;ok&quot;</span>;
+    };
+
+    gpio@c200 { <span class="hljs-comment">/* GPIO3 -CAMERA SENSOR 2 VDIG*/</span>
+        qcom,mode = &lt;<span class="hljs-number">1</span>&gt;;                <span class="hljs-comment">/* Output */</span>
+        qcom,pull = &lt;<span class="hljs-number">5</span>&gt;;                <span class="hljs-comment">/* No Pull */</span>
+        qcom,vin-sel = &lt;<span class="hljs-number">0</span>&gt;;             <span class="hljs-comment">/* VIN1 GPIO_LV */</span>
+        qcom,src-sel = &lt;<span class="hljs-number">0</span>&gt;;             <span class="hljs-comment">/* GPIO */</span>
+        qcom,invert = &lt;<span class="hljs-number">0</span>&gt;;              <span class="hljs-comment">/* Invert */</span>
+        qcom,master-en = &lt;<span class="hljs-number">1</span>&gt;;           <span class="hljs-comment">/* Enable GPIO */</span>
+        status = <span class="hljs-string">&quot;ok&quot;</span>;
+    };
+};
+</code></pre>
+<h4 id="14-sdm660-pinctrldtsi">1.4 sdm660-pinctrl.dtsi</h4>
+<p>&#x5728;&#x524D;&#x9762; &#x4E2D;&#xFF0C;&#x6709;&#x9700;&#x8981;&#x7528;&#x5230;&#x7684;gpio&#xFF0C;&#x51FA;&#x4E8E;&#x7535;&#x6E90;&#x7BA1;&#x7406;&#x7684;&#x9700;&#x6C42;&#xFF0C;&#x9700;&#x8981;&#x5728; pinctrl &#x4E2D;&#x914D;&#x7F6E;&#x5176;active &#x548C; suspend &#x5BF9;&#x5E94;&#x7684;&#x914D;&#x7F6E;&#xFF1A;</p>
+<p>&#x4F8B;&#x5982;&#xFF0C;GPIO 32 &#x548C; GPIO 46 &#x4EE5;&#x53CA; GPIO 50
+&#x5728;&#x524D;&#x8FB9;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x4F7F;&#x7528;&#x914D;&#x7F6E;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c">gpio <span class="hljs-number">50</span>&#xFF1A;
+        pinctrl-names = <span class="hljs-string">&quot;cam_default&quot;</span>, <span class="hljs-string">&quot;cam_suspend&quot;</span>;
+        pinctrl<span class="hljs-number">-0</span> = &lt;&amp;cam_actuator_vaf_active&gt;;
+        pinctrl<span class="hljs-number">-1</span> = &lt;&amp;cam_actuator_vaf_suspend&gt;;
+
+GPIO <span class="hljs-number">32</span> &#x3001;GPIO <span class="hljs-number">46</span>&#xFF1A;
+        pinctrl-names = <span class="hljs-string">&quot;cam_default&quot;</span>, <span class="hljs-string">&quot;cam_suspend&quot;</span>;
+        pinctrl<span class="hljs-number">-0</span> = &lt;&amp;cam_sensor_mclk0_active &amp;cam_sensor_rear_active&gt;;
+        pinctrl<span class="hljs-number">-1</span> = &lt;&amp;cam_sensor_mclk0_suspend    &amp;cam_sensor_rear_suspend&gt;;
+        gpios = &lt;&amp;tlmm <span class="hljs-number">32</span> <span class="hljs-number">0</span>&gt;, &lt;&amp;tlmm <span class="hljs-number">46</span> <span class="hljs-number">0</span>&gt;;
+</code></pre>
+<pre><code class="lang-c">\kernel\msm<span class="hljs-number">-4.4</span>\arch\arm\boot\dts\qcom\sdm660-pinctrl.dtsi
+        cam_actuator_vaf_active: cam_actuator_vaf_active {
+            <span class="hljs-comment">/* ACTUATOR POWER */</span>
+            mux {
+                pins = <span class="hljs-string">&quot;gpio50&quot;</span>;
+                function = <span class="hljs-string">&quot;gpio&quot;</span>;
+            };
+            config {
+                pins = <span class="hljs-string">&quot;gpio50&quot;</span>;
+                bias-disable; <span class="hljs-comment">/* No PULL */</span>
+                drive-strength = &lt;<span class="hljs-number">2</span>&gt;; <span class="hljs-comment">/* 2 MA */</span>
+            };
+        };
+        cam_actuator_vaf_suspend: cam_actuator_vaf_suspend {
+            <span class="hljs-comment">/* ACTUATOR POWER */</span>
+            mux {
+                pins = <span class="hljs-string">&quot;gpio50&quot;</span>;
+                function = <span class="hljs-string">&quot;gpio&quot;</span>;
+            };
+            config {
+                pins = <span class="hljs-string">&quot;gpio50&quot;</span>;
+                bias-pull-down; <span class="hljs-comment">/* PULL DOWN */</span>
+                drive-strength = &lt;<span class="hljs-number">2</span>&gt;; <span class="hljs-comment">/* 2 MA */</span>
+            };
+        };
+        cam_sensor_mclk0_active: cam_sensor_mclk0_active {
+            <span class="hljs-comment">/* MCLK0 */</span>
+            mux {
+                <span class="hljs-comment">/* CLK */</span>
+                pins = <span class="hljs-string">&quot;gpio32&quot;</span>;
+                function = <span class="hljs-string">&quot;cam_mclk&quot;</span>;
+            };
+            config {
+                pins = <span class="hljs-string">&quot;gpio32&quot;</span>;
+                bias-disable; <span class="hljs-comment">/* No PULL */</span>
+                drive-strength = &lt;<span class="hljs-number">2</span>&gt;; <span class="hljs-comment">/* 2 MA */</span>
+            };
+        };
+        cam_sensor_mclk0_suspend: cam_sensor_mclk0_suspend {
+            <span class="hljs-comment">/* MCLK0 */</span>
+            mux {
+                <span class="hljs-comment">/* CLK */</span>
+                pins = <span class="hljs-string">&quot;gpio32&quot;</span>;
+                function = <span class="hljs-string">&quot;cam_mclk&quot;</span>;
+            };
+            config {
+                pins = <span class="hljs-string">&quot;gpio32&quot;</span>;
+                bias-pull-down; <span class="hljs-comment">/* PULL DOWN */</span>
+                drive-strength = &lt;<span class="hljs-number">2</span>&gt;; <span class="hljs-comment">/* 2 MA */</span>
+            };
+        };
+        cam_sensor_rear_active: cam_sensor_rear_active {
+            <span class="hljs-comment">/* RESET, STANDBY */</span>
+            mux {
+                pins = <span class="hljs-string">&quot;gpio46&quot;</span>;
+                function = <span class="hljs-string">&quot;gpio&quot;</span>;
+            };
+            config {
+                pins = <span class="hljs-string">&quot;gpio46&quot;</span>;
+                bias-disable; <span class="hljs-comment">/* No PULL */</span>
+                drive-strength = &lt;<span class="hljs-number">2</span>&gt;; <span class="hljs-comment">/* 2 MA */</span>
+            };
+        };
+        cam_sensor_rear_suspend: cam_sensor_rear_suspend {
+            <span class="hljs-comment">/* RESET, STANDBY */</span>
+            mux {
+                pins = <span class="hljs-string">&quot;gpio46&quot;</span>;
+                function = <span class="hljs-string">&quot;gpio&quot;</span>;
+            };
+            config {
+                pins = <span class="hljs-string">&quot;gpio46&quot;</span>;
+                bias-disable; <span class="hljs-comment">/* No PULL */</span>
+                drive-strength = &lt;<span class="hljs-number">2</span>&gt;; <span class="hljs-comment">/* 2 MA */</span>
+            };
+        };
+        cam_sensor_mclk1_active: cam_sensor_mclk1_active {
+            <span class="hljs-comment">/* MCLK1 */</span>
+            mux {
+                <span class="hljs-comment">/* CLK */</span>
+                pins = <span class="hljs-string">&quot;gpio33&quot;</span>;
+                function = <span class="hljs-string">&quot;cam_mclk&quot;</span>;
+            };
+            config {
+                pins = <span class="hljs-string">&quot;gpio33&quot;</span>;
+                bias-disable; <span class="hljs-comment">/* No PULL */</span>
+                drive-strength = &lt;<span class="hljs-number">2</span>&gt;; <span class="hljs-comment">/* 2 MA */</span>
+            };
+        };
+        cam_sensor_mclk1_suspend: cam_sensor_mclk1_suspend {
+            <span class="hljs-comment">/* MCLK1 */</span>
+            mux {
+                <span class="hljs-comment">/* CLK */</span>
+                pins = <span class="hljs-string">&quot;gpio33&quot;</span>;
+                function = <span class="hljs-string">&quot;cam_mclk&quot;</span>;
+            };
+            config {
+                pins = <span class="hljs-string">&quot;gpio33&quot;</span>;
+                bias-pull-down; <span class="hljs-comment">/* PULL DOWN */</span>
+                drive-strength = &lt;<span class="hljs-number">2</span>&gt;; <span class="hljs-comment">/* 2 MA */</span>
+            };
+        };
+        cam_sensor_rear2_active: cam_sensor_rear2_active {
+            <span class="hljs-comment">/* RESET, STANDBY */</span>
+            mux {
+                pins = <span class="hljs-string">&quot;gpio48&quot;</span>;
+                function = <span class="hljs-string">&quot;gpio&quot;</span>;
+            };
+            config {
+                pins = <span class="hljs-string">&quot;gpio48&quot;</span>;
+                bias-disable; <span class="hljs-comment">/* No PULL */</span>
+                drive-strength = &lt;<span class="hljs-number">2</span>&gt;; <span class="hljs-comment">/* 2 MA */</span>
+            };
+        };
+        cam_sensor_rear2_suspend: cam_sensor_rear2_suspend {
+            <span class="hljs-comment">/* RESET, STANDBY */</span>
+            mux {
+                pins = <span class="hljs-string">&quot;gpio48&quot;</span>;
+                function = <span class="hljs-string">&quot;gpio&quot;</span>;
+            };
+            config {
+                pins = <span class="hljs-string">&quot;gpio48&quot;</span>;
+                bias-disable; <span class="hljs-comment">/* No PULL */</span>
+                drive-strength = &lt;<span class="hljs-number">2</span>&gt;; <span class="hljs-comment">/* 2 MA */</span>
+            };
+        };
+        cam_sensor_mclk2_active: cam_sensor_mclk2_active {
+            <span class="hljs-comment">/* MCLK1 */</span>
+            mux {
+                <span class="hljs-comment">/* CLK */</span>
+                pins = <span class="hljs-string">&quot;gpio34&quot;</span>;
+                function = <span class="hljs-string">&quot;cam_mclk&quot;</span>;
+            };
+            config {
+                pins = <span class="hljs-string">&quot;gpio34&quot;</span>;
+                bias-disable; <span class="hljs-comment">/* No PULL */</span>
+                drive-strength = &lt;<span class="hljs-number">2</span>&gt;; <span class="hljs-comment">/* 2 MA */</span>
+            };
+        };
+        cam_sensor_mclk2_suspend: cam_sensor_mclk2_suspend {
+            <span class="hljs-comment">/* MCLK1 */</span>
+            mux {
+                <span class="hljs-comment">/* CLK */</span>
+                pins = <span class="hljs-string">&quot;gpio34&quot;</span>;
+                function = <span class="hljs-string">&quot;cam_mclk&quot;</span>;
+            };
+            config {
+                pins = <span class="hljs-string">&quot;gpio34&quot;</span>;
+                bias-pull-down; <span class="hljs-comment">/* PULL DOWN */</span>
+                drive-strength = &lt;<span class="hljs-number">2</span>&gt;; <span class="hljs-comment">/* 2 MA */</span>
+            };
+        };
+        cam_sensor_front_active: cam_sensor_front_active {
+            <span class="hljs-comment">/* RESET  VANA*/</span>
+            mux {
+                pins = <span class="hljs-string">&quot;gpio47&quot;</span>;
+                function = <span class="hljs-string">&quot;gpio&quot;</span>;
+            };
+            config {
+                pins = <span class="hljs-string">&quot;gpio47&quot;</span>;
+                bias-disable; <span class="hljs-comment">/* No PULL */</span>
+                drive-strength = &lt;<span class="hljs-number">2</span>&gt;; <span class="hljs-comment">/* 2 MA */</span>
+            };
+        };
+        cam_sensor_front_suspend: cam_sensor_front_suspend {
+            <span class="hljs-comment">/* RESET */</span>
+            mux {
+                pins = <span class="hljs-string">&quot;gpio47&quot;</span>;
+                function = <span class="hljs-string">&quot;gpio&quot;</span>;
+            };
+            config {
+                pins = <span class="hljs-string">&quot;gpio47&quot;</span>;
+                bias-disable; <span class="hljs-comment">/* No PULL */</span>
+                drive-strength = &lt;<span class="hljs-number">2</span>&gt;; <span class="hljs-comment">/* 2 MA */</span>
+            };
+        };
+        cam_sensor_mclk3_active: cam_sensor_mclk3_active {
+            <span class="hljs-comment">/* MCLK3 */</span>
+            mux {
+                <span class="hljs-comment">/* CLK */</span>
+                pins = <span class="hljs-string">&quot;gpio35&quot;</span>;
+                function = <span class="hljs-string">&quot;cam_mclk&quot;</span>;
+            };
+            config {
+                pins = <span class="hljs-string">&quot;gpio35&quot;</span>;
+                bias-disable; <span class="hljs-comment">/* No PULL */</span>
+                drive-strength = &lt;<span class="hljs-number">2</span>&gt;; <span class="hljs-comment">/* 2 MA */</span>
+            };
+        };
+        cam_sensor_mclk3_suspend: cam_sensor_mclk3_suspend {
+            <span class="hljs-comment">/* MCLK3 */</span>
+            mux {
+                <span class="hljs-comment">/* CLK */</span>
+                pins = <span class="hljs-string">&quot;gpio35&quot;</span>;
+                function = <span class="hljs-string">&quot;cam_mclk&quot;</span>;
+            };
+            config {
+                pins = <span class="hljs-string">&quot;gpio35&quot;</span>;
+                bias-pull-down; <span class="hljs-comment">/* PULL DOWN */</span>
+                drive-strength = &lt;<span class="hljs-number">2</span>&gt;; <span class="hljs-comment">/* 2 MA */</span>
+            };
+        };
+        cam_sensor_front_iris_active: cam_sensor_front_iris_active {
+            <span class="hljs-comment">/* RESET */</span>
+            mux {
+                pins = <span class="hljs-string">&quot;gpio52&quot;</span>;
+                function = <span class="hljs-string">&quot;gpio&quot;</span>;
+            };
+            config {
+                pins = <span class="hljs-string">&quot;gpio52&quot;</span>;
+                bias-disable; <span class="hljs-comment">/* No PULL */</span>
+                drive-strength = &lt;<span class="hljs-number">2</span>&gt;; <span class="hljs-comment">/* 2 MA */</span>
+            };
+        };
+        cam_sensor_front_iris_suspend: cam_sensor_front_iris_suspend {
+            <span class="hljs-comment">/* RESET */</span>
+            mux {
+                pins = <span class="hljs-string">&quot;gpio52&quot;</span>;
+                function = <span class="hljs-string">&quot;gpio&quot;</span>;
+            };
+            config {
+                pins = <span class="hljs-string">&quot;gpio52&quot;</span>;
+                bias-disable; <span class="hljs-comment">/* No PULL */</span>
+                drive-strength = &lt;<span class="hljs-number">2</span>&gt;; <span class="hljs-comment">/* 2 MA */</span>
+            };
+        };
+</code></pre>
+<p>&#x81F3;&#x6B64;&#xFF0C;Camera &#x4E2D; dts &#x76F8;&#x5173;&#x7684;&#x914D;&#x7F6E;&#x597D;&#x4E0A;&#x8FB9;&#x8FD9;&#x4E9B;&#x5C31;ok &#x4E86;&#x3002;</p>
+<h3 id="2-kernel-driver-&#x914D;&#x7F6E;">2. Kernel Driver &#x914D;&#x7F6E;</h3>
+<p>&#x73B0;&#x5728;&#x6BD4;&#x8F83;&#x65B0;&#x7684;&#x9AD8;&#x901A;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;Kernel &#x4E2D;&#x53EA;&#x9700;&#x8981;&#x914D;&#x7F6E;&#x597D;DTS&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#xFF0C;&#x9A71;&#x52A8;&#x4EE3;&#x7801;&#x662F;&#x4EE5;&#x5E93;&#x4EE3;&#x7801;&#x7684;&#x5F62;&#x5F0F;&#x5B58;&#x653E;&#x5728;vendor &#x76EE;&#x5F55;&#x4E2D;&#x3002;</p>
+<p>&#x800C;kernel &#x4E2D;&#x7684;camera &#x76F8;&#x5173;&#x7684; C &#x6587;&#x4EF6;&#x662F;&#x9AD8;&#x901A;&#x9ED8;&#x8BA4;&#x7684;&#x901A;&#x7528;&#x6587;&#x4EF6;&#x3002;</p>
+<p><em>\kernel\msm-4.4\drivers\media\platform\msm\camera_v2</em></p>
+<p>&#x6211;&#x4EEC;&#x4ECA;&#x5929;&#x91CD;&#x70B9;&#x5728;&#x79FB;&#x690D;&#xFF0C;&#x8FD9;&#x4E00;&#x5757;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x540E;&#x7EED;&#x6211;&#x8BB2;camera &#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;&#x7684;&#x65F6;&#x5019;&#x91CD;&#x70B9;&#x6765;&#x5B66;&#x4E60;&#x3002;</p>
+<h2 id="&#x4E8C;&#x3001;vendor-&#x4EE3;&#x7801;&#x79FB;&#x690D;">&#x4E8C;&#x3001;Vendor &#x4EE3;&#x7801;&#x79FB;&#x690D;</h2>
+<p>&#x76EE;&#x524D;&#x9AD8;&#x901A;&#x4E2D;&#xFF0C;vendor &#x4E2D;&#x5305;&#x62EC;&#x4E86;&#xFF0C;camera&#x3001;&#x9A6C;&#x8FBE;&#x3001;eeprom&#x3001;Trunning &#x6548;&#x679C;&#x7B49;&#x5E93;&#x6587;&#x4EF6;&#xFF0C;&#x8FD9;&#x4E9B;&#x662F;&#x6211;&#x4EEC;&#x8981;&#x6839;&#x636E;&#x9700;&#x6C42;&#x79FB;&#x690D;&#x8FDB;&#x6765;&#x7684;&#x3002;</p>
+<p>&#x63A5;&#x4E0B;&#x6765;&#x6211;&#x4EEC;&#x6162;&#x6162;&#x5199;&#x7684;&#x6765;&#x3002;</p>
+<h3 id="1-camera-sensor-&#x5E93;&#x6587;&#x4EF6;&#x4EE3;&#x7801;&#x79FB;&#x690D;">1. Camera Sensor &#x5E93;&#x6587;&#x4EF6;&#x4EE3;&#x7801;&#x79FB;&#x690D;</h3>
+<p>&#x4EE5; <em>imx350 sensor</em> &#x4E3A;&#x4F8B;&#xFF1A;</p>
+<pre><code class="lang-c">@ qcom\proprietary\common\config\device-vendor.mk
+@ qcom\proprietary\mm-camera\mm-camera2\media-controller\modules\sensors\config\Android.mk
+@ qcom\proprietary\mm-camera\mm-camera2\media-controller\modules\sensors\config\imx350_suny.xml
+@ qcom\proprietary\mm-camera\mm-camera2\media-controller\modules\sensors\config\sdm660_camera.xml
+@ qcom\proprietary\mm-camera\mm-camera2\media-controller\modules\sensors\libs\imx350\ 
+@ qcom\proprietary\mm-camera\mm-camera2\media-controller\modules\sensors\chromatix\<span class="hljs-number">0310</span>\chromatix_imx350_sunny\
+</code></pre>
+<h4 id="11-&#x5BFC;&#x5165;camera-sensor-lib-&#x5E93;&#x4EE3;&#x7801;">1.1 &#x5BFC;&#x5165;Camera Sensor lib &#x5E93;&#x4EE3;&#x7801;</h4>
+<p>&#x5C06; sensor lib&#x5E93;&#x4EE3;&#x7801;&#x653E;&#x5165;&#x5982;&#x4E0B;&#x76EE;&#x5F55;&#xFF1A;</p>
+<p><em>\vendor\qcom\proprietary\mm-camera\mm-camera2\media-controller\modules\sensors\sensor\libs\imx350</em></p>
+<p>&#x6CE8;&#x610F;Android.mk&#x4E2D;
+<em>LOCAL_SRC_FILES:= imx350_lib.c</em>
+<em>LOCAL_MODULE := libmmcamera_imx350</em></p>
+<p>&#x9700;&#x8981;&#x5728; <em>\vendor\qcom\proprietary\common\config\device-vendor.mk</em>&#x4E2D;&#x5BFC;&#x5165;&#x6A21;&#x5757;&#xFF0C;&#x6DFB;&#x52A0;&#x4FEE;&#x6539;&#x5982;&#x4E0B;&#xFF1A;
+<em>MM_CAMERA += libmmcamera_imx350</em></p>
+<h3 id="2-&#x5BFC;&#x5165;camera-chromatix-&#x9ED8;&#x8BA4;&#x6548;&#x679C;&#x53C2;&#x6570;">2. &#x5BFC;&#x5165;Camera Chromatix &#x9ED8;&#x8BA4;&#x6548;&#x679C;&#x53C2;&#x6570;</h3>
+<p>&#x5C06;&#x9ED8;&#x8BA4;&#x7684; Chromatix &#x6548;&#x679C;&#x53C2;&#x6570;&#x653E;&#x5165;&#x5982;&#x4E0B;&#x76EE;&#x5F55;
+<em>\vendor\qcom\proprietary\mm-camera\mm-camera2\media-controller\modules\sensors\chromatix\0310\chromatix_imx350_sunny</em></p>
+<p>&#x5176;&#x4E2D;&#x5305;&#x62EC;&#x4E86;&#xFF0C;3A &#x53CA; ISP &#x7684;&#x6548;&#x679C;&#x53C2;&#x6570;&#xFF0C;&#x540E;&#x7EED;Camera Turnning &#x5DE5;&#x7A0B;&#x5E08;&#x4F1A;&#x4EE3;&#x7801;&#x6548;&#x679C;&#x540E;&#x4FEE;&#x4EE5;&#x4E0B;&#x9762;&#x7684;&#x53C2;&#x6570;&#x3002;
+&#x7531;&#x4E8E;&#x4E0A;&#x9762;&#x6BCF;&#x4E2A;&#x5206;&#x522B;&#x4F1A;&#x7F16;&#x8BD1;&#x6210;&#x591A;&#x4E2A;&#x5E93;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x8981;&#x6CE8;&#x610F;&#x6BCF;&#x4E2A;&#x5E93;&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x6211;&#x4EEC;&#x8FDB;&#x5165;&#x6BCF;&#x4E2A;&#x6587;&#x4EF6;&#x5939;&#x7684;Android.mk &#x770B;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-makefile">@ mm-camera2\media-controller\modules\sensors\chromatix\0310\chromatix_imx350_sunny\3A
+LOCAL_MODULE           :=  libchromatix_imx350_sunny_default_preview_3a
+LOCAL_MODULE           :=  libchromatix_imx350_sunny_default_video_3a
+LOCAL_MODULE           :=  libchromatix_imx350_sunny_hfr_120_3a
+LOCAL_MODULE           :=  libchromatix_imx350_sunny_hfr_60_3a
+LOCAL_MODULE           :=  libchromatix_imx350_sunny_hfr_90_3a 
+LOCAL_MODULE           :=  libchromatix_imx350_sunny_zsl_preview_3a
+LOCAL_MODULE           :=  libchromatix_imx350_sunny_zsl_video_3a
+
+@ mm-camera2\media-controller\modules\sensors\chromatix\0310\chromatix_imx350_sunny\common
+LOCAL_MODULE           :=  libchromatix_imx350_sunny_common
+
+@ mm-camera2\media-controller\modules\sensors\chromatix\0310\chromatix_imx350_sunny\cpp
+LOCAL_MODULE           := libchromatix_imx350_sunny_cpp_hfr_120
+LOCAL_MODULE           := libchromatix_imx350_sunny_cpp_hfr_60
+LOCAL_MODULE           := libchromatix_imx350_sunny_cpp_hfr_90
+LOCAL_MODULE           := libchromatix_imx350_sunny_cpp_liveshot
+LOCAL_MODULE           := libchromatix_imx350_sunny_cpp_preview
+LOCAL_MODULE           := libchromatix_imx350_sunny_cpp_snapshot
+LOCAL_MODULE           := libchromatix_imx350_sunny_cpp_video
+
+@ mm-camera2\media-controller\modules\sensors\chromatix\0310\chromatix_imx350_sunny\isp
+LOCAL_MODULE           := libchromatix_imx350_sunny_hfr_120
+LOCAL_MODULE           := libchromatix_imx350_sunny_hfr_60
+LOCAL_MODULE           := libchromatix_imx350_sunny_hfr_90
+LOCAL_MODULE           := libchromatix_imx350_sunny_liveshot
+LOCAL_MODULE           := libchromatix_imx350_sunny_preview
+LOCAL_MODULE           := libchromatix_imx350_sunny_snapshot
+LOCAL_MODULE           := libchromatix_imx350_sunny_default_video
+LOCAL_MODULE           := libchromatix_imx350_sunny_postproc
+LOCAL_MODULE           := libchromatix_imx350_sunny_oz_preview_3a
+LOCAL_MODULE           := libchromatix_imx350_sunny_oz_video_3a
+
+@ mm-camera2\media-controller\modules\sensors\chromatix\0310\chromatix_imx350_sunny\postproc
+LOCAL_MODULE           := libchromatix_imx350_sunny_postproc
+</code></pre>
+<p>&#x5728; <em>\vendor\qcom\proprietary\common\config\device-vendor.mk</em>&#x4E2D;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x4FEE;&#x6539;&#xFF1A;</p>
+<pre><code class="lang-makefile">MM_CAMERA += libchromatix_imx350_sunny_default_preview_3a
+MM_CAMERA += libchromatix_imx350_sunny_default_video_3a
+MM_CAMERA += libchromatix_imx350_sunny_hfr_120_3a
+MM_CAMERA += libchromatix_imx350_sunny_hfr_60_3a
+MM_CAMERA += libchromatix_imx350_sunny_hfr_90_3a
+MM_CAMERA += libchromatix_imx350_sunny_zsl_preview_3a
+MM_CAMERA += libchromatix_imx350_sunny_zsl_video_3a
+
+MM_CAMERA += libchromatix_imx350_sunny_common
+
+MM_CAMERA += libchromatix_imx350_sunny_cpp_hfr_120
+MM_CAMERA += libchromatix_imx350_sunny_cpp_hfr_60
+MM_CAMERA += libchromatix_imx350_sunny_cpp_hfr_90
+MM_CAMERA += libchromatix_imx350_sunny_cpp_liveshot
+MM_CAMERA += libchromatix_imx350_sunny_cpp_preview
+MM_CAMERA += libchromatix_imx350_sunny_cpp_snapshot
+MM_CAMERA += libchromatix_imx350_sunny_cpp_video
+
+MM_CAMERA += libchromatix_imx350_sunny_hfr_120
+MM_CAMERA += libchromatix_imx350_sunny_hfr_60
+MM_CAMERA += libchromatix_imx350_sunny_hfr_90
+MM_CAMERA += libchromatix_imx350_sunny_liveshot
+MM_CAMERA += libchromatix_imx350_sunny_preview
+MM_CAMERA += libchromatix_imx350_sunny_snapshot
+MM_CAMERA += libchromatix_imx350_sunny_default_video
+MM_CAMERA += libchromatix_imx350_sunny_postproc
+MM_CAMERA += libchromatix_imx350_sunny_oz_preview_3a
+MM_CAMERA += libchromatix_imx350_sunny_oz_video_3a
+
+MM_CAMERA += libchromatix_imx350_sunny_postproc
+</code></pre>
+<h4 id="21-chromatix-version-0309-&#x548C;-0310-&#x5B9A;&#x4E49;">2.1 chromatix version 0309 &#x548C; 0310 &#x5B9A;&#x4E49;</h4>
+<p>&#x5177;&#x4F53;&#x8D70;&#x54EA;&#x4E2A;&#x662F;&#x7531; <em>CHROMATIX_VERSION</em>&#x6765;&#x63A7;&#x5236;&#x7684;&#xFF0C;&#x5176;&#x5B9A;&#x4E49;&#x4E8E;&#xFF1A;</p>
+<p><em>\vendor\qcom\proprietary\mm-camera\Android.mk</em></p>
+<pre><code class="lang-makefile">ifeq ($(BUILD_SERVER), true)
+  CHROMATIX_VERSION := 0208
+else ifeq ($(BUILD_MM_CAMERA2), true)
+  ifeq ($(OEM_CHROMATIX_0308), 1)
+    CHROMATIX_VERSION := 0308E
+  else ifeq ($(call is-board-platform-in-list,sdm660 msm8998),true)
+    CHROMATIX_VERSION := 0310
+  else
+    CHROMATIX_VERSION := 0309
+  endif
+endif
+
+ifeq ($(OEM_CHROMATIX_0310), 1)
+  OEM_CHROMATIX:=true
+endif
+
+ifeq ($(OEM_CHROMATIX), true)
+  LOCAL_CHROMATIX_PATH := $(LOCAL_PATH)/../mm-camera-ext/mm-camerasdk/sensor/includes/$(CHROMATIX_VERSION)
+  LOCAL_EXTEN_ISP_INCLUDES := $(LOCAL_PATH)/../mm-camera-ext/mm-camera2/media-controller/modules/isp2/
+  LOCAL_EXTEN_PPROC_INCLUDES := $(LOCAL_PATH)/../mm-camera-ext/mm-camera2/media-controller/modules/pproc-new/cpp/
+  LOCAL_EXTEN_CHROMATIX_FILE_PATH := $(LOCAL_PATH)/../mm-camera-ext/mm-camera2/media-controller/modules/sensors/chromatix/$(CHROMATIX_VERSION)
+else
+  LOCAL_CHROMATIX_PATH := $(LOCAL_PATH)/../mm-camerasdk/sensor/includes/$(CHROMATIX_VERSION)
+  LOCAL_EXTEN_CHROMATIX_FILE_PATH := $(LOCAL_PATH)/mm-camera2/media-controller/modules/sensors/chromatix/$(CHROMATIX_VERSION)
+endif
+</code></pre>
+<h3 id="3-&#x4FEE;&#x6539;-sensor-config-xml">3. &#x4FEE;&#x6539; Sensor Config XML</h3>
+<pre><code>qcom\proprietary\mm-camera\mm-camera2\media-controller\modules\sensors\config\Android.mk
+qcom\proprietary\mm-camera\mm-camera2\media-controller\modules\sensors\config\imx350_suny.xml
+qcom\proprietary\mm-camera\mm-camera2\media-controller\modules\sensors\config\sdm660_camera.xml
+</code></pre><h4 id="31-imx350sunnyxml">3.1 imx350_sunny.xml</h4>
+<p><em>\mm-camera2\media-controller\modules\sensors\configs\imx350_sunny.xml</em></p>
+<p>&#x5728;&#x8BE5;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x63CF;&#x8FF0;&#x4E86;&#x5BF9;&#x5E94;&#x7684; chromatix &#x6A21;&#x5757;&#x540D;&#x5B57;&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;
+&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x548C;&#x524D;&#x9762; chromatix &#x4E2D;&#x7684;&#x6A21;&#x5757;&#x540D;&#x5B57;&#x4E00;&#x6A21;&#x4E00;&#x6837;&#x3002;</p>
+<pre><code class="lang-xml"><span class="hljs-comment">&lt;!--
+CommonChromatixInfo:
+    CommonChromatixInfo is the information about chromatix needed for various use cases.
+    Ex:- Preview, Snapshot, ZSL, HFR, HDR, Video, Liveshot for ISP, CPP,3A and SW PostProc.
+    Entries in this node are common for all sensor modes.
+
+ResolutionChromatixInfo:
+    ResolutionChromatixInfo is the information about chromatix needed for various use cases.
+    Ex:- Preview, Snapshot, ZSL, HFR, HDR, Video, Liveshot for ISP, CPP, 3A and SW PostProc.
+    Entries in this node are specific to sensor resolution.
+
+ChromatixName:
+    Contains the list of chromatix names for all modules.
+    special_mode_mask:
+        It is the bit mask for special modes, which is used for  chromatix selection.
+        Special modes can be any mode that needs a special chromatix.
+        Ex:- scene mode, DZOOM mode, OIS capture mode, flash mode
+        This is applicable for CommonChromatixInfo and ResolutionChromatixInfo.
+        special_mode_mask=&quot;0&quot; means none of the special modes are selected.
+    sensor_resolution_index:
+        It is the sensor resolution index for which chromatix libraries will be choosen.
+        It is applicable only in ResolutionChromatixInfo.
+
+ISPCommon :     Common tuning library name for ISP
+ISPPreview :     Preview tuning library name for ISP
+ISPSnapshot :     Snapshot tuning library name for ISP
+CPPCommon :     Common tuning library name for CPP
+CPPPreview :     Preview tuning library name for CPP
+CPPSnapshot :     Snapshot tuning library name for CPP
+CPPLiveshot :     Liveshot tuning library name for CPP
+PostProc :        Tuning library name for postproc module
+A3Preview :        Preview tuning library for 3A
+A3Video :        Video tuning library for 3A
+
+Order of Resolution Pick:
+    Assume the current sensor mode is &quot;r&quot; and special mode mask is &quot;s&quot;.
+    Chromatix for a module and type is choosen in this order till we find a valid chroamtix file name or else NULL is returned.
+    1) From ResolutionChromatixInfo node for which sensor_resolution_index is &quot;r&quot; and special_mode_mask is &quot;s&quot;.
+    2) From CommonChromatixInfo node for which special_mode_mask is &quot;s&quot;.
+    3) From ResolutionChromatixInfo node for which sensor_resolution_index is &quot;r&quot; and special_mode_mask is &quot;0&quot;.
+    4) From CommonChromatixInfo node for which special_mode_mask is &quot;0&quot;.
+    5) NULL is returned if we dont find in any of the above cases.
+
+special_mode_mask values:
+    SENSOR_SPECIAL_MODE_NONE = 0,
+    SENSOR_SPECIAL_MODE_FLASH = 1,
+    SENSOR_SPECIAL_MODE_ZOOM_UPSCALE = 2,
+    SENSOR_SPECIAL_MODE_ZOOM_DOWNSCALE = 4,
+    SENSOR_SPECIAL_MODE_OIS_CAPTURE = 8,
+--&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">ChromatixConfigurationRoot</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">CommonChromatixInfo</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ChromatixName</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">PostProc</span>&gt;</span>imx350_sunny_postproc<span class="hljs-tag">&lt;/<span class="hljs-name">PostProc</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ChromatixName</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">CommonChromatixInfo</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">ResolutionChromatixInfo</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ChromatixName</span> <span class="hljs-attr">sensor_resolution_index</span>=<span class="hljs-string">&quot;0&quot;</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPCommon</span>&gt;</span>imx350_sunny_common<span class="hljs-tag">&lt;/<span class="hljs-name">ISPCommon</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPPreview</span>&gt;</span>imx350_sunny_snapshot<span class="hljs-tag">&lt;/<span class="hljs-name">ISPPreview</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPSnapshot</span>&gt;</span>imx350_sunny_snapshot<span class="hljs-tag">&lt;/<span class="hljs-name">ISPSnapshot</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPVideo</span>&gt;</span>imx350_sunny_default_video<span class="hljs-tag">&lt;/<span class="hljs-name">ISPVideo</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPPreview</span>&gt;</span>imx350_sunny_cpp_preview<span class="hljs-tag">&lt;/<span class="hljs-name">CPPPreview</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPSnapshot</span>&gt;</span>imx350_sunny_cpp_snapshot<span class="hljs-tag">&lt;/<span class="hljs-name">CPPSnapshot</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPVideo</span>&gt;</span>imx350_sunny_cpp_video<span class="hljs-tag">&lt;/<span class="hljs-name">CPPVideo</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPLiveshot</span>&gt;</span>imx350_sunny_cpp_liveshot<span class="hljs-tag">&lt;/<span class="hljs-name">CPPLiveshot</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">A3Preview</span>&gt;</span>imx350_sunny_zsl_preview_3a<span class="hljs-tag">&lt;/<span class="hljs-name">A3Preview</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">A3Video</span>&gt;</span>imx350_sunny_zsl_video_3a<span class="hljs-tag">&lt;/<span class="hljs-name">A3Video</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ChromatixName</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ChromatixName</span> <span class="hljs-attr">sensor_resolution_index</span>=<span class="hljs-string">&quot;1&quot;</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPCommon</span>&gt;</span>imx350_sunny_common_oz<span class="hljs-tag">&lt;/<span class="hljs-name">ISPCommon</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPPreview</span>&gt;</span>imx350_sunny_oz_preview<span class="hljs-tag">&lt;/<span class="hljs-name">ISPPreview</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPSnapshot</span>&gt;</span>imx350_sunny_oz_snapshot<span class="hljs-tag">&lt;/<span class="hljs-name">ISPSnapshot</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPVideo</span>&gt;</span>imx350_sunny_oz_preview<span class="hljs-tag">&lt;/<span class="hljs-name">ISPVideo</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPPreview</span>&gt;</span>imx350_sunny_cpp_oz_preview<span class="hljs-tag">&lt;/<span class="hljs-name">CPPPreview</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPSnapshot</span>&gt;</span>imx350_sunny_cpp_oz_snapshot<span class="hljs-tag">&lt;/<span class="hljs-name">CPPSnapshot</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPVideo</span>&gt;</span>imx350_sunny_cpp_oz_preview<span class="hljs-tag">&lt;/<span class="hljs-name">CPPVideo</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPLiveshot</span>&gt;</span>imx350_sunny_cpp_liveshot<span class="hljs-tag">&lt;/<span class="hljs-name">CPPLiveshot</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">A3Preview</span>&gt;</span>imx350_sunny_oz_preview_3a<span class="hljs-tag">&lt;/<span class="hljs-name">A3Preview</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">A3Video</span>&gt;</span>imx350_sunny_oz_preview_3a<span class="hljs-tag">&lt;/<span class="hljs-name">A3Video</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ChromatixName</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ChromatixName</span> <span class="hljs-attr">sensor_resolution_index</span>=<span class="hljs-string">&quot;2&quot;</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPCommon</span>&gt;</span>imx350_sunny_common_bining<span class="hljs-tag">&lt;/<span class="hljs-name">ISPCommon</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPPreview</span>&gt;</span>imx350_sunny_preview<span class="hljs-tag">&lt;/<span class="hljs-name">ISPPreview</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPSnapshot</span>&gt;</span>imx350_sunny_snapshot<span class="hljs-tag">&lt;/<span class="hljs-name">ISPSnapshot</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPVideo</span>&gt;</span>imx350_sunny_default_video<span class="hljs-tag">&lt;/<span class="hljs-name">ISPVideo</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPPreview</span>&gt;</span>imx350_sunny_cpp_preview<span class="hljs-tag">&lt;/<span class="hljs-name">CPPPreview</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPSnapshot</span>&gt;</span>imx350_sunny_cpp_snapshot<span class="hljs-tag">&lt;/<span class="hljs-name">CPPSnapshot</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPVideo</span>&gt;</span>imx350_sunny_cpp_video<span class="hljs-tag">&lt;/<span class="hljs-name">CPPVideo</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPLiveshot</span>&gt;</span>imx350_sunny_cpp_liveshot<span class="hljs-tag">&lt;/<span class="hljs-name">CPPLiveshot</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">A3Preview</span>&gt;</span>imx350_sunny_default_preview_3a<span class="hljs-tag">&lt;/<span class="hljs-name">A3Preview</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">A3Video</span>&gt;</span>imx350_sunny_default_video_3a<span class="hljs-tag">&lt;/<span class="hljs-name">A3Video</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ChromatixName</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ChromatixName</span> <span class="hljs-attr">sensor_resolution_index</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">special_mode_mask</span>=<span class="hljs-string">&quot;SCENE_BOKEH_MODE|&quot;</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPCommon</span>&gt;</span>imx350_sunny_common_bining<span class="hljs-tag">&lt;/<span class="hljs-name">ISPCommon</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPPreview</span>&gt;</span>imx350_sunny_preview_bokeh<span class="hljs-tag">&lt;/<span class="hljs-name">ISPPreview</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPSnapshot</span>&gt;</span>imx350_sunny_preview_bokeh<span class="hljs-tag">&lt;/<span class="hljs-name">ISPSnapshot</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPVideo</span>&gt;</span>imx350_sunny_default_video<span class="hljs-tag">&lt;/<span class="hljs-name">ISPVideo</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPPreview</span>&gt;</span>imx350_sunny_cpp_preview<span class="hljs-tag">&lt;/<span class="hljs-name">CPPPreview</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPSnapshot</span>&gt;</span>imx350_sunny_cpp_snapshot<span class="hljs-tag">&lt;/<span class="hljs-name">CPPSnapshot</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPVideo</span>&gt;</span>imx350_sunny_cpp_video<span class="hljs-tag">&lt;/<span class="hljs-name">CPPVideo</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPLiveshot</span>&gt;</span>imx350_sunny_cpp_liveshot<span class="hljs-tag">&lt;/<span class="hljs-name">CPPLiveshot</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">A3Preview</span>&gt;</span>imx350_sunny_default_preview_3a<span class="hljs-tag">&lt;/<span class="hljs-name">A3Preview</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">A3Video</span>&gt;</span>imx350_sunny_default_video_3a<span class="hljs-tag">&lt;/<span class="hljs-name">A3Video</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ChromatixName</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ChromatixName</span> <span class="hljs-attr">sensor_resolution_index</span>=<span class="hljs-string">&quot;3&quot;</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPCommon</span>&gt;</span>imx350_sunny_common<span class="hljs-tag">&lt;/<span class="hljs-name">ISPCommon</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPPreview</span>&gt;</span>imx350_sunny_hfr_90<span class="hljs-tag">&lt;/<span class="hljs-name">ISPPreview</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPSnapshot</span>&gt;</span>imx350_sunny_hfr_90<span class="hljs-tag">&lt;/<span class="hljs-name">ISPSnapshot</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPVideo</span>&gt;</span>imx350_sunny_hfr_90<span class="hljs-tag">&lt;/<span class="hljs-name">ISPVideo</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPPreview</span>&gt;</span>imx350_sunny_cpp_hfr_90<span class="hljs-tag">&lt;/<span class="hljs-name">CPPPreview</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPSnapshot</span>&gt;</span>imx350_sunny_cpp_hfr_90<span class="hljs-tag">&lt;/<span class="hljs-name">CPPSnapshot</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPVideo</span>&gt;</span>imx350_sunny_cpp_hfr_90<span class="hljs-tag">&lt;/<span class="hljs-name">CPPVideo</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPLiveshot</span>&gt;</span>imx350_sunny_cpp_liveshot<span class="hljs-tag">&lt;/<span class="hljs-name">CPPLiveshot</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">A3Preview</span>&gt;</span>imx350_sunny_hfr_90_3a<span class="hljs-tag">&lt;/<span class="hljs-name">A3Preview</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">A3Video</span>&gt;</span>imx350_sunny_hfr_90_3a<span class="hljs-tag">&lt;/<span class="hljs-name">A3Video</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ChromatixName</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">ChromatixName</span> <span class="hljs-attr">sensor_resolution_index</span>=<span class="hljs-string">&quot;4&quot;</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPCommon</span>&gt;</span>imx350_sunny_common<span class="hljs-tag">&lt;/<span class="hljs-name">ISPCommon</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPPreview</span>&gt;</span>imx350_sunny_hfr_120<span class="hljs-tag">&lt;/<span class="hljs-name">ISPPreview</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPSnapshot</span>&gt;</span>imx350_sunny_hfr_120<span class="hljs-tag">&lt;/<span class="hljs-name">ISPSnapshot</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ISPVideo</span>&gt;</span>imx350_sunny_hfr_120<span class="hljs-tag">&lt;/<span class="hljs-name">ISPVideo</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPPreview</span>&gt;</span>imx350_sunny_cpp_hfr_120<span class="hljs-tag">&lt;/<span class="hljs-name">CPPPreview</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPSnapshot</span>&gt;</span>imx350_sunny_cpp_hfr_120<span class="hljs-tag">&lt;/<span class="hljs-name">CPPSnapshot</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPVideo</span>&gt;</span>imx350_sunny_cpp_hfr_120<span class="hljs-tag">&lt;/<span class="hljs-name">CPPVideo</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CPPLiveshot</span>&gt;</span>imx350_sunny_cpp_liveshot<span class="hljs-tag">&lt;/<span class="hljs-name">CPPLiveshot</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">A3Preview</span>&gt;</span>imx350_sunny_hfr_120_3a<span class="hljs-tag">&lt;/<span class="hljs-name">A3Preview</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">A3Video</span>&gt;</span>imx350_sunny_hfr_120_3a<span class="hljs-tag">&lt;/<span class="hljs-name">A3Video</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ChromatixName</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">ResolutionChromatixInfo</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ChromatixConfigurationRoot</span>&gt;</span>
+</code></pre>
+<h4 id="32-sdm660cameraxml">3.2 sdm660_camera.xml</h4>
+<pre><code class="lang-xml"><span class="hljs-comment">&lt;!--
+CameraModuleConfig :
+    This node must be added for each module prosent in the device.
+    It contain all information about the module present.
+    The number of nodes of CameraModuleConfig indicate number of modules
+    to be probed on the device.
+    Maximum number of CameraModuleConfig nodes is 10
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+*CameraId : Camera Id is the Slot number in which the mode is plugged. Valid values are 0, 1, 2 and 3.
+*SensorName : Name of the sensor present on the module. The sensor library name should be of the form libmmcamera_&lt;SensorName&gt;.so
+ActuatorName : Name of the actuator on this module.The actuator library name should be of the form libactuator_&lt;ActuatorName&gt;.so.
+                If there is no actuator remove the &lt;ActuatorName&gt; node.
+EepromName : Name of the eeprom on this module.
+    Eeprom lib name should be of the form libmmcamera_&lt;EepromName&gt;_eeprom.so If there is no eeprom remove the &lt;EepromName&gt; node.
+FlashName :
+    Name of the flash on this module.
+    The flash library name should be of the form libflash_&lt;FlashName&gt;.so. If there is no flash remove the &lt;FlashName&gt; node.
+ChromatixName :
+    Name of the tuning xml file.
+    Tuning file contains the list of chromatix library names. If there is no tuning xml file remove the &lt;ChromatixName&gt; node.
+Position :
+    Position of the sensor module. Valid values are: BACK, FRONT and BACK_AUX
+MountAngle :
+    Angle at which the sensor is mounted. Valid values are 0, 90, 180, 270 and 360.
+    To use default mountangle mentioned in kernel use 360.
+
+CsiInfo : This node contains information about the receiver configuration.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+*CSIDCore : CSID core to receive the data. Valid values are 0, 1, 2 and 3.
+*LaneMask : Mask to mention which lane is enabled.
+    LaneMask[0] for DL0.
+    LaneMask[1] for CLK.
+    LaneMask[2] for DL1.
+    LaneMask[3] for DL2.
+    LaneMask[4] for DL3
+*LaneAssign : Number which describes the lane mapping between sensor and PHY.
+    LaneAssign[0:3] is sensor lane number connected to data lane 0 of PHY on MSM
+    LaneAssign[4:7] is sensor lane number connected to data lane 2 of PHY on MSM
+    LaneAssign[8:11] is sensor lane number connected to data lane 3 of PHY on MSM
+    LaneAssign[12:15] is sensor lane number connected to data lane 4 of PHY on MSM
+
+    NOTE : Lane 1 is reserved for the clock lane.
+        Wiring and setting it to a data lane is prohibited.
+ComboMode :
+    Flag to enable combo mode.
+    This flag is enabled if multiple sensors are using same CSI-PHY receiver
+
+LensInfo : Information of the lens present in the module.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+*FocalLength : FocalLength of the lens in micometers. Distance between the center of curvature to the focal point.
+*FNumber : FNumber of the lens.
+*TotalFocusDistance : The total distance in meters the lens could focus.
+*HorizontalViewAngle : HorizontalViewAngle in degrees
+*VerticalViewAngle : VerticalViewAngle in degrees
+*MinFocusDistance : Minimum distance in meters the lens could focus.
+
+*VARIABLES MARKED WITH ASTRICK (*) ARE MANDATORY.
+--&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">CameraConfigurationRoot</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">CameraModuleConfig</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">CameraId</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">CameraId</span>&gt;</span>                            // camera id =0&#xFF0C;&#x6CE8;&#x610F;&#x548C; dts &#x4E2D; cell-index &#x4E00;&#x81F4;
+        <span class="hljs-tag">&lt;<span class="hljs-name">SensorName</span>&gt;</span>imx362<span class="hljs-tag">&lt;/<span class="hljs-name">SensorName</span>&gt;</span>                    // sensor name , &#x8FD9;&#x4E2A;&#x540D;&#x5B57;&#x7528;&#x6765;&#x627E;&#x5230;&#x5BF9;&#x5E94;&#x7684; sensor lib &#x5E93;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x80FD;&#x9519;&#x4E86;
+        <span class="hljs-tag">&lt;<span class="hljs-name">ActuatorName</span>&gt;</span>ak7374<span class="hljs-tag">&lt;/<span class="hljs-name">ActuatorName</span>&gt;</span>                // lens name &#xFF0C;&#x7528;&#x6765;&#x627E;&#x5230;&#x5BF9;&#x5E94;&#x7684;&#x9A6C;&#x8FBE;&#x9A71;&#x52A8;
+        <span class="hljs-tag">&lt;<span class="hljs-name">EepromName</span>&gt;</span>sony_imx362<span class="hljs-tag">&lt;/<span class="hljs-name">EepromName</span>&gt;</span>            // eeprom name, &#x7528;&#x6765;&#x627E;&#x5230;&#x5BF9;&#x5E94;&#x7684;eeprom&#x9A71;&#x52A8;
+        <span class="hljs-tag">&lt;<span class="hljs-name">ChromatixName</span>&gt;</span>imx362_chromatix<span class="hljs-tag">&lt;/<span class="hljs-name">ChromatixName</span>&gt;</span>    // chromatix name&#xFF0C;&#x7528;&#x6765;&#x627E;&#x5230;&#x5BF9;&#x5E94;&#x7684;&#x6548;&#x679C;&#x6587;&#x4EF6;
+        <span class="hljs-tag">&lt;<span class="hljs-name">FlashName</span>&gt;</span>pmic<span class="hljs-tag">&lt;/<span class="hljs-name">FlashName</span>&gt;</span>                        // flashlight name, &#x7528;&#x6765;&#x627E;&#x5230; mm-camera2\media-controller\modules\sensors\flash\libs &#x4E0B;&#x9762;&#x5BF9;&#x5E94;&#x7684;&#x5E93;
+        <span class="hljs-tag">&lt;<span class="hljs-name">ModesSupported</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">ModesSupported</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Position</span>&gt;</span>BACK<span class="hljs-tag">&lt;/<span class="hljs-name">Position</span>&gt;</span>                        // &#x540E;&#x6444;
+        <span class="hljs-tag">&lt;<span class="hljs-name">MountAngle</span>&gt;</span>90<span class="hljs-tag">&lt;/<span class="hljs-name">MountAngle</span>&gt;</span>                        // &#x65CB;&#x8F6C;90&#x5EA6;&#xFF0C;&#x6CE8;&#x610F;&#x548C; dts &#x4E2D;&#x914D;&#x7F6E;&#x7684;&#x4E00;&#x6837;
+        <span class="hljs-tag">&lt;<span class="hljs-name">CSIInfo</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">CSIDCore</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">CSIDCore</span>&gt;</span>                    // CS 0
+              <span class="hljs-tag">&lt;<span class="hljs-name">LaneMask</span>&gt;</span>0x1F<span class="hljs-tag">&lt;/<span class="hljs-name">LaneMask</span>&gt;</span>                    // 4 lane &#x548C; 1 clk &#x540C;&#x65F6;&#x4F7F;&#x80FD;
+              <span class="hljs-tag">&lt;<span class="hljs-name">LaneAssign</span>&gt;</span>0x4320<span class="hljs-tag">&lt;/<span class="hljs-name">LaneAssign</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">ComboMode</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">ComboMode</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">CSIInfo</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">LensInfo</span>&gt;</span>                                        // &#x9A6C;&#x8FBE;&#x76F8;&#x5173;&#x7684;&#x53C2;&#x6570;&#xFF0C;&#x5177;&#x4F53;&#x770B;&#x6A21;&#x7EC4; sepc
+              <span class="hljs-tag">&lt;<span class="hljs-name">FocalLength</span>&gt;</span>3.94<span class="hljs-tag">&lt;/<span class="hljs-name">FocalLength</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">FNumber</span>&gt;</span>1.9<span class="hljs-tag">&lt;/<span class="hljs-name">FNumber</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">TotalFocusDistance</span>&gt;</span>4.64<span class="hljs-tag">&lt;/<span class="hljs-name">TotalFocusDistance</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">HorizontalViewAngle</span>&gt;</span>70.4<span class="hljs-tag">&lt;/<span class="hljs-name">HorizontalViewAngle</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">VerticalViewAngle</span>&gt;</span>55.7<span class="hljs-tag">&lt;/<span class="hljs-name">VerticalViewAngle</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">MinFocusDistance</span>&gt;</span>0.1<span class="hljs-tag">&lt;/<span class="hljs-name">MinFocusDistance</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">LensInfo</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">CameraModuleConfig</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">CameraModuleConfig</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">CameraId</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">CameraId</span>&gt;</span>                            // camera id =1
+        <span class="hljs-tag">&lt;<span class="hljs-name">SensorName</span>&gt;</span>imx350<span class="hljs-tag">&lt;/<span class="hljs-name">SensorName</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">ActuatorName</span>&gt;</span>dw9800<span class="hljs-tag">&lt;/<span class="hljs-name">ActuatorName</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">EepromName</span>&gt;</span>sony_imx350<span class="hljs-tag">&lt;/<span class="hljs-name">EepromName</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">ChromatixName</span>&gt;</span>imx350_chromatix<span class="hljs-tag">&lt;/<span class="hljs-name">ChromatixName</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">ModesSupported</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">ModesSupported</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Position</span>&gt;</span>BACK_AUX<span class="hljs-tag">&lt;/<span class="hljs-name">Position</span>&gt;</span>                    // &#x540E;&#x4E8C;&#x6444;
+        <span class="hljs-tag">&lt;<span class="hljs-name">MountAngle</span>&gt;</span>90<span class="hljs-tag">&lt;/<span class="hljs-name">MountAngle</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">CSIInfo</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">CSIDCore</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">CSIDCore</span>&gt;</span>                    // CS 1
+              <span class="hljs-tag">&lt;<span class="hljs-name">LaneMask</span>&gt;</span>0x1F<span class="hljs-tag">&lt;/<span class="hljs-name">LaneMask</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">LaneAssign</span>&gt;</span>0x4320<span class="hljs-tag">&lt;/<span class="hljs-name">LaneAssign</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">ComboMode</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">ComboMode</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">CSIInfo</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">LensInfo</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">FocalLength</span>&gt;</span>5.3<span class="hljs-tag">&lt;/<span class="hljs-name">FocalLength</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">FNumber</span>&gt;</span>2.6<span class="hljs-tag">&lt;/<span class="hljs-name">FNumber</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">TotalFocusDistance</span>&gt;</span>5.0<span class="hljs-tag">&lt;/<span class="hljs-name">TotalFocusDistance</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">HorizontalViewAngle</span>&gt;</span>51.4<span class="hljs-tag">&lt;/<span class="hljs-name">HorizontalViewAngle</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">VerticalViewAngle</span>&gt;</span>40.0<span class="hljs-tag">&lt;/<span class="hljs-name">VerticalViewAngle</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">MinFocusDistance</span>&gt;</span>0.3<span class="hljs-tag">&lt;/<span class="hljs-name">MinFocusDistance</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">LensInfo</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">CameraModuleConfig</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">CameraModuleConfig</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">CameraId</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">CameraId</span>&gt;</span>                            // camera id =2
+        <span class="hljs-tag">&lt;<span class="hljs-name">SensorName</span>&gt;</span>s5k4h7yx<span class="hljs-tag">&lt;/<span class="hljs-name">SensorName</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">EepromName</span>&gt;</span>holitech_s5k4h7yx<span class="hljs-tag">&lt;/<span class="hljs-name">EepromName</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">ChromatixName</span>&gt;</span>s5k4h7yx_chromatix<span class="hljs-tag">&lt;/<span class="hljs-name">ChromatixName</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">ModesSupported</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">ModesSupported</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Position</span>&gt;</span>FRONT<span class="hljs-tag">&lt;/<span class="hljs-name">Position</span>&gt;</span>                        // &#x524D;&#x6444;
+        <span class="hljs-tag">&lt;<span class="hljs-name">MountAngle</span>&gt;</span>270<span class="hljs-tag">&lt;/<span class="hljs-name">MountAngle</span>&gt;</span>                    // &#x65CB;&#x8F6C;270&#x5EA6;
+        <span class="hljs-tag">&lt;<span class="hljs-name">CSIInfo</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">CSIDCore</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">CSIDCore</span>&gt;</span>                    // CS2
+              <span class="hljs-tag">&lt;<span class="hljs-name">LaneMask</span>&gt;</span>0x1F<span class="hljs-tag">&lt;/<span class="hljs-name">LaneMask</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">LaneAssign</span>&gt;</span>0x4320<span class="hljs-tag">&lt;/<span class="hljs-name">LaneAssign</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">ComboMode</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">ComboMode</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">CSIInfo</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">LensInfo</span>&gt;</span>                                        // &#x9A6C;&#x8FBE;&#x76F8;&#x5173;&#x53C2;&#x6570;
+              <span class="hljs-tag">&lt;<span class="hljs-name">FocalLength</span>&gt;</span>2.47<span class="hljs-tag">&lt;/<span class="hljs-name">FocalLength</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">FNumber</span>&gt;</span>2.0<span class="hljs-tag">&lt;/<span class="hljs-name">FNumber</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">TotalFocusDistance</span>&gt;</span>1.9<span class="hljs-tag">&lt;/<span class="hljs-name">TotalFocusDistance</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">HorizontalViewAngle</span>&gt;</span>63.84<span class="hljs-tag">&lt;/<span class="hljs-name">HorizontalViewAngle</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">VerticalViewAngle</span>&gt;</span>47.88<span class="hljs-tag">&lt;/<span class="hljs-name">VerticalViewAngle</span>&gt;</span>
+              <span class="hljs-tag">&lt;<span class="hljs-name">MinFocusDistance</span>&gt;</span>0.1<span class="hljs-tag">&lt;/<span class="hljs-name">MinFocusDistance</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">LensInfo</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">CameraModuleConfig</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">CameraConfigurationRoot</span>&gt;</span>
+</code></pre>
+<h4 id="33-sensorsconfigsandroidmk">3.3 sensors_configs_Android.mk</h4>
+<p><em>\vendor\qcom\proprietary\mm-camera\mm-camera2\media-controller\modules\sensors\configs\Android.mk</em></p>
+<p>&#x5728; Android.mk &#x4E2D;&#xFF0C;&#x6DFB;&#x52A0; xml &#x7F16;&#x8BD1;&#x3002;</p>
+<pre><code class="lang-makefile">ifeq ($(call is-board-platform-in-list, sdm660),true)
+include $(CLEAR_VARS)
+LOCAL_MODULE:= camera_config.xml
+LOCAL_MODULE_CLASS := EXECUTABLES
+LOCAL_SRC_FILES := sdm660_camera.xml
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_PATH := <span class="hljs-variable">$(TARGET_OUT)</span>/etc/camera
+LOCAL_MODULE_OWNER := qti
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE:= imx350_sunny.xml
+LOCAL_MODULE_CLASS := EXECUTABLES
+LOCAL_SRC_FILES := imx350_sunny.xml
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_PATH := <span class="hljs-variable">$(TARGET_OUT)</span>/etc/camera
+LOCAL_MODULE_OWNER := qti
+include $(BUILD_PREBUILT)
+</code></pre>
+<h3 id="4-&#x5BFC;&#x5165;-camera-af-&#x9A6C;&#x8FBE;lib&#x5E93;&#x4EE3;&#x7801;">4. &#x5BFC;&#x5165; Camera AF &#x9A6C;&#x8FBE;lib&#x5E93;&#x4EE3;&#x7801;</h3>
+<p>&#x5728;&#x524D;&#x9762;<em>sdm660_camera.xml</em>&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;</p>
+<p>&#x4F7F;&#x7528;&#x4E86; <em><actuatorname>ak7374</actuatorname></em>&#x548C;<em><actuatorname>dw9800</actuatorname></em>&#x8FD9;&#x4E24;&#x79CD;&#x9A6C;&#x8FBE;&#x3002;</p>
+<p>&#x9A6C;&#x8FBE;lib&#x5E93;&#x4EE3;&#x7801;&#x4F4D;&#x4E8E;<em>vendor\qcom\proprietary\mm-camera\mm-camera2\media-controller\modules\sensors\actuator\libs</em>&#x4E2D;&#x3002;</p>
+<p>&#x4ECE; Android.mk&#x4E2D;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x5404;&#x6A21;&#x5757;&#x540D;&#x5B57;&#x4E3A;&#xFF1A;
+<em>LOCAL_MODULE := libactuator_dw9800</em>
+<em>LOCAL_MODULE := libactuator_ak7374</em></p>
+<p>&#x5BFC;&#x5165;&#x4EE3;&#x7801;&#x540E;&#xFF0C;&#x5728; <em>\vendor\qcom\proprietary\common\config\device-vendor.mk</em>&#x4E2D;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF0C;&#x5C06;&#x6A21;&#x5757;&#x5BFC;&#x5165;&#x8FDB;&#x6765;&#xFF1A;
+<em>MM_CAMERA += libactuator_dw9800</em>
+<em>MM_CAMERA += libactuator_ak7374</em></p>
+<h3 id="5-&#x5BFC;&#x5165;-camera-flashlight-&#x95EA;&#x5149;&#x706F;lib&#x5E93;&#x4EE3;&#x7801;">5. &#x5BFC;&#x5165; Camera Flashlight &#x95EA;&#x5149;&#x706F;lib&#x5E93;&#x4EE3;&#x7801;</h3>
+<p>&#x5728;&#x524D;&#x9762;<em>sdm660_camera.xml</em>&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x51FA;flashlight &#x4F7F;&#x7528;&#x7684;&#x662F;&#x9ED8;&#x8BA4;&#x7684; <em><flashname>pmic</flashname></em>&#x9A71;&#x52A8;&#x3002;</p>
+<p>&#x4EE3;&#x7801;&#x4F4D;&#x7F6E;&#x5728; <em>\vendor\qcom\proprietary\mm-camera\mm-camera2\media-controller\modules\sensors\flash\libs\pmic</em></p>
+<p>&#x5728;<em>Android.mk</em>&#x4E2D;&#xFF0C;&#x6A21;&#x5757;&#x540D;&#x5B57;&#x4E3A;&#xFF1A;
+<em>LOCAL_MODULE := libflash_pmic</em></p>
+<p>&#x5BFC;&#x5165;&#x4EE3;&#x7801;&#x540E;&#xFF0C;&#x5728; <em>\vendor\qcom\proprietary\common\config\device-vendor.mk</em>&#x4E2D;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF0C;&#x5C06;&#x6A21;&#x5757;&#x5BFC;&#x5165;&#x8FDB;&#x6765;&#xFF1A;
+<em>MM_CAMERA += libflash_pmic</em></p>
+<h3 id="6-&#x5BFC;&#x5165;-camera-eeprom-otp-lib&#x5E93;&#x4EE3;&#x7801;">6. &#x5BFC;&#x5165; Camera Eeprom OTP lib&#x5E93;&#x4EE3;&#x7801;</h3>
+<p>&#x5728;&#x524D;&#x9762;<em>sdm660_camera.xml</em>&#x4E2D;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x51FA;Eeprom&#x4F7F;&#x7528;&#x7684;&#x662F;&#x9ED8;&#x8BA4;&#x7684; <em><eepromname>sony_imx362</eepromname></em>&#x548C;<em><eepromname>sony_imx350</eepromname></em>&#x9A71;&#x52A8;&#x3002;</p>
+<p>&#x4EE3;&#x7801;&#x4F4D;&#x7F6E;&#x5728; <em>\vendor\qcom\proprietary\mm-camera\mm-camera2\media-controller\modules\sensors\eeprom\libs\sony_imx350</em></p>
+<p>&#x5728;<em>Android.mk</em>&#x4E2D;&#xFF0C;&#x6A21;&#x5757;&#x540D;&#x5B57;&#x4E3A;&#xFF1A;
+<em>LOCAL_MODULE := libmmcamera_sony_imx350_eeprom</em></p>
+<p>&#x5BFC;&#x5165;&#x4EE3;&#x7801;&#x540E;&#xFF0C;&#x5728; \vendor\qcom\proprietary\common\config\device-vendor.mk<em>&#x4E2D;&#x6DFB;&#x52A0;&#x5982;&#x4E0B;&#x4EE3;&#x7801;&#xFF0C;&#x5C06;&#x6A21;&#x5757;&#x5BFC;&#x5165;&#x8FDB;&#x6765;&#xFF1A;
+</em>MM_CAMERA += libmmcamera_sony_imx350_eeprom*</p>
+<p>&#x597D;&#xFF0C;&#x81F3;&#x6B64;&#xFF0C;camera &#x4EE3;&#x7801;&#x79FB;&#x690D;&#x76F8;&#x5173;&#x7684;&#x5DE5;&#x4F5C;&#x5C31;&#x5B8C;&#x4E86;&#xFF0C;&#x5982;&#x679C;&#x8FD9;&#x4E9B;&#x76F8;&#x5173;&#x7684;&#x6587;&#x4EF6;&#x90FD;&#x914D;&#x7F6E;&#x6B63;&#x786E;&#x7684;&#x8BDD;&#xFF0C;
+&#x63A5;&#x4E0B;&#x6765;&#x60A8;&#x5C31;&#x53EF;&#x4EE5;&#xFF0C;&#x7F16;&#x8BD1;&#x4E0B;&#x8F7D;&#x770B;&#x4E0B;&#x662F;&#x5426;&#x6B63;&#x5E38;&#x70B9;&#x4EAE;&#xFF0C;&#x53CA;&#x6293;log &#x8C03;&#x8BD5;&#x4E0B;&#x3002;</p>
+<footer class="page-footer"><span class="copyright">copyright by duguosheng all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x4EF6;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
+2022-08-16 16:57:54
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="使用流程.html" class="navigation navigation-prev " aria-label="Previous page: 第 2 章：SC66_Camera 使用流程">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="附加内容.html" class="navigation navigation-next " aria-label="Next page: 2.2 附加知识">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"2.1 Camera_driver 移植流程","level":"1.3.1","depth":2,"next":{"title":"2.2 附加知识","level":"1.3.2","depth":2,"path":"Sdm660_Camera/附加内容.md","ref":"Sdm660_Camera/附加内容.md","articles":[]},"previous":{"title":"第 2 章：SC66_Camera 使用流程","level":"1.3","depth":1,"path":"Sdm660_Camera/使用流程.md","ref":"Sdm660_Camera/使用流程.md","articles":[{"title":"2.1 Camera_driver 移植流程","level":"1.3.1","depth":2,"path":"Sdm660_Camera/相机驱动移植流程.md","ref":"Sdm660_Camera/相机驱动移植流程.md","articles":[]},{"title":"2.2 附加知识","level":"1.3.2","depth":2,"path":"Sdm660_Camera/附加内容.md","ref":"Sdm660_Camera/附加内容.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-pro","expandable-chapters","code-optimize","splitter","pageview-count","tbfed-pagefooter","flexible-alerts"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"copyright by duguosheng","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"splitter":{},"search-pro":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"pageview-count":{},"flexible-alerts":{"danger":{"className":"danger","icon":"fa fa-ban","label":"Attention"},"note":{"className":"info","icon":"fa fa-info-circle","label":"Note"},"style":"flat","tip":{"className":"tip","icon":"fa fa-lightbulb-o","label":"Tip"},"warning":{"className":"warning","icon":"fa fa-exclamation-triangle","label":"Warning"}},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"code-optimize":{"copyButtons":true,"showLines":false},"expandable-chapters":{}},"theme":"default","author":"DuGuoSheng","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"6.S081 All-In-One","gitbook":"*"},"file":{"path":"Sdm660_Camera/相机驱动移植流程.md","mtime":"2022-08-16T08:57:54.464Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-08-16T08:58:08.874Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code-optimize/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-pageview-count/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-flexible-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

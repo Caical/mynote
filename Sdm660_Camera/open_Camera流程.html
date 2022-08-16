@@ -84,7 +84,7 @@
     <link rel="next" href="open_Camera代码分析.html" />
     
     
-    <link rel="prev" href="Camera_init流程.html" />
+    <link rel="prev" href="相机初始化流程.html" />
     
 
     </head>
@@ -126,9 +126,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="SC66_Camera介绍.html">
+        <li class="chapter " data-level="1.2" data-path="相机介绍.html">
             
-                <a href="SC66_Camera介绍.html">
+                <a href="相机介绍.html">
             
                     
                     第 1 章：SC66_Camera 介绍
@@ -137,11 +137,43 @@
             
 
             
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="高通Camera设计.html">
+            
+                <a href="高通Camera设计.html">
+            
+                    
+                    1.1 高通 Camera 设计
+            
+                </a>
+            
+
+            
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="SC66_Camera使用流程.html">
+        <li class="chapter " data-level="1.2.2" data-path="代码组织.html">
             
-                <a href="SC66_Camera使用流程.html">
+                <a href="代码组织.html">
+            
+                    
+                    1.2 代码组织
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="使用流程.html">
+            
+                <a href="使用流程.html">
             
                     
                     第 2 章：SC66_Camera 使用流程
@@ -153,9 +185,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="Camera_driver移植流程.html">
+        <li class="chapter " data-level="1.3.1" data-path="相机驱动移植流程.html">
             
-                <a href="Camera_driver移植流程.html">
+                <a href="相机驱动移植流程.html">
             
                     
                     2.1 Camera_driver 移植流程
@@ -166,9 +198,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.3.2" data-path="additional.html">
+        <li class="chapter " data-level="1.3.2" data-path="附加内容.html">
             
-                <a href="additional.html">
+                <a href="附加内容.html">
             
                     
                     2.2 附加知识
@@ -229,16 +261,35 @@
             
         </li>
     
-        <li class="chapter " data-level="1.5" data-path="Camera_init流程.html">
+        <li class="chapter " data-level="1.5" data-path="系统架构.html">
             
-                <a href="Camera_init流程.html">
+                <a href="系统架构.html">
             
                     
-                    第 4 章：Camera Init 初始化流程
+                    第 4 章：Camera 系统架构
             
                 </a>
             
 
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="相机初始化流程.html">
+            
+                <a href="相机初始化流程.html">
+            
+                    
+                    4.1 Camera Init 初始化流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
             
         </li>
     
@@ -261,7 +312,7 @@
                 <a href="open_Camera代码分析.html">
             
                     
-                    5.1 open_Camera 流程
+                    5.1 open_Camera 代码分析
             
                 </a>
             
@@ -319,1428 +370,40 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="camera-open-&#x6D41;&#x7A0B;">Camera Open &#x6D41;&#x7A0B;</h1>
-<h1 id="&#x4E00;&#x3001;java-&#x5C42;-camera-class-&#x4F7F;&#x7528;&#x4ECB;&#x7ECD;">&#x4E00;&#x3001;Java &#x5C42; Camera Class &#x4F7F;&#x7528;&#x4ECB;&#x7ECD;</h1>
-<p>&#x5148;&#x770B;&#x4E0B;&#x8C37;&#x6B4C;&#x5B98;&#x65B9;&#x5BF9; Camera Class &#x7684;&#x4ECB;&#x7ECD;&#xFF1A;</p>
-<pre><code class="lang-java">The Camera class is used to set image capture settings, start/stop preview, 
-                    snap pictures, and retrieve frames for encoding for video. 
-This Class is a client for the Camera service, which manages the actual camera hardware.
-
-To access the device camera, 
-you must declare the {@link android.Manifest.permission#CAMERA} permission in your Android Manifest. 
-
-Also be sure to include the uses-feature manifest element to declare camera features used by your application.
-
-For example, 
-if you use the camera and auto-focus feature, your Manifest should include the following:
-
-uses-permission android:name = &#x201C;android.permission.CAMERA&#x201D;
-uses-feature android:name = &#x201C;android.hardware.camera&#x201D;
-uses-feature android:name = &quot;android.hardware.camera.autofocus&quot;
-</code></pre>
-<h2 id="11-&#x62CD;&#x7167;&#x5B98;&#x65B9;&#x6D41;&#x7A0B;">1.1 &#x62CD;&#x7167;&#x5B98;&#x65B9;&#x6D41;&#x7A0B;</h2>
-<ol>
-<li><p>&#x901A;&#x8FC7;<code>open(int)</code>&#x83B7;&#x53D6;&#x4E00;&#x4E2A;Camera&#x5B9E;&#x4F8B;&#x3002;</p>
-</li>
-<li><p>&#x4F7F;&#x7528;<code>getParameters()</code>&#x53D6;&#x5F97;&#x73B0;&#x6709;&#x7684;&#x8BBE;&#x7F6E;&#xFF08;&#x4F8B;&#x5982;&#x9ED8;&#x8BA4;&#x5206;&#x8FA8;&#x7387;&#x3001;&#x5E27;&#x7387;&#x7B49; &#xFF09;&#x3002;</p>
-</li>
-<li><p>&#x8BBE;&#x7F6E;&#x5E76;&#x4E0B;&#x53D1; <em>Camera</em> &#x53C2;&#x6570;&#x3002;&#x5982;&#x679C;&#x6709;&#x5FC5;&#x8981;&#xFF0C;&#x4FEE;&#x6539;&#x8FD4;&#x56DE;&#x7684;<em>Camera.Parameters</em>&#xFF0C;&#x5E76;&#x8C03;&#x7528;<code>setParameters(Camera.Parameters)&#x3002;</code></p>
-</li>
-<li><p>&#x8BBE;&#x7F6E;&#x5C4F;&#x5E55;&#x663E;&#x793A;&#x65B9;&#x5411;&#xFF0C;&#x5982;&#x679C;&#x9700;&#x8981;&#xFF0C;&#x8C03;&#x7528;<code>setDisplayOrientation(int)&#x3002;</code></p>
-</li>
-<li><p>&#x4F20;&#x9012;&#x4E00;&#x4E2A;&#x5B8C;&#x5168;&#x521D;&#x59CB;&#x5316;&#x7684; <em>SurfaceHolder</em>&#xFF0C;&#x8C03;&#x7528;<code>setPreviewDisplay(SurfaceHolder)</code>&#xFF0C;&#x5426;&#x5219;&#x65E0;&#x6CD5;&#x9884;&#x89C8;&#x3002;</p>
-</li>
-<li><p>&#x8C03;&#x7528; <code>startPreview()</code> &#x5F00;&#x59CB;&#x9884;&#x89C8;&#xFF0C;&#x62CD;&#x7167;&#x4E4B;&#x524D;&#x5FC5;&#x987B;&#x5148;&#x9884;&#x89C8;&#x3002;</p>
-</li>
-<li><p>&#x8C03;&#x7528;<code>takePicture()</code> &#x5F00;&#x59CB;&#x62CD;&#x7167;&#x65F6;&#xFF0C;&#x7B49;&#x5F85;&#x5B83;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x56DE;&#x4F20;&#x6570;&#x636E;&#x3002;
-<code>takePicture(Camera.ShutterCallback,Camera.PictureCallback, Camera.PictureCallback, Camera.PictureCallback)</code></p>
-</li>
-<li><p>&#x62CD;&#x7167;&#x5B8C;&#x540E;&#xFF0C;preview&#x4F1A;&#x505C;&#x6B62;&#xFF0C;&#x5982;&#x679C;&#x60F3;&#x7EE7;&#x7EED;&#x62CD;&#x7167;&#xFF0C;&#x9700;&#x91CD;&#x65B0;&#x8C03;&#x7528; startPreview()&#x3002;</p>
-</li>
-<li><p>&#x8C03;&#x7528;stopPreview()&#x505C;&#x6B62;&#x66F4;&#x65B0;&#x9884;&#x89C8;&#x754C;&#x9762;&#x3002;</p>
-</li>
-<li><p>&#x8C03;&#x7528; release() &#x91CA;&#x653E;Camera &#x8D44;&#x6E90;&#x3002;</p>
-</li>
-</ol>
-<h2 id="12-&#x5F55;&#x50CF;&#x5B98;&#x65B9;&#x6D41;&#x7A0B;">1.2 &#x5F55;&#x50CF;&#x5B98;&#x65B9;&#x6D41;&#x7A0B;</h2>
-<ol>
-<li>&#x83B7;&#x53D6;&#x5E76;&#x521D;&#x59CB;&#x5316; Camera &#x5BF9;&#x50CF;&#xFF0C;&#x5E76;&#x8C03;&#x7528; startPreview()&#x3002;</li>
-<li>&#x8C03;&#x7528; unlock() &#x5141;&#x8BB8; media &#x8FDB;&#x7A0B;&#x64CD;&#x4F5C;Camera&#x3002;</li>
-<li>&#x8C03;&#x7528; setCamera(Camera) &#x5C06; Camera &#x5BF9;&#x50CF;&#x4F20;&#x9012;&#x7ED9; MediaRecorder&#x3002;</li>
-<li>&#x5F53;&#x5F55;&#x50CF;&#x5B8C;&#x6BD5;&#x540E;&#xFF0C;&#x8C03;&#x7528; reconnect() &#x91CD;&#x65B0;&#x9501;&#x5B9A;Camera&#x3002;</li>
-<li>&#x5982;&#x679C;&#x60F3;&#x62CD;&#x7167;&#xFF0C;&#x91CD;&#x65B0;preview &#xFF0C;&#x7136;&#x540E;&#x62CD;&#x7167;&#x3002;</li>
-<li>&#x8C03;&#x7528; stopPreview() &#x548C; release() &#x9000;&#x51FA;&#x9884;&#x89C8;&#x5E76;&#x91CA;&#x653E;Camera&#x8D44;&#x6E90;&#x3002;</li>
-</ol>
-<h1 id="&#x4E8C;&#x3001;-frameworks-&#x5C42;-camerajava-&#x5206;&#x6790;">&#x4E8C;&#x3001; Frameworks &#x5C42; Camera.java &#x5206;&#x6790;</h1>
-<p>Java &#x5C42;&#x4E2D;&#x8C03;&#x7528;&#x7684; Camera Class &#x6E90;&#x7801;&#x4F4D;&#x4E8E; <code>frameworks/base/core/java/android/hardware/Camera.java</code></p>
-<pre><code class="lang-JAVA">frameworks/base/core/java/android/hardware/Camera.java
-
-<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Camera</span> </span>{
-    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String TAG = <span class="hljs-string">&quot;Camera&quot;</span>;
-
-    <span class="hljs-keyword">private</span> CameraDataCallback mCameraDataCallback;
-    <span class="hljs-keyword">private</span> CameraMetaDataCallback mCameraMetaDataCallback;
-
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> CAMERA_HAL_API_VERSION_1_0 = <span class="hljs-number">0x100</span>;
-
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CameraInfo</span> </span>{
-        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> CAMERA_FACING_BACK = <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> CAMERA_FACING_FRONT = <span class="hljs-number">1</span>;
-        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> CAMERA_SUPPORT_MODE_ZSL = <span class="hljs-number">2</span>;
-        <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> CAMERA_SUPPORT_MODE_NONZSL = <span class="hljs-number">3</span>;
-        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> facing;
-        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> orientation;
-        <span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> canDisableShutterSound;
-    };
-
-    <span class="hljs-comment">// 1. &#x627E;&#x5F00;&#x6307;&#x5B9A; id &#x7684;Camera</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Camera <span class="hljs-title">open</span><span class="hljs-params">(<span class="hljs-keyword">int</span> cameraId)</span> </span>{
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Camera(cameraId);
-    }
-
-    <span class="hljs-comment">// 2. &#x5728;Camera open() &#x51FD;&#x6570;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x6307;&#x5B9A;open &#x5BF9;&#x5E94;&#x7684;camera id&#xFF0C;&#x5219;&#x9ED8;&#x8BA4;&#x6253;&#x5F00;&#x540E;&#x6444;</span>
-    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Camera <span class="hljs-title">open</span><span class="hljs-params">()</span> </span>{
-        <span class="hljs-keyword">int</span> numberOfCameras = getNumberOfCameras();
-        CameraInfo cameraInfo = <span class="hljs-keyword">new</span> CameraInfo();
-        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; numberOfCameras; i++) {
-            getCameraInfo(i, cameraInfo);
-            <span class="hljs-keyword">if</span> (cameraInfo.facing == CameraInfo.CAMERA_FACING_BACK) {
-                <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Camera(i);
-            }
-        }
-        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
-    }
-
-    <span class="hljs-comment">// 3. &#x8C03;&#x7528; cameraInitNormal() &#x521D;&#x59CB;&#x5BF9;&#x5E94; id &#x7684;Camera</span>
-    <span class="hljs-comment">/** used by Camera#open, Camera#open(int) */</span>
-    Camera(<span class="hljs-keyword">int</span> cameraId) {
-        <span class="hljs-keyword">int</span> err = cameraInitNormal(cameraId);
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">cameraInitNormal</span><span class="hljs-params">(<span class="hljs-keyword">int</span> cameraId)</span> </span>{
-        <span class="hljs-keyword">return</span> cameraInitVersion(cameraId, CAMERA_HAL_API_VERSION_NORMAL_CONNECT);  <span class="hljs-comment">// -2</span>
-    }
-
-    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">cameraInitVersion</span><span class="hljs-params">(<span class="hljs-keyword">int</span> cameraId, <span class="hljs-keyword">int</span> halVersion)</span> </span>{
-        mShutterCallback = <span class="hljs-keyword">null</span>;    
-        mRawImageCallback = <span class="hljs-keyword">null</span>;
-        mJpegCallback = <span class="hljs-keyword">null</span>;
-        mPreviewCallback = <span class="hljs-keyword">null</span>;
-        mPostviewCallback = <span class="hljs-keyword">null</span>;
-        mUsingPreviewAllocation = <span class="hljs-keyword">false</span>;
-        mZoomListener = <span class="hljs-keyword">null</span>;
-        <span class="hljs-comment">/* ### QC ADD-ONS: START */</span>
-        mCameraDataCallback = <span class="hljs-keyword">null</span>;
-        mCameraMetaDataCallback = <span class="hljs-keyword">null</span>;
-        <span class="hljs-comment">/* ### QC ADD-ONS: END */</span>
-
-        <span class="hljs-comment">// 1. &#x6CE8;&#x518C; EventHandler &#x5FAA;&#x73AF;&#x76D1;&#x542C;Camera &#x4E8B;&#x4EF6;</span>
-        Looper looper;
-        <span class="hljs-keyword">if</span> ((looper = Looper.myLooper()) != <span class="hljs-keyword">null</span>) {
-            mEventHandler = <span class="hljs-keyword">new</span> EventHandler(<span class="hljs-keyword">this</span>, looper);
-        } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((looper = Looper.getMainLooper()) != <span class="hljs-keyword">null</span>) {
-            mEventHandler = <span class="hljs-keyword">new</span> EventHandler(<span class="hljs-keyword">this</span>, looper);
-        } <span class="hljs-keyword">else</span> {
-            mEventHandler = <span class="hljs-keyword">null</span>;
-        }
-        <span class="hljs-comment">// 2. &#x83B7;&#x53D6;&#x5F53;&#x524D;&#x5305;&#x540D;</span>
-        String packageName = ActivityThread.currentOpPackageName();
-
-        <span class="hljs-comment">// 3. &#x5982;&#x679C;&#x5B9A;&#x4E49;&#x4E86; prop &#x5C5E;&#x6027; &quot;camera.hal1.packagelist&quot; &#xFF0C; &#x5219;&#x5F3A;&#x5236;&#x4F7F;&#x7528; HAL1</span>
-        <span class="hljs-comment">//Force HAL1 if the package name falls in this bucket</span>
-        String packageList = SystemProperties.get(<span class="hljs-string">&quot;camera.hal1.packagelist&quot;</span>, <span class="hljs-string">&quot;&quot;</span>);
-        <span class="hljs-keyword">if</span> (packageList.length() &gt; <span class="hljs-number">0</span>) {
-            TextUtils.StringSplitter splitter = <span class="hljs-keyword">new</span> TextUtils.SimpleStringSplitter(<span class="hljs-string">&apos;,&apos;</span>);
-            splitter.setString(packageList);
-            <span class="hljs-keyword">for</span> (String str : splitter) {
-                <span class="hljs-keyword">if</span> (packageName.equals(str)) {
-                    halVersion = CAMERA_HAL_API_VERSION_1_0;
-                    <span class="hljs-keyword">break</span>;
-                }
-            }
-        }
-        <span class="hljs-comment">// 4. &#x8C03;&#x7528; native_setup() JNI &#x51FD;&#x6570;&#xFF0C;&#x5E76;&#x4E0B;&#x53D1; camera id &#x3001;&#x5F53;&#x524D;&#x5305;&#x540D;&#x3001;hal&#x5C42;&#x7248;&#x672C;&#x53F7;</span>
-        <span class="hljs-keyword">return</span> native_setup(<span class="hljs-keyword">new</span> WeakReference&lt;Camera&gt;(<span class="hljs-keyword">this</span>), cameraId, halVersion, packageName);
-    }
-</code></pre>
-<h2 id="21-&#x3010;jni&#x3011;-cameraservice&#x521D;&#x59CB;&#x5316;-nativesetup--&#x2014;-androidhardwarecameranativesetup-">2.1 &#x3010;JNI&#x3011; CameraService&#x521D;&#x59CB;&#x5316; native_setup( ) &#x2014;&gt; android_hardware_Camera_native_setup( )</h2>
-<p>java &#x4E2D;&#x901A;&#x8FC7;JNI &#x8C03;&#x7528; native &#x65B9;&#x6CD5;&#xFF0C;Camera JNI &#x4EE3;&#x7801;&#x4F4D;&#x4E8E;</p>
-<pre><code class="lang-c++"><span class="hljs-comment">//cameraId = 0</span>
-<span class="hljs-comment">//halVersion = -2</span>
-native_setup(<span class="hljs-keyword">new</span> WeakReference&lt;Camera&gt;(<span class="hljs-keyword">this</span>), cameraId, halVersion, packageName);
-
-@ frameworks/base/core/jni/android_hardware_Camera.cpp
-<span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> JNINativeMethod camMethods[] = {
-  { <span class="hljs-string">&quot;_getNumberOfCameras&quot;</span>,     <span class="hljs-string">&quot;()I&quot;</span>,         (<span class="hljs-keyword">void</span> *)android_hardware_Camera_getNumberOfCameras },
-  { <span class="hljs-string">&quot;_getCameraInfo&quot;</span>,         <span class="hljs-string">&quot;(ILandroid/hardware/Camera$CameraInfo;)V&quot;</span>, (<span class="hljs-keyword">void</span>*)android_hardware_Camera_getCameraInfo },
-  { <span class="hljs-string">&quot;native_setup&quot;</span>,         <span class="hljs-string">&quot;(Ljava/lang/Object;IILjava/lang/String;)I&quot;</span>, (<span class="hljs-keyword">void</span>*)android_hardware_Camera_native_setup },
-  { <span class="hljs-string">&quot;native_release&quot;</span>,         <span class="hljs-string">&quot;()V&quot;</span>,         (<span class="hljs-keyword">void</span>*)android_hardware_Camera_release },
-  { <span class="hljs-string">&quot;setPreviewSurface&quot;</span>,     <span class="hljs-string">&quot;(Landroid/view/Surface;)V&quot;</span>,     (<span class="hljs-keyword">void</span> *)android_hardware_Camera_setPreviewSurface },
-  { <span class="hljs-string">&quot;setPreviewTexture&quot;</span>,     <span class="hljs-string">&quot;(Landroid/graphics/SurfaceTexture;)V&quot;</span>,    (<span class="hljs-keyword">void</span> *)android_hardware_Camera_setPreviewTexture },
-  { <span class="hljs-string">&quot;setPreviewCallbackSurface&quot;</span>, <span class="hljs-string">&quot;(Landroid/view/Surface;)V&quot;</span>, (<span class="hljs-keyword">void</span> *)android_hardware_Camera_setPreviewCallbackSurface },
-  { <span class="hljs-string">&quot;startPreview&quot;</span>,            <span class="hljs-string">&quot;()V&quot;</span>,         (<span class="hljs-keyword">void</span> *)android_hardware_Camera_startPreview },
-  { <span class="hljs-string">&quot;_stopPreview&quot;</span>,            <span class="hljs-string">&quot;()V&quot;</span>,        (<span class="hljs-keyword">void</span> *)android_hardware_Camera_stopPreview },
-  { <span class="hljs-string">&quot;previewEnabled&quot;</span>,         <span class="hljs-string">&quot;()Z&quot;</span>,         (<span class="hljs-keyword">void</span> *)android_hardware_Camera_previewEnabled },
-  { <span class="hljs-string">&quot;setHasPreviewCallback&quot;</span>,<span class="hljs-string">&quot;(ZZ)V&quot;</span>,    (<span class="hljs-keyword">void</span> *)android_hardware_Camera_setHasPreviewCallback },
-  { <span class="hljs-string">&quot;_addCallbackBuffer&quot;</span>,    <span class="hljs-string">&quot;([BI)V&quot;</span>,    (<span class="hljs-keyword">void</span> *)android_hardware_Camera_addCallbackBuffer },
-  { <span class="hljs-string">&quot;native_autoFocus&quot;</span>,         <span class="hljs-string">&quot;()V&quot;</span>,        (<span class="hljs-keyword">void</span> *)android_hardware_Camera_autoFocus },
-  { <span class="hljs-string">&quot;native_cancelAutoFocus&quot;</span>,<span class="hljs-string">&quot;()V&quot;</span>,        (<span class="hljs-keyword">void</span> *)android_hardware_Camera_cancelAutoFocus },
-  { <span class="hljs-string">&quot;native_takePicture&quot;</span>,    <span class="hljs-string">&quot;(I)V&quot;</span>,        (<span class="hljs-keyword">void</span> *)android_hardware_Camera_takePicture },
-  { <span class="hljs-string">&quot;native_setHistogramMode&quot;</span>,<span class="hljs-string">&quot;(Z)V&quot;</span>,    (<span class="hljs-keyword">void</span> *)android_hardware_Camera_setHistogramMode },
-  { <span class="hljs-string">&quot;native_setMetadataCb&quot;</span>,    <span class="hljs-string">&quot;(Z)V&quot;</span>,         (<span class="hljs-keyword">void</span> *)android_hardware_Camera_setMetadataCb },
-  { <span class="hljs-string">&quot;native_sendHistogramData&quot;</span>,<span class="hljs-string">&quot;()V&quot;</span>,    (<span class="hljs-keyword">void</span> *)android_hardware_Camera_sendHistogramData },
- { <span class="hljs-string">&quot;native_setLongshot&quot;</span>,    <span class="hljs-string">&quot;(Z)V&quot;</span>,        (<span class="hljs-keyword">void</span> *)android_hardware_Camera_setLongshot },
-  { <span class="hljs-string">&quot;native_setParameters&quot;</span>,    <span class="hljs-string">&quot;(Ljava/lang/String;)V&quot;</span>,    (<span class="hljs-keyword">void</span> *)android_hardware_Camera_setParameters },
-  { <span class="hljs-string">&quot;native_getParameters&quot;</span>, <span class="hljs-string">&quot;()Ljava/lang/String;&quot;</span>,        (<span class="hljs-keyword">void</span> *)android_hardware_Camera_getParameters },
-  { <span class="hljs-string">&quot;reconnect&quot;</span>,             <span class="hljs-string">&quot;()V&quot;</span>,        (<span class="hljs-keyword">void</span>*)android_hardware_Camera_reconnect },
-  { <span class="hljs-string">&quot;lock&quot;</span>,                    <span class="hljs-string">&quot;()V&quot;</span>,         (<span class="hljs-keyword">void</span>*)android_hardware_Camera_lock },
-  { <span class="hljs-string">&quot;unlock&quot;</span>,                <span class="hljs-string">&quot;()V&quot;</span>,        (<span class="hljs-keyword">void</span>*)android_hardware_Camera_unlock },
-  { <span class="hljs-string">&quot;startSmoothZoom&quot;</span>,        <span class="hljs-string">&quot;(I)V&quot;</span>,        (<span class="hljs-keyword">void</span> *)android_hardware_Camera_startSmoothZoom },
-  { <span class="hljs-string">&quot;stopSmoothZoom&quot;</span>,        <span class="hljs-string">&quot;()V&quot;</span>,        (<span class="hljs-keyword">void</span> *)android_hardware_Camera_stopSmoothZoom },
-  { <span class="hljs-string">&quot;setDisplayOrientation&quot;</span>,<span class="hljs-string">&quot;(I)V&quot;</span>,        (<span class="hljs-keyword">void</span> *)android_hardware_Camera_setDisplayOrientation },
-  { <span class="hljs-string">&quot;_enableShutterSound&quot;</span>,    <span class="hljs-string">&quot;(Z)Z&quot;</span>,        (<span class="hljs-keyword">void</span> *)android_hardware_Camera_enableShutterSound },
-  { <span class="hljs-string">&quot;_startFaceDetection&quot;</span>,    <span class="hljs-string">&quot;(I)V&quot;</span>,        (<span class="hljs-keyword">void</span> *)android_hardware_Camera_startFaceDetection },
-  { <span class="hljs-string">&quot;_stopFaceDetection&quot;</span>,    <span class="hljs-string">&quot;()V&quot;</span>,        (<span class="hljs-keyword">void</span> *)android_hardware_Camera_stopFaceDetection},
-  { <span class="hljs-string">&quot;enableFocusMoveCallback&quot;</span>,<span class="hljs-string">&quot;(I)V&quot;</span>,    (<span class="hljs-keyword">void</span> *)android_hardware_Camera_enableFocusMoveCallback},
-};
-</code></pre>
-<pre><code class="lang-c++"><span class="hljs-comment">// connect to camera service</span>
-<span class="hljs-function"><span class="hljs-keyword">static</span> jint <span class="hljs-title">android_hardware_Camera_native_setup</span><span class="hljs-params">(JNIEnv *env, jobject thiz, jobject weak_this, jint cameraId, jint halVersion, jstring clientPackageName)</span>
-</span>{
-    <span class="hljs-comment">// Convert jstring to String16</span>
-    <span class="hljs-keyword">const</span> <span class="hljs-keyword">char16_t</span> *rawClientName = <span class="hljs-keyword">reinterpret_cast</span>&lt;<span class="hljs-keyword">const</span> <span class="hljs-keyword">char16_t</span>*&gt;(env-&gt;GetStringChars(clientPackageName, <span class="hljs-literal">NULL</span>));
-    jsize rawClientNameLen = env-&gt;GetStringLength(clientPackageName);
-    <span class="hljs-function">String16 <span class="hljs-title">clientName</span><span class="hljs-params">(rawClientName, rawClientNameLen)</span></span>;
-    env-&gt;ReleaseStringChars(clientPackageName, <span class="hljs-keyword">reinterpret_cast</span>&lt;<span class="hljs-keyword">const</span> jchar*&gt;(rawClientName));
-
-    sp&lt;Camera&gt; camera;
-    <span class="hljs-keyword">if</span> (halVersion == CAMERA_HAL_API_VERSION_NORMAL_CONNECT) {        <span class="hljs-comment">// -2</span>
-        <span class="hljs-comment">// Default path: hal version is don&apos;t care, do normal camera connect.</span>
-        <span class="hljs-comment">// &#x8C03;&#x7528; Camera::connect() &#x51FD;&#x6570;&#xFF0C;connect &#x4E3A; AIDL &#x65B9;&#x6CD5;&#xFF0C;</span>
-        <span class="hljs-comment">// &#x901A;&#x8FC7;binder &#x8C03;&#x7528;&#x5230;&#x670D;&#x52A1;&#x7AEF;CameraService.cpp&#x4E2D;&#x7684; CameraService::connect() &#x65B9;&#x6CD5;&#x4E2D;</span>
-        camera = Camera::connect(cameraId, clientName, Camera::USE_CALLING_UID, Camera::USE_CALLING_PID);
-        ======================&gt; 
-        +    <span class="hljs-comment">// frameworks/av/camera/Camera.cpp</span>
-        +    <span class="hljs-keyword">return</span> CameraBaseT::connect(cameraId, clientPackageName, clientUid, clientPid);
-        +        ========&gt; 
-        +        <span class="hljs-comment">// frameworks/av/camera/CameraBase.cpp</span>
-        +        sp&lt;TCam&gt; CameraBase&lt;TCam, TCamTraits&gt;::connect(<span class="hljs-keyword">int</span> cameraId, <span class="hljs-keyword">const</span> String16&amp; clientPackageName, <span class="hljs-keyword">int</span> clientUid, <span class="hljs-keyword">int</span> clientPid)
-        +        {
-        +        -    sp&lt;TCam&gt; c = <span class="hljs-keyword">new</span> TCam(cameraId);
-        +        -    sp&lt;TCamCallbacks&gt; cl = c;
-        +            <span class="hljs-keyword">const</span> sp&lt;::android::hardware::ICameraService&gt; cs = getCameraService();
-        +            TCamConnectService fnConnectService = TCamTraits::fnConnectService;
-        +            ret = (cs.get()-&gt;*fnConnectService)(cl, cameraId, clientPackageName, clientUid, clientPid, <span class="hljs-comment">/*out*/</span> &amp;c-&gt;mCamera);
-        +            ---------&gt;
-        +                CameraTraits&lt;Camera&gt;::TCamConnectService CameraTraits&lt;Camera&gt;::fnConnectService = 
-        +                                &amp;::android::hardware::ICameraService::connect;
-        +                
-        +            IInterface::asBinder(c-&gt;mCamera)-&gt;linkToDeath(c);
-        +            <span class="hljs-keyword">return</span> c;
-        +        }
-        +        &lt;========
-        &lt;======================
-    } <span class="hljs-keyword">else</span> {
-        jint status = Camera::connectLegacy(cameraId, halVersion, clientName, Camera::USE_CALLING_UID, camera);
-        <span class="hljs-keyword">if</span> (status != NO_ERROR) {
-            <span class="hljs-keyword">return</span> status;
-        }
-    }
-    <span class="hljs-comment">// make sure camera hardware is alive</span>
-    <span class="hljs-keyword">if</span> (camera-&gt;getStatus() != NO_ERROR) {
-        <span class="hljs-keyword">return</span> NO_INIT;
-    }
-    <span class="hljs-comment">// &#x83B7;&#x53D6; Camera Class</span>
-    jclass clazz = env-&gt;GetObjectClass(thiz);
-    <span class="hljs-keyword">if</span> (clazz == <span class="hljs-literal">NULL</span>) {
-        <span class="hljs-comment">// This should never happen</span>
-        jniThrowRuntimeException(env, <span class="hljs-string">&quot;Can&apos;t find android/hardware/Camera&quot;</span>);
-        <span class="hljs-keyword">return</span> INVALID_OPERATION;
-    }
-
-    <span class="hljs-comment">// We use a weak reference so the Camera object can be garbage collected.</span>
-    <span class="hljs-comment">// The reference is only used as a proxy for callbacks.</span>
-    sp&lt;JNICameraContext&gt; context = <span class="hljs-keyword">new</span> JNICameraContext(env, weak_this, clazz, camera);
-    context-&gt;incStrong((<span class="hljs-keyword">void</span>*)android_hardware_Camera_native_setup);
-    camera-&gt;setListener(context);    <span class="hljs-comment">// &#x4E13;&#x95E8;&#x8D1F;&#x8D23;&#x4E0E;java Camera&#x5BF9;&#x8C61;&#x901A;&#x4FE1;&#x7684;&#x5BF9;&#x8C61; </span>
-
-    <span class="hljs-comment">// save context in opaque field</span>
-    env-&gt;SetLongField(thiz, fields.context, (jlong)context.get());
-
-    <span class="hljs-comment">// Update default display orientation in case the sensor is reverse-landscape</span>
-    CameraInfo cameraInfo;
-    <span class="hljs-keyword">status_t</span> rc = Camera::getCameraInfo(cameraId, &amp;cameraInfo);
-
-    <span class="hljs-keyword">int</span> defaultOrientation = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">switch</span> (cameraInfo.orientation) {
-        <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>: <span class="hljs-keyword">break</span>;
-        <span class="hljs-keyword">case</span> <span class="hljs-number">90</span>:
-            <span class="hljs-keyword">if</span> (cameraInfo.facing == CAMERA_FACING_FRONT) {
-                defaultOrientation = <span class="hljs-number">180</span>;
-            }
-            <span class="hljs-keyword">break</span>;
-        <span class="hljs-keyword">case</span> <span class="hljs-number">180</span>:
-            defaultOrientation = <span class="hljs-number">180</span>;
-            <span class="hljs-keyword">break</span>;
-        <span class="hljs-keyword">case</span> <span class="hljs-number">270</span>:
-            <span class="hljs-keyword">if</span> (cameraInfo.facing != CAMERA_FACING_FRONT) {
-                defaultOrientation = <span class="hljs-number">180</span>;
-            }
-            <span class="hljs-keyword">break</span>;
-        <span class="hljs-keyword">default</span>:
-            ALOGE(<span class="hljs-string">&quot;Unexpected camera orientation %d!&quot;</span>, cameraInfo.orientation);
-            <span class="hljs-keyword">break</span>;
-    }
-    <span class="hljs-comment">// &#x5982;&#x679C;&#x6CA1;&#x6709;&#x8BBE;&#x7F6E;&#x5C4F;&#x5E55;&#x663E;&#x793A;&#x65B9;&#x5411;&#xFF0C;&#x5219;&#x9ED8;&#x8BA4;&#x4E3A;0&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x4E3A;0&#xFF0C;&#x8C03;&#x7528;sendCommand &#x4E0B;&#x53D1;&#x5C4F;&#x5E55;&#x663E;&#x793A;&#x65B9;&#x5411;</span>
-    <span class="hljs-keyword">if</span> (defaultOrientation != <span class="hljs-number">0</span>) {
-        ALOGV(<span class="hljs-string">&quot;Setting default display orientation to %d&quot;</span>, defaultOrientation);
-        rc = camera-&gt;sendCommand(CAMERA_CMD_SET_DISPLAY_ORIENTATION,defaultOrientation, <span class="hljs-number">0</span>);
-    }
-    <span class="hljs-keyword">return</span> NO_ERROR;
-}
-</code></pre>
-<h2 id="22-&#x3010;aidl&#x3011;&#x63A5;&#x53E3;icameraservice">2.2 &#x3010;AIDL&#x3011;&#x63A5;&#x53E3;ICameraService</h2>
-<p>&#x5728;&#x524D;&#x9762;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C; &#x7ECF;&#x8FC7;&#x5982;&#x4E0B;&#x4E00;&#x7CFB;&#x5217;&#x8C03;&#x7528;&#xFF0C;&#x6700;&#x7EC8;&#x8D70;&#x5230;&#x4E86; AIDL &#x5C42;&#x3002;</p>
-<p><em>native_setup()   &#x2192;   android_hardware_Camera_native_setup()   &#x2192;   CameraBaseT::connect   &#x2192;   sp<tcam> CameraBase<tcam, tcamtraits="">::connect   &#x2192;   ret = (cs.get()-&gt;</tcam,></tcam></em>fnConnectService)   &#x2192;  android::hardware::ICameraService::connect()
-<strong><em>fnConnectService</em></strong> &#x5B9A;&#x4E49;&#x5982;&#x4E0B;&#xFF1A;</p>
-<p><em>CameraTraits<camera>::TCamConnectService  CameraTraits<camera>::fnConnectService = &amp;::android::hardware::ICameraService::connect;</camera></camera></em></p>
-<pre><code class="lang-java">frameworks/av/camera/aidl/android/hardware/ICameraService.aidl
-
-<span class="hljs-comment">/**
- * Binder interface for the native camera service running in mediaserver.
- * <span class="hljs-doctag">@hide</span>
- */</span>
-<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ICameraService</span>
-</span>{
-     <span class="hljs-comment">/** Open a camera device through the old camera API */</span>
-    <span class="hljs-function">ICamera <span class="hljs-title">connect</span><span class="hljs-params">(ICameraClient client, <span class="hljs-keyword">int</span> cameraId, String opPackageName, <span class="hljs-keyword">int</span> clientUid, <span class="hljs-keyword">int</span> clientPid)</span></span>;
-
-    <span class="hljs-comment">/** Open a camera device through the new camera API Only supported for device HAL versions &gt;= 3.2 */</span>
-    <span class="hljs-function">ICameraDeviceUser <span class="hljs-title">connectDevice</span><span class="hljs-params">(ICameraDeviceCallbacks callbacks, <span class="hljs-keyword">int</span> cameraId,String opPackageName,<span class="hljs-keyword">int</span> clientUid)</span></span>;
-}
-</code></pre>
-<p>AIDL &#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x8D70;&#x7684;&#x662F;&#x8001;&#x65B9;&#x6CD5;&#xFF0C; <code>ICamera connect().</code></p>
-<blockquote>
-<p>Android Interface Definition Language,&#x662F;&#x4E00;&#x79CD;&#x63A5;&#x53E3;&#x5B9A;&#x4E49;&#x8BED;&#x8A00;&#xFF0C;&#x7528;&#x4E8E;&#x751F;&#x6210;&#x53EF;&#x4EE5;&#x5728;Android&#x8BBE;&#x5907;&#x4E0A;&#x4E24;&#x4E2A;&#x8FDB;&#x7A0B;&#x95F4;&#x8FDB;&#x884C;&#x901A;&#x4FE1;&#x7684;&#x4EE3;&#x7801;&#x3002;
-Android Java Service Framework&#x63D0;&#x4F9B;&#x7684;&#x5927;&#x591A;&#x6570;&#x7CFB;&#x7EDF;&#x670D;&#x52A1;&#x90FD;&#x662F;&#x4F7F;&#x7528;AIDL&#x8BED;&#x8A00;&#x751F;&#x6210;&#x7684;&#x3002;&#x4F7F;&#x7528;AIDL&#x8BED;&#x8A00;&#xFF0C;&#x53EF;&#x4EE5;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x670D;&#x52A1;&#x63A5;&#x53E3;&#x3001;&#x670D;&#x52A1;&#x4EE3;&#x7406;&#x3001;&#x670D;&#x52A1;Stub&#x4EE3;&#x7801;&#x3002;</p>
-</blockquote>
-<h2 id="23-&#x3010;&#x539F;&#x751F;&#x3011;cameraservicecpp">2.3 &#x3010;&#x539F;&#x751F;&#x3011;CameraService.cpp</h2>
-<p>&#x901A;&#x8FC7; AIDL &#x7684; Binder &#x901A;&#x4FE1;&#xFF0C;&#x8DF3;&#x8F6C;&#x5230; CameraService.cpp &#x4E2D;&#x3002;</p>
-<p>CameraService.cpp &#x662F;camera &#x521D;&#x59CB;&#x5316;&#x4E2D;&#xFF0C;&#x5728;&#x5F00;&#x673A;&#x65F6;&#x4F1A;&#x6CE8;&#x518C;&#x597D;&#x5BF9;&#x5E94;&#x7684; cameraservice &#x670D;&#x52A1;&#x3002;
-&#x6B64;&#x65F6;&#x5C31;&#x662F;&#x901A;&#x8FC7;Binder&#x901A;&#x4FE1;&#xFF0C;&#x8C03;&#x7528;CameraService &#x670D;&#x52A1;&#x4E2D;&#x7684; connect &#x65B9;&#x6CD5;&#xFF1A;</p>
-<pre><code class="lang-c++">frameworks/av/services/camera/libcameraservice/CameraService.cpp 
-Status CameraService::connect(
-        <span class="hljs-keyword">const</span> sp&lt;ICameraClient&gt;&amp; cameraClient,
-        <span class="hljs-keyword">int</span> cameraId,
-        <span class="hljs-keyword">const</span> String16&amp; clientPackageName,
-        <span class="hljs-keyword">int</span> clientUid,
-        <span class="hljs-keyword">int</span> clientPid,
-        <span class="hljs-comment">/*out*/</span>
-        sp&lt;ICamera&gt;* device) {
-
-    String8 id = String8::format(<span class="hljs-string">&quot;%d&quot;</span>, cameraId);
-    sp&lt;Client&gt; client = <span class="hljs-literal">nullptr</span>;
-    ret = connectHelper&lt;ICameraClient,Client&gt;(cameraClient, id,
-            CAMERA_HAL_API_VERSION_UNSPECIFIED, clientPackageName, clientUid, clientPid, API_1,
-            <span class="hljs-comment">/*legacyMode*/</span> <span class="hljs-literal">false</span>, <span class="hljs-comment">/*shimUpdateOnly*/</span> <span class="hljs-literal">false</span>,
-            <span class="hljs-comment">/*out*/</span>client);
-
-    *device = client;
-    <span class="hljs-keyword">return</span> ret;
-}
-</code></pre>
-<p>&#x8FDB;&#x5165; connectHelper &#x51FD;&#x6570;&#x770B;&#x4E0B;&#xFF1A;</p>
-<ol>
-<li>&#x68C0;&#x67E5; Client &#x7684;&#x6743;&#x9650;</li>
-<li>&#x5982;&#x679C;&#x5DF2;&#x5B58;&#x5728; client &#x5219;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;</li>
-<li>&#x5728;&#x6253;&#x5F00;Camera &#x524D;&#xFF0C;&#x6240;&#x6709;Flashlight &#x90FD;&#x5E94;&#x8BE5;&#x88AB;&#x5173;&#x95ED;</li>
-<li>&#x8C03;&#x7528;makeClient() &#x521B;&#x5EFA; Camera Client &#x5BF9;&#x8C61;&#x3002; client&#x662F;&#x901A;&#x8FC7; Camera2ClientBase() &#x8FDB;&#x884C;&#x521B;&#x5EFA;&#x7684;&#xFF0C;&#x540C;&#x65F6;&#x521B;&#x5EFA;Camera3Device &#x5BF9;&#x8C61;</li>
-<li>&#x8C03;&#x7528;client-&gt;initialize&#x5BF9;&#x524D;&#x9762;&#x521B;&#x5EFA;&#x597D;&#x7684; Camera client &#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;</li>
-</ol>
-<pre><code class="lang-c++"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> CALLBACK, <span class="hljs-keyword">class</span> CLIENT&gt;
-binder::Status CameraService::connectHelper(<span class="hljs-keyword">const</span> sp&lt;CALLBACK&gt;&amp; cameraCb, <span class="hljs-keyword">const</span> String8&amp; cameraId,
-        <span class="hljs-keyword">int</span> halVersion, <span class="hljs-keyword">const</span> String16&amp; clientPackageName, <span class="hljs-keyword">int</span> clientUid, <span class="hljs-keyword">int</span> clientPid,
-        apiLevel effectiveApiLevel, <span class="hljs-keyword">bool</span> legacyMode, <span class="hljs-keyword">bool</span> shimUpdateOnly,
-        <span class="hljs-comment">/*out*/</span>sp&lt;CLIENT&gt;&amp; device) {
-    binder::Status ret = binder::Status::ok();
-
-    <span class="hljs-function">String8 <span class="hljs-title">clientName8</span><span class="hljs-params">(clientPackageName)</span></span>;
-
-    <span class="hljs-keyword">int</span> originalClientPid = <span class="hljs-number">0</span>;
-
-    ALOGI(<span class="hljs-string">&quot;CameraService::connect call (PID %d \&quot;%s\&quot;, camera ID %s) for HAL version %s and &quot;</span>
-            <span class="hljs-string">&quot;Camera API version %d&quot;</span>, clientPid, clientName8.<span class="hljs-built_in">string</span>(), cameraId.<span class="hljs-built_in">string</span>(),
-            (halVersion == <span class="hljs-number">-1</span>) ? <span class="hljs-string">&quot;default&quot;</span> : <span class="hljs-built_in">std</span>::to_string(halVersion).c_str(), <span class="hljs-keyword">static_cast</span>&lt;<span class="hljs-keyword">int</span>&gt;(effectiveApiLevel));
-
-    sp&lt;CLIENT&gt; client = <span class="hljs-literal">nullptr</span>;
-    {
-        <span class="hljs-comment">// 1. &#x68C0;&#x67E5; Client &#x7684;&#x6743;&#x9650;</span>
-        <span class="hljs-comment">// Enforce client permissions and do basic sanity checks</span>
-        <span class="hljs-keyword">if</span>(!(ret = validateConnectLocked(cameraId, clientName8,  <span class="hljs-comment">/*inout*/</span>clientUid, <span class="hljs-comment">/*inout*/</span>clientPid, <span class="hljs-comment">/*out*/</span>originalClientPid)).isOk()) {
-            <span class="hljs-keyword">return</span> ret;
-        }
-
-        sp&lt;BasicClient&gt; clientTmp = <span class="hljs-literal">nullptr</span>;
-        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;resource_policy::ClientDescriptor&lt;String8, sp&lt;BasicClient&gt;&gt;&gt; partial;
-        err = handleEvictionsLocked(cameraId, originalClientPid, effectiveApiLevel,
-                IInterface::asBinder(cameraCb), clientName8, <span class="hljs-comment">/*out*/</span>&amp;clientTmp, <span class="hljs-comment">/*out*/</span>&amp;partial));
-        <span class="hljs-comment">// 2. &#x5982;&#x679C;&#x5DF2;&#x5B58;&#x5728; client &#x5219;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;</span>
-        <span class="hljs-keyword">if</span> (clientTmp.get() != <span class="hljs-literal">nullptr</span>) {
-            <span class="hljs-comment">// Handle special case for API1 MediaRecorder where the existing client is returned</span>
-            device = <span class="hljs-keyword">static_cast</span>&lt;CLIENT*&gt;(clientTmp.get());
-            <span class="hljs-keyword">return</span> ret;
-        }
-        <span class="hljs-comment">// 3. &#x5728;&#x6253;&#x5F00;Camera &#x524D;&#xFF0C;&#x6240;&#x6709;Flashlight &#x90FD;&#x5E94;&#x8BE5;&#x88AB;&#x5173;&#x95ED;</span>
-        <span class="hljs-comment">// give flashlight a chance to close devices if necessary.</span>
-        mFlashlight-&gt;prepareDeviceOpen(cameraId);
-
-        <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Update getDeviceVersion + HAL interface to use strings for Camera IDs</span>
-        <span class="hljs-keyword">int</span> id = cameraIdToInt(cameraId);
-
-        <span class="hljs-keyword">int</span> facing = <span class="hljs-number">-1</span>;
-        <span class="hljs-keyword">int</span> deviceVersion = getDeviceVersion(id, <span class="hljs-comment">/*out*/</span>&amp;facing);
-        sp&lt;BasicClient&gt; tmp = <span class="hljs-literal">nullptr</span>;
-
-        <span class="hljs-comment">// 4.  &#x8C03;&#x7528;makeClient() &#x521B;&#x5EFA; Camera Client &#x5BF9;&#x8C61;&#x3002; client&#x662F;&#x901A;&#x8FC7; Camera2ClientBase() &#x8FDB;&#x884C;&#x521B;&#x5EFA;&#x7684;&#xFF0C;&#x540C;&#x65F6;&#x521B;&#x5EFA;Camera3Device &#x5BF9;&#x8C61;</span>
-        <span class="hljs-keyword">if</span>(!(ret = makeClient(<span class="hljs-keyword">this</span>, cameraCb, clientPackageName, id, facing, clientPid,
-                clientUid, getpid(), legacyMode, halVersion, deviceVersion, effectiveApiLevel,
-                <span class="hljs-comment">/*out*/</span>&amp;tmp)).isOk()) {
-            <span class="hljs-keyword">return</span> ret;
-        }
-        client = <span class="hljs-keyword">static_cast</span>&lt;CLIENT*&gt;(tmp.get());  <span class="hljs-comment">// Camera2Client</span>
-
-        LOG_ALWAYS_FATAL_IF(client.get() == <span class="hljs-literal">nullptr</span>, <span class="hljs-string">&quot;%s: CameraService in invalid state&quot;</span>,
-                __FUNCTION__);
-        <span class="hljs-comment">// 5. &#x8C03;&#x7528;client-&gt;initialize&#x5BF9;&#x524D;&#x9762;&#x521B;&#x5EFA;&#x597D;&#x7684; Camera client &#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;</span>
-        <span class="hljs-keyword">if</span> ((err = client-&gt;initialize(mModule)) != OK) {
-            ALOGE(<span class="hljs-string">&quot;%s: Could not initialize client from HAL module.&quot;</span>, __FUNCTION__);
-            <span class="hljs-comment">// Errors could be from the HAL module open call or from AppOpsManager</span>
-            <span class="hljs-keyword">switch</span>(err) {
-                <span class="hljs-keyword">case</span> BAD_VALUE:
-                    <span class="hljs-keyword">return</span> STATUS_ERROR_FMT(ERROR_ILLEGAL_ARGUMENT,
-                            <span class="hljs-string">&quot;Illegal argument to HAL module for camera \&quot;%s\&quot;&quot;</span>, cameraId.<span class="hljs-built_in">string</span>());
-                <span class="hljs-keyword">case</span> -EBUSY:
-                    <span class="hljs-keyword">return</span> STATUS_ERROR_FMT(ERROR_CAMERA_IN_USE,
-                            <span class="hljs-string">&quot;Camera \&quot;%s\&quot; is already open&quot;</span>, cameraId.<span class="hljs-built_in">string</span>());
-                <span class="hljs-keyword">case</span> -EUSERS:
-                    <span class="hljs-keyword">return</span> STATUS_ERROR_FMT(ERROR_MAX_CAMERAS_IN_USE,
-                            <span class="hljs-string">&quot;Too many cameras already open, cannot open camera \&quot;%s\&quot;&quot;</span>,
-                            cameraId.<span class="hljs-built_in">string</span>());
-                <span class="hljs-keyword">case</span> PERMISSION_DENIED:
-                    <span class="hljs-keyword">return</span> STATUS_ERROR_FMT(ERROR_PERMISSION_DENIED,
-                            <span class="hljs-string">&quot;No permission to open camera \&quot;%s\&quot;&quot;</span>, cameraId.<span class="hljs-built_in">string</span>());
-                <span class="hljs-keyword">case</span> -EACCES:
-                    <span class="hljs-keyword">return</span> STATUS_ERROR_FMT(ERROR_DISABLED,
-                            <span class="hljs-string">&quot;Camera \&quot;%s\&quot; disabled by policy&quot;</span>, cameraId.<span class="hljs-built_in">string</span>());
-                <span class="hljs-keyword">case</span> -ENODEV:
-                <span class="hljs-keyword">default</span>:
-                    <span class="hljs-keyword">return</span> STATUS_ERROR_FMT(ERROR_INVALID_OPERATION,
-                            <span class="hljs-string">&quot;Failed to initialize camera \&quot;%s\&quot;: %s (%d)&quot;</span>, cameraId.<span class="hljs-built_in">string</span>(),
-                            strerror(-err), err);
-            }
-        }
-
-        <span class="hljs-comment">// Update shim paremeters for legacy clients</span>
-        <span class="hljs-keyword">if</span> (effectiveApiLevel == API_1) {
-            <span class="hljs-comment">// Assume we have always received a Client subclass for API1</span>
-            sp&lt;Client&gt; shimClient = <span class="hljs-keyword">reinterpret_cast</span>&lt;Client*&gt;(client.get());
-            String8 rawParams = shimClient-&gt;getParameters();
-            <span class="hljs-function">CameraParameters <span class="hljs-title">params</span><span class="hljs-params">(rawParams)</span></span>;
-
-            <span class="hljs-keyword">auto</span> cameraState = getCameraState(cameraId);
-            <span class="hljs-keyword">if</span> (cameraState != <span class="hljs-literal">nullptr</span>) {
-                cameraState-&gt;setShimParams(params);
-            } <span class="hljs-keyword">else</span> {
-                ALOGE(<span class="hljs-string">&quot;%s: Cannot update shim parameters for camera %s, no such device exists.&quot;</span>,
-                        __FUNCTION__, cameraId.<span class="hljs-built_in">string</span>());
-            }
-        }
-
-        <span class="hljs-keyword">if</span> (shimUpdateOnly) {
-            <span class="hljs-comment">// If only updating legacy shim parameters, immediately disconnect client</span>
-            mServiceLock.unlock();
-            client-&gt;disconnect();
-            mServiceLock.lock();
-        } <span class="hljs-keyword">else</span> {
-            <span class="hljs-comment">// Otherwise, add client to active clients list</span>
-            finishConnectLocked(client, partial);
-        }
-    } <span class="hljs-comment">// lock is destroyed, allow further connect calls</span>
-
-    <span class="hljs-comment">// Important: release the mutex here so the client can call back into the service from its</span>
-    <span class="hljs-comment">// destructor (can be at the end of the call)</span>
-    device = client;
-    <span class="hljs-keyword">return</span> ret;
-}
-</code></pre>
-<h3 id="231-&#x3010;hal&#x3011;-&#x521B;&#x5EFA;-camera-&#x5BA2;&#x6237;&#x7AEF;-makeclient-">2.3.1 &#x3010;HAL&#x3011; &#x521B;&#x5EFA; Camera &#x5BA2;&#x6237;&#x7AEF; makeClient( )</h3>
-<p>&#x63A5;&#x7740;&#x8C03;&#x7528;</p>
-<p><em>makeClient(this, cameraCb, clientPackageName, id, facing, clientPid, clientUid, getpid(), legacyMode, halVersion, deviceVersion, effectiveApiLevel, /out/&amp;tmp))</em></p>
-<pre><code class="lang-c++">frameworks/av/services/camera/libcameraservice/CameraService.cpp
-
-Status CameraService::makeClient(<span class="hljs-keyword">const</span> sp&lt;CameraService&gt;&amp; cameraService,
-        <span class="hljs-keyword">const</span> sp&lt;IInterface&gt;&amp; cameraCb, <span class="hljs-keyword">const</span> String16&amp; packageName, <span class="hljs-keyword">int</span> cameraId,
-        <span class="hljs-keyword">int</span> facing, <span class="hljs-keyword">int</span> clientPid, <span class="hljs-keyword">uid_t</span> clientUid, <span class="hljs-keyword">int</span> servicePid, <span class="hljs-keyword">bool</span> legacyMode,
-        <span class="hljs-keyword">int</span> halVersion, <span class="hljs-keyword">int</span> deviceVersion, apiLevel effectiveApiLevel,
-        <span class="hljs-comment">/*out*/</span>sp&lt;BasicClient&gt;* client) {
-
-    <span class="hljs-keyword">if</span> (halVersion &lt; <span class="hljs-number">0</span> || halVersion == deviceVersion) {
-        <span class="hljs-comment">// Default path: HAL version is unspecified by caller, create CameraClient</span>
-        <span class="hljs-comment">// based on device version reported by the HAL.</span>
-        <span class="hljs-keyword">switch</span>(deviceVersion) {
-          <span class="hljs-keyword">case</span> CAMERA_DEVICE_API_VERSION_1_0:
-            <span class="hljs-keyword">if</span> (effectiveApiLevel == API_1) {  <span class="hljs-comment">// Camera1 API route</span>
-                sp&lt;ICameraClient&gt; tmp = <span class="hljs-keyword">static_cast</span>&lt;ICameraClient*&gt;(cameraCb.get());
-                *client = <span class="hljs-keyword">new</span> CameraClient(cameraService, tmp, packageName, cameraId, facing,
-                        clientPid, clientUid, getpid(), legacyMode);
-            } <span class="hljs-keyword">else</span> { <span class="hljs-comment">// Camera2 API route</span>
-                ALOGW(<span class="hljs-string">&quot;Camera using old HAL version: %d&quot;</span>, deviceVersion);
-                <span class="hljs-keyword">return</span> STATUS_ERROR_FMT(ERROR_DEPRECATED_HAL,
-                        <span class="hljs-string">&quot;Camera device \&quot;%d\&quot; HAL version %d does not support camera2 API&quot;</span>,
-                        cameraId, deviceVersion);
-            }
-            <span class="hljs-keyword">break</span>;
-          <span class="hljs-keyword">case</span> CAMERA_DEVICE_API_VERSION_3_0:
-          <span class="hljs-keyword">case</span> CAMERA_DEVICE_API_VERSION_3_1:
-          <span class="hljs-keyword">case</span> CAMERA_DEVICE_API_VERSION_3_2:
-          <span class="hljs-keyword">case</span> CAMERA_DEVICE_API_VERSION_3_3:
-          <span class="hljs-keyword">case</span> CAMERA_DEVICE_API_VERSION_3_4:
-            <span class="hljs-keyword">if</span> (effectiveApiLevel == API_1) { <span class="hljs-comment">// Camera1 API route</span>
-                sp&lt;ICameraClient&gt; tmp = <span class="hljs-keyword">static_cast</span>&lt;ICameraClient*&gt;(cameraCb.get());
-                *client = <span class="hljs-keyword">new</span> Camera2Client(cameraService, tmp, packageName, cameraId, facing,
-                        clientPid, clientUid, servicePid, legacyMode);
-            } <span class="hljs-keyword">else</span> { <span class="hljs-comment">// Camera2 API route</span>
-                sp&lt;hardware::camera2::ICameraDeviceCallbacks&gt; tmp =
-                        <span class="hljs-keyword">static_cast</span>&lt;hardware::camera2::ICameraDeviceCallbacks*&gt;(cameraCb.get());
-                *client = <span class="hljs-keyword">new</span> CameraDeviceClient(cameraService, tmp, packageName, cameraId,
-                        facing, clientPid, clientUid, servicePid);
-            }
-            <span class="hljs-keyword">break</span>;
-        }
-    } <span class="hljs-keyword">else</span> {
-        <span class="hljs-comment">// A particular HAL version is requested by caller. Create CameraClient</span>
-        <span class="hljs-comment">// based on the requested HAL version.</span>
-        <span class="hljs-keyword">if</span> (deviceVersion &gt; CAMERA_DEVICE_API_VERSION_1_0 &amp;&amp;
-            halVersion == CAMERA_DEVICE_API_VERSION_1_0) {
-            <span class="hljs-comment">// Only support higher HAL version device opened as HAL1.0 device.</span>
-            sp&lt;ICameraClient&gt; tmp = <span class="hljs-keyword">static_cast</span>&lt;ICameraClient*&gt;(cameraCb.get());
-            *client = <span class="hljs-keyword">new</span> CameraClient(cameraService, tmp, packageName, cameraId, facing,
-                    clientPid, clientUid, servicePid, legacyMode);
-        } <span class="hljs-keyword">else</span> {
-            <span class="hljs-comment">// Other combinations (e.g. HAL3.x open as HAL2.x) are not supported yet.</span>
-            ALOGE(<span class="hljs-string">&quot;Invalid camera HAL version %x: HAL %x device can only be&quot;</span>
-                    <span class="hljs-string">&quot; opened as HAL %x device&quot;</span>, halVersion, deviceVersion,
-                    CAMERA_DEVICE_API_VERSION_1_0);
-            <span class="hljs-keyword">return</span> STATUS_ERROR_FMT(ERROR_ILLEGAL_ARGUMENT,
-                    <span class="hljs-string">&quot;Camera device \&quot;%d\&quot; (HAL version %d) cannot be opened as HAL version %d&quot;</span>,
-                    cameraId, deviceVersion, halVersion);
-        }
-    }
-    <span class="hljs-keyword">return</span> Status::ok();
-}
-</code></pre>
-<p>&#x63A5;&#x7740;&#x8C03;&#x7528; </p>
-<pre><code class="lang-c++">client = <span class="hljs-keyword">new</span> Camera2Client(cameraService, tmp, packageName, cameraId, facing, clientPid, clientUid, servicePid, legacyMode);
-</code></pre>
-<p>client&#x662F;&#x901A;&#x8FC7; Camera2ClientBase() &#x8FDB;&#x884C;&#x521B;&#x5EFA;&#x7684;</p>
-<pre><code class="lang-c++">frameworks/av/services/camera/libcameraservice/api1/Camera2Client.cpp
-Camera2Client::Camera2Client(<span class="hljs-keyword">const</span> sp&lt;CameraService&gt;&amp; cameraService,
-        <span class="hljs-keyword">const</span> sp&lt;hardware::ICameraClient&gt;&amp; cameraClient,
-        <span class="hljs-keyword">const</span> String16&amp; clientPackageName,
-        <span class="hljs-keyword">int</span> cameraId,
-        <span class="hljs-keyword">int</span> cameraFacing,
-        <span class="hljs-keyword">int</span> clientPid,
-        <span class="hljs-keyword">uid_t</span> clientUid,
-        <span class="hljs-keyword">int</span> servicePid,
-        <span class="hljs-keyword">bool</span> legacyMode):
-        Camera2ClientBase(cameraService, cameraClient, clientPackageName,
-                cameraId, cameraFacing, clientPid, clientUid, servicePid),
-        mParameters(cameraId, cameraFacing)
-{
-    ATRACE_CALL();
-
-    SharedParameters::<span class="hljs-function">Lock <span class="hljs-title">l</span><span class="hljs-params">(mParameters)</span></span>;
-    l.mParameters.state = Parameters::DISCONNECTED;
-
-    mLegacyMode = legacyMode;
-}
-</code></pre>
-<p>&#x521B;&#x5EFA;Camera3Device &#x5BF9;&#x8C61;</p>
-<pre><code class="lang-c++"><span class="hljs-comment">// Interface used by CameraService</span>
-
-<span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> TClientBase&gt;
-Camera2ClientBase&lt;TClientBase&gt;::Camera2ClientBase(
-        <span class="hljs-keyword">const</span> sp&lt;CameraService&gt;&amp; cameraService,
-        <span class="hljs-keyword">const</span> sp&lt;TCamCallbacks&gt;&amp; remoteCallback,
-        <span class="hljs-keyword">const</span> String16&amp; clientPackageName,
-        <span class="hljs-keyword">int</span> cameraId,
-        <span class="hljs-keyword">int</span> cameraFacing,
-        <span class="hljs-keyword">int</span> clientPid,
-        <span class="hljs-keyword">uid_t</span> clientUid,
-        <span class="hljs-keyword">int</span> servicePid):
-        TClientBase(cameraService, remoteCallback, clientPackageName,cameraId, cameraFacing, clientPid, clientUid, servicePid),
-        mSharedCameraCallbacks(remoteCallback),
-        mDeviceVersion(cameraService-&gt;getDeviceVersion(cameraId)),
-        mDeviceActive(<span class="hljs-literal">false</span>)
-{
-    ALOGI(<span class="hljs-string">&quot;Camera %d: Opened. Client: %s (PID %d, UID %d)&quot;</span>, cameraId, String8(clientPackageName).<span class="hljs-built_in">string</span>(), clientPid, clientUid);
-
-    mInitialClientPid = clientPid;
-    mDevice = <span class="hljs-keyword">new</span> Camera3Device(cameraId);
-    LOG_ALWAYS_FATAL_IF(mDevice == <span class="hljs-number">0</span>, <span class="hljs-string">&quot;Device should never be NULL here.&quot;</span>);
-}
-</code></pre>
-<pre><code class="lang-c++">frameworks/av/services/camera/libcameraservice/device3/Camera3Device.cpp
-
-Camera3Device::Camera3Device(<span class="hljs-keyword">int</span> id):
-        mId(id),
-        mIsConstrainedHighSpeedConfiguration(<span class="hljs-literal">false</span>),
-        mHal3Device(<span class="hljs-literal">NULL</span>),
-        mStatus(STATUS_UNINITIALIZED),
-        mStatusWaiters(<span class="hljs-number">0</span>),
-        mUsePartialResult(<span class="hljs-literal">false</span>),
-        mNumPartialResults(<span class="hljs-number">1</span>),
-        mTimestampOffset(<span class="hljs-number">0</span>),
-        mNextResultFrameNumber(<span class="hljs-number">0</span>),
-        mNextReprocessResultFrameNumber(<span class="hljs-number">0</span>),
-        mNextShutterFrameNumber(<span class="hljs-number">0</span>),
-        mNextReprocessShutterFrameNumber(<span class="hljs-number">0</span>),
-        mListener(<span class="hljs-literal">NULL</span>)
-{
-    ATRACE_CALL();
-    camera3_callback_ops::notify = &amp;sNotify;
-    camera3_callback_ops::process_capture_result = &amp;sProcessCaptureResult;
-    ALOGV(<span class="hljs-string">&quot;%s: Created device for camera %d&quot;</span>, __FUNCTION__, id);
-}
-</code></pre>
-<h3 id="232-&#x3010;hal&#x3011;-camera2client&#x521D;&#x59CB;&#x5316;-client-initializemmodule">2.3.2 &#x3010;HAL&#x3011; Camera2Client&#x521D;&#x59CB;&#x5316; client-&gt;initialize(mModule))</h3>
-<ol>
-<li>&#x8C03;&#x7528; Camera3Device::initialize &#x5BF9;/dev/videox &#x8C03;&#x5907;&#x8282;&#x70B9;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x83B7;&#x53D6;&#x5BF9;&#x5E94;&#x7684;&#x8BBE;&#x5907;&#x7684;opt &#x64CD;&#x4F5C;&#x51FD;&#x6570;</li>
-<li>&#x521D;&#x59CB;&#x5316; Camera &#x9ED8;&#x8BA4;&#x53C2;&#x6570;</li>
-<li>&#x521B;&#x5EFA; Camera &#x8FD0;&#x884C;&#x65F6;&#x7684;&#x516D;&#x5927;&#x7EBF;&#x7A0B;<ul>
-<li>StreamingProcessor&#xFF1A;&#x7528;&#x6765;&#x5904;&#x7406;preview&#x548C;&#x5F55;&#x50CF; stream&#x7684;&#x7EBF;&#x7A0B;&#x3002;</li>
-<li>FrameProcessor&#xFF1A;&#x7528;&#x6765;&#x5904;&#x7406;3A&#x548C;&#x4EBA;&#x8138;&#x8BC6;&#x522B;&#x7684;&#x7EBF;&#x7A0B;&#x3002;</li>
-<li>CaptureSequencer&#xFF1A;&#x62CD;&#x7167;&#x6D41;&#x7A0B;&#x72B6;&#x6001;&#x673A;&#x7EBF;&#x7A0B;&#xFF0C;&#x62CD;&#x7167;&#x7684;&#x573A;&#x666F;&#x975E;&#x5E38;&#x591A;&#xFF0C;&#x540E;&#x9762;&#x4F1A;&#x53D1;&#x51FA;&#x72B6;&#x6001;&#x673A;&#x7684;&#x8FD0;&#x8F6C;&#x6D41;&#x7A0B;&#x3002;</li>
-<li>JpegProcessor&#xFF1A;&#x7528;&#x6765;&#x5904;&#x7406;&#x62CD;&#x7167; jpeg stream &#x7EBF;&#x7A0B;</li>
-<li>ZslProcessor3&#xFF1A;&#x8FD9;&#x4E2A;&#x5904;&#x7406;&#x96F6;&#x5EF6;&#x65F6;zsl stream&#x4F7F;&#x7528;&#x7684;&#x7EBF;&#x7A0B;</li>
-<li>mCallbackProcessor&#xFF1A;&#x5904;&#x7406;callback&#x7684;&#x7EBF;&#x7A0B;&#xFF0C;&#x4E3B;&#x8981;&#x5305;&#x542B;&#x5BF9; callback stream &#x7684;&#x521B;&#x5EFA;&#x51FD;&#x6570; updateStream()&#x4EE5;&#x53CA;&#x5904;&#x7406; HAL &#x5C42;&#x4F20;&#x4E0A;&#x6765;&#x7684; callback stream &#x7684;&#x7EBF;&#x7A0B;</li>
+                                <h1 id="camera-open-&#x603B;&#x7ED3;">Camera Open &#x603B;&#x7ED3;</h1>
+<p>&#x6574;&#x4E2A;<em>Camera Open</em> &#x8FC7;&#x7A0B;&#x603B;&#x7ED3;&#x5982;&#x4E0B;&#xFF1A;</p>
+<h2 id="&#x4E00;&#x3001;java-app-&#x5C42;">&#x4E00;&#x3001;<em>Java APP</em> &#x5C42;</h2>
+<ul>
+<li>&#x8C03;&#x7528; <em>Frameworks</em> &#x5C42; <em>Camera.java</em> &#x4E2D;&#x7684; <code>open()</code> &#x65B9;&#x6CD5;&#xFF1B;</li>
+<li>&#x5728;<em>open camera</em> &#x540E;&#xFF0C;&#x624D;&#x5F00;&#x59CB;&#x8C03;&#x7528;&#x5BF9;&#x5E94;&#x7684; <code>getParameters()</code>&#xFF0C;<code>setParameters()</code>&#xFF0C; <code>startPreview()</code> &#x7B49; &#x51FD;&#x6570;&#xFF1B;</li>
 </ul>
-</li>
-</ol>
-<pre><code class="lang-c++">frameworks/av/services/camera/libcameraservice/api1/Camera2Client.cpp
-
-<span class="hljs-keyword">status_t</span> Camera2Client::initialize(CameraModule *module)
-{
-    ATRACE_CALL();
-    ALOGV(<span class="hljs-string">&quot;%s: Initializing client for camera %d&quot;</span>, __FUNCTION__, mCameraId);
-    <span class="hljs-keyword">status_t</span> res;
-
-    <span class="hljs-comment">// 1. &#x8C03;&#x7528; Camera3Device::initialize &#x8FDB;&#x884C;&#x8BBE;&#x5907;&#x521D;&#x59CB;&#x5316;,&#x83B7;&#x53D6;&#x5BF9;&#x5E94;&#x7684; camera device &#x7684;opt &#x64CD;&#x4F5C;&#x51FD;&#x6570;</span>
-    res = Camera2ClientBase::initialize(module);
-    ==============&gt; 
-        @ frameworks/av/services/camera/libcameraservice/device3/Camera3Device.cpp
-        mDevice-&gt;initialize(module);
-        mDevice-&gt;setNotifyCallback(weakThis);
-    &lt;==============
-
-    <span class="hljs-comment">// 2. &#x521D;&#x59CB;&#x5316; Camera  &#x9ED8;&#x8BA4;&#x53C2;&#x6570;</span>
-    {
-        SharedParameters::<span class="hljs-function">Lock <span class="hljs-title">l</span><span class="hljs-params">(mParameters)</span></span>;
-
-        res = l.mParameters.initialize(&amp;(mDevice-&gt;info()), mDeviceVersion);
-        ================&gt;
-        +    @ frameworks/av/services/camera/libcameraservice/api1/client2/Parameters.cpp
-        +    <span class="hljs-keyword">status_t</span> Parameters::initialize(<span class="hljs-keyword">const</span> CameraMetadata *info, <span class="hljs-keyword">int</span> deviceVersion) {
-        +        ......
-        +        videoWidth = previewWidth;
-        +        videoHeight = previewHeight;
-        +        params.setPreviewSize(previewWidth, previewHeight);
-        +        params.setVideoSize(videoWidth, videoHeight);
-        +        params.<span class="hljs-built_in">set</span>(CameraParameters::KEY_PREFERRED_PREVIEW_SIZE_FOR_VIDEO, 
-        +                        String8::format(<span class="hljs-string">&quot;%dx%d&quot;</span>, previewWidth, previewHeight));
-        +        params.<span class="hljs-built_in">set</span>(CameraParameters::KEY_SUPPORTED_PREVIEW_FORMATS, supportedPreviewFormats);
-        +        ......  &#x7701;&#x7565;&#x4E00;&#x7CFB;&#x5217; &#x53C2;&#x6570;&#x521D;&#x59CB;&#x5316;&#x4EE3;&#x7801;
-        &lt;================
-    }
-
-
-    String8 threadName;
-    <span class="hljs-comment">// 3. &#x521B;&#x5EFA; Camera &#x8FD0;&#x884C;&#x65F6;&#x7684;&#x516D;&#x5927;&#x7EBF;&#x7A0B;</span>
-    <span class="hljs-comment">// 3.1 StreamingProcessor&#xFF1A;&#x7528;&#x6765;&#x5904;&#x7406;preview&#x548C;&#x5F55;&#x50CF; stream&#x7684;&#x7EBF;&#x7A0B;&#x3002;</span>
-    mStreamingProcessor = <span class="hljs-keyword">new</span> StreamingProcessor(<span class="hljs-keyword">this</span>);
-    threadName = String8::format(<span class="hljs-string">&quot;C2-%d-StreamProc&quot;</span>, mCameraId);
-    mFrameProcessor-&gt;run(threadName.<span class="hljs-built_in">string</span>());
-
-    <span class="hljs-comment">// 3.2 FrameProcessor&#xFF1A;&#x7528;&#x6765;&#x5904;&#x7406;3A&#x548C;&#x4EBA;&#x8138;&#x8BC6;&#x522B;&#x7684;&#x7EBF;&#x7A0B;&#x3002;</span>
-    mFrameProcessor = <span class="hljs-keyword">new</span> FrameProcessor(mDevice, <span class="hljs-keyword">this</span>);
-    threadName = String8::format(<span class="hljs-string">&quot;C2-%d-FrameProc&quot;</span>,mCameraId);
-    mFrameProcessor-&gt;run(threadName.<span class="hljs-built_in">string</span>());
-
-    <span class="hljs-comment">// 3.3 CaptureSequencer&#xFF1A;&#x62CD;&#x7167;&#x6D41;&#x7A0B;&#x72B6;&#x6001;&#x673A;&#x7EBF;&#x7A0B;&#xFF0C;&#x62CD;&#x7167;&#x7684;&#x573A;&#x666F;&#x975E;&#x5E38;&#x591A;&#xFF0C;&#x540E;&#x9762;&#x4F1A;&#x53D1;&#x51FA;&#x72B6;&#x6001;&#x673A;&#x7684;&#x8FD0;&#x8F6C;&#x6D41;&#x7A0B;&#x3002;</span>
-    mCaptureSequencer = <span class="hljs-keyword">new</span> CaptureSequencer(<span class="hljs-keyword">this</span>);
-    threadName = String8::format(<span class="hljs-string">&quot;C2-%d-CaptureSeq&quot;</span>,mCameraId);
-    mCaptureSequencer-&gt;run(threadName.<span class="hljs-built_in">string</span>());
-
-    <span class="hljs-comment">// 3.4 JpegProcessor&#xFF1A;&#x7528;&#x6765;&#x5904;&#x7406;&#x62CD;&#x7167; jpeg stream &#x7EBF;&#x7A0B;</span>
-    mJpegProcessor = <span class="hljs-keyword">new</span> JpegProcessor(<span class="hljs-keyword">this</span>, mCaptureSequencer);
-    threadName = String8::format(<span class="hljs-string">&quot;C2-%d-JpegProc&quot;</span>,mCameraId);
-    mJpegProcessor-&gt;run(threadName.<span class="hljs-built_in">string</span>());
-
-    <span class="hljs-comment">// 3.5 ZslProcessor3&#xFF1A;&#x8FD9;&#x4E2A;&#x5904;&#x7406;&#x96F6;&#x5EF6;&#x65F6;zsl stream&#x4F7F;&#x7528;&#x7684;&#x7EBF;&#x7A0B;</span>
-    mZslProcessor = <span class="hljs-keyword">new</span> ZslProcessor(<span class="hljs-keyword">this</span>, mCaptureSequencer);
-    threadName = String8::format(<span class="hljs-string">&quot;C2-%d-ZslProc&quot;</span>,mCameraId);
-    mZslProcessor-&gt;run(threadName.<span class="hljs-built_in">string</span>());
-
-    <span class="hljs-comment">// 3.6 mCallbackProcessor&#xFF1A;&#x5904;&#x7406;callback&#x7684;&#x7EBF;&#x7A0B;&#xFF0C;&#x4E3B;&#x8981;&#x5305;&#x542B;&#x5BF9; callback stream &#x7684;&#x521B;&#x5EFA;&#x51FD;&#x6570; updateStream()&#x4EE5;&#x53CA;&#x5904;&#x7406; HAL &#x5C42;&#x4F20;&#x4E0A;&#x6765;&#x7684; callback stream &#x7684;&#x7EBF;&#x7A0B;</span>
-    mCallbackProcessor = <span class="hljs-keyword">new</span> CallbackProcessor(<span class="hljs-keyword">this</span>);
-    threadName = String8::format(<span class="hljs-string">&quot;C2-%d-CallbkProc&quot;</span>,mCameraId);
-    mCallbackProcessor-&gt;run(threadName.<span class="hljs-built_in">string</span>());
-
-    <span class="hljs-keyword">return</span> OK;
-}
-</code></pre>
-<h4 id="2321&#x3010;hal&#x3011;camera-device-&#x521D;&#x59CB;&#x5316;-mdevice-initializemodule">2.3.2.1&#x3010;HAL&#x3011;Camera device &#x521D;&#x59CB;&#x5316; mDevice-&gt;initialize(module)</h4>
-<ol>
-<li>&#x8C03;&#x7528; hardware &#x5C42;&#x7684;camera_module_t.common &#x4E2D;&#x7684; open &#x65B9;&#x6CD5;&#xFF0C;&#x4F20;&#x5165;Camera ID</li>
-<li>&#x83B7;&#x53D6; Camera&#x76F8;&#x5173;&#x7684;&#x4FE1;&#x606F;</li>
-<li>&#x521D;&#x59CB;&#x5316; Camera &#x8BBE;&#x5907;</li>
-</ol>
-<pre><code class="lang-c++">frameworks/av/services/camera/libcameraservice/device3/Camera3Device.cpp
-<span class="hljs-keyword">status_t</span> Camera3Device::initialize(CameraModule *module)
-{
-    ALOGV(<span class="hljs-string">&quot;%s: Initializing device for camera %d&quot;</span>, __FUNCTION__, mId);
-    <span class="hljs-comment">/** Open HAL device */</span>
-    String8 deviceName = String8::format(<span class="hljs-string">&quot;%d&quot;</span>, mId);
-
-    <span class="hljs-keyword">camera3_device_t</span> *device;
-    ATRACE_BEGIN(<span class="hljs-string">&quot;camera3-&gt;open&quot;</span>);
-    <span class="hljs-comment">// 1. &#x8C03;&#x7528; hardware &#x5C42;&#x7684;camera_module_t.common &#x4E2D;&#x7684; open &#x65B9;&#x6CD5;&#xFF0C;&#x4F20;&#x5165;Camera ID</span>
-    res = module-&gt;open(deviceName.<span class="hljs-built_in">string</span>(), <span class="hljs-keyword">reinterpret_cast</span>&lt;<span class="hljs-keyword">hw_device_t</span>**&gt;(&amp;device));
-    ===============&gt; @ frameworks/av/services/camera/libcameraservice/common/CameraModule.cpp 
-    +    res = filterOpenErrorCode(mModule-&gt;common.methods-&gt;open(&amp;mModule-&gt;common, id, device));
-    +    =========&gt;
-    +        @ hardware/qcom/camera/QCamera2/QCamera2Hal.cpp 
-    +        <span class="hljs-keyword">struct</span> <span class="hljs-keyword">hw_module_methods_t</span> QCamera2Factory::mModuleMethods = {
-    +            .open = QCamera2Factory::camera_device_open,
-    +                =====&gt;
-    +                    @ hardware/qcom/camera/QCamera2/QCamera2Factory.cpp
-    +                    rc = gQCamera2Factory-&gt;cameraDeviceOpen(atoi(id), hw_device);
-    +        };
-    +    &lt;=========
-    +&lt;===============
-    <span class="hljs-comment">// 2. &#x83B7;&#x53D6; Camera&#x76F8;&#x5173;&#x7684;&#x4FE1;&#x606F;</span>
-    camera_info info;
-    res = module-&gt;getCameraInfo(mId, &amp;info);
-
-    <span class="hljs-comment">// 3. &#x521D;&#x59CB;&#x5316; Camera &#x8BBE;&#x5907;&#xFF0C;&#x8BBE;&#x7F6E;&#x56DE;&#x8C03;&#x51FD;&#x6570;</span>
-    <span class="hljs-comment">/** Initialize device with callback functions */</span>
-    ATRACE_BEGIN(<span class="hljs-string">&quot;camera3-&gt;initialize&quot;</span>);
-    res = device-&gt;ops-&gt;initialize(device, <span class="hljs-keyword">this</span>);
-    ATRACE_END();
-    ================&gt;
-    +    @ hardware/qcom/camera/QCamera2/HAL3/QCamera3HWI.cpp
-    +    <span class="hljs-keyword">camera3_device_ops_t</span> QCamera3HardwareInterface::mCameraOps = {
-    +        .initialize            = QCamera3HardwareInterface::initialize,
-    +        ============&gt;
-    +            <span class="hljs-keyword">int</span> rc = hw-&gt;initialize(callback_ops);
-    &lt;================
-
-    <span class="hljs-comment">/** Start up status tracker thread */</span>
-    mStatusTracker = <span class="hljs-keyword">new</span> StatusTracker(<span class="hljs-keyword">this</span>);
-    res = mStatusTracker-&gt;run(String8::format(<span class="hljs-string">&quot;C3Dev-%d-Status&quot;</span>, mId).<span class="hljs-built_in">string</span>());
-    <span class="hljs-keyword">if</span> (res != OK) {
-        SET_ERR_L(<span class="hljs-string">&quot;Unable to start status tracking thread: %s (%d)&quot;</span>,
-                strerror(-res), res);
-        device-&gt;common.close(&amp;device-&gt;common);
-        mStatusTracker.clear();
-        <span class="hljs-keyword">return</span> res;
-    }
-
-    <span class="hljs-comment">/** Register in-flight map to the status tracker */</span>
-    mInFlightStatusId = mStatusTracker-&gt;addComponent();
-
-    <span class="hljs-comment">/** Create buffer manager */</span>
-    mBufferManager = <span class="hljs-keyword">new</span> Camera3BufferManager();
-
-    <span class="hljs-keyword">bool</span> aeLockAvailable = <span class="hljs-literal">false</span>;
-    camera_metadata_ro_entry aeLockAvailableEntry;
-    res = find_camera_metadata_ro_entry(info.static_camera_characteristics,
-            ANDROID_CONTROL_AE_LOCK_AVAILABLE, &amp;aeLockAvailableEntry);
-    <span class="hljs-keyword">if</span> (res == OK &amp;&amp; aeLockAvailableEntry.count &gt; <span class="hljs-number">0</span>) {
-        aeLockAvailable = (aeLockAvailableEntry.data.u8[<span class="hljs-number">0</span>] ==
-                ANDROID_CONTROL_AE_LOCK_AVAILABLE_TRUE);
-    }
-
-    <span class="hljs-comment">/** Start up request queue thread */</span>
-    mRequestThread = <span class="hljs-keyword">new</span> RequestThread(<span class="hljs-keyword">this</span>, mStatusTracker, device, aeLockAvailable);
-    res = mRequestThread-&gt;run(String8::format(<span class="hljs-string">&quot;C3Dev-%d-ReqQueue&quot;</span>, mId).<span class="hljs-built_in">string</span>());
-    <span class="hljs-keyword">if</span> (res != OK) {
-        SET_ERR_L(<span class="hljs-string">&quot;Unable to start request queue thread: %s (%d)&quot;</span>,
-                strerror(-res), res);
-        device-&gt;common.close(&amp;device-&gt;common);
-        mRequestThread.clear();
-        <span class="hljs-keyword">return</span> res;
-    }
-
-    mPreparerThread = <span class="hljs-keyword">new</span> PreparerThread();
-
-    <span class="hljs-comment">/** Everything is good to go */</span>
-
-    mDeviceVersion = device-&gt;common.version;
-    mDeviceInfo = info.static_camera_characteristics;
-    mHal3Device = device;
-
-    <span class="hljs-comment">// Determine whether we need to derive sensitivity boost values for older devices.</span>
-    <span class="hljs-comment">// If post-RAW sensitivity boost range is listed, so should post-raw sensitivity control</span>
-    <span class="hljs-comment">// be listed (as the default value 100)</span>
-    <span class="hljs-keyword">if</span> (mDeviceVersion &lt; CAMERA_DEVICE_API_VERSION_3_4 &amp;&amp;
-            mDeviceInfo.exists(ANDROID_CONTROL_POST_RAW_SENSITIVITY_BOOST_RANGE)) {
-        mDerivePostRawSensKey = <span class="hljs-literal">true</span>;
-    }
-
-    internalUpdateStatusLocked(STATUS_UNCONFIGURED);
-    mNextStreamId = <span class="hljs-number">0</span>;
-    mDummyStreamId = NO_STREAM;
-    mNeedConfig = <span class="hljs-literal">true</span>;
-    mPauseStateNotify = <span class="hljs-literal">false</span>;
-
-    <span class="hljs-comment">// Measure the clock domain offset between camera and video/hw_composer</span>
-    camera_metadata_entry timestampSource =
-            mDeviceInfo.find(ANDROID_SENSOR_INFO_TIMESTAMP_SOURCE);
-    <span class="hljs-keyword">if</span> (timestampSource.count &gt; <span class="hljs-number">0</span> &amp;&amp; timestampSource.data.u8[<span class="hljs-number">0</span>] ==
-            ANDROID_SENSOR_INFO_TIMESTAMP_SOURCE_REALTIME) {
-        mTimestampOffset = getMonoToBoottimeOffset();
-    }
-
-    <span class="hljs-comment">// Will the HAL be sending in early partial result metadata?</span>
-    <span class="hljs-keyword">if</span> (mDeviceVersion &gt;= CAMERA_DEVICE_API_VERSION_3_2) {
-        camera_metadata_entry partialResultsCount =
-                mDeviceInfo.find(ANDROID_REQUEST_PARTIAL_RESULT_COUNT);
-        <span class="hljs-keyword">if</span> (partialResultsCount.count &gt; <span class="hljs-number">0</span>) {
-            mNumPartialResults = partialResultsCount.data.i32[<span class="hljs-number">0</span>];
-            mUsePartialResult = (mNumPartialResults &gt; <span class="hljs-number">1</span>);
-        }
-    } <span class="hljs-keyword">else</span> {
-        camera_metadata_entry partialResultsQuirk =
-                mDeviceInfo.find(ANDROID_QUIRKS_USE_PARTIAL_RESULT);
-        <span class="hljs-keyword">if</span> (partialResultsQuirk.count &gt; <span class="hljs-number">0</span> &amp;&amp; partialResultsQuirk.data.u8[<span class="hljs-number">0</span>] == <span class="hljs-number">1</span>) {
-            mUsePartialResult = <span class="hljs-literal">true</span>;
-        }
-    }
-
-    camera_metadata_entry configs =
-            mDeviceInfo.find(ANDROID_SCALER_AVAILABLE_STREAM_CONFIGURATIONS);
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">uint32_t</span> i = <span class="hljs-number">0</span>; i &lt; configs.count; i += <span class="hljs-number">4</span>) {
-        <span class="hljs-keyword">if</span> (configs.data.i32[i] == HAL_PIXEL_FORMAT_IMPLEMENTATION_DEFINED &amp;&amp;
-                configs.data.i32[i + <span class="hljs-number">3</span>] ==
-                ANDROID_SCALER_AVAILABLE_STREAM_CONFIGURATIONS_INPUT) {
-            mSupportedOpaqueInputSizes.add(Size(configs.data.i32[i + <span class="hljs-number">1</span>],
-                    configs.data.i32[i + <span class="hljs-number">2</span>]));
-        }
-    }
-
-    <span class="hljs-keyword">return</span> OK;
-}
-</code></pre>
-<h4 id="2322&#x3010;hardware&#x3011;&#x6253;&#x5F00;&#x8BBE;&#x5907;-gqcamera2factory-cameradeviceopen-">2.3.2.2&#x3010;Hardware&#x3011;&#x6253;&#x5F00;&#x8BBE;&#x5907; gQCamera2Factory-&gt;cameraDeviceOpen( )</h4>
-<pre><code class="lang-c++">hardware/qcom/camera/QCamera2/QCamera2Factory.cpp
-
-<span class="hljs-keyword">int</span> QCamera2Factory::cameraDeviceOpen(<span class="hljs-keyword">int</span> camera_id, <span class="hljs-keyword">struct</span> <span class="hljs-keyword">hw_device_t</span> **hw_device)
-{
-    LOGI(<span class="hljs-string">&quot;Open camera id %d API version %d&quot;</span>,camera_id, mHalDescriptors[camera_id].device_version);
-
-    <span class="hljs-keyword">if</span> ( mHalDescriptors[camera_id].device_version == CAMERA_DEVICE_API_VERSION_3_0 ) {
-        CAMSCOPE_INIT(CAMSCOPE_SECTION_HAL);
-        QCamera3HardwareInterface *hw = <span class="hljs-keyword">new</span> QCamera3HardwareInterface(mHalDescriptors[camera_id].cameraId, mCallbacks);
-
-        rc = hw-&gt;openCamera(hw_device);
-    }
-<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> QCAMERA_HAL1_SUPPORT</span>
-    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (mHalDescriptors[camera_id].device_version == CAMERA_DEVICE_API_VERSION_1_0) {
-        QCamera2HardwareInterface *hw = <span class="hljs-keyword">new</span> QCamera2HardwareInterface((<span class="hljs-keyword">uint32_t</span>)camera_id);
-
-        rc = hw-&gt;openCamera(hw_device);
-    }
-<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
-    <span class="hljs-keyword">return</span> rc;
-}
-</code></pre>
-<p>&#x521D;&#x59CB;&#x5316; <code>QCamera3HardwareInterface()</code></p>
-<pre><code class="lang-c++">hardware/qcom/camera/QCamera2/HAL3/QCamera3HWI.cpp
-QCamera3HardwareInterface::QCamera3HardwareInterface(<span class="hljs-keyword">uint32_t</span> cameraId, <span class="hljs-keyword">const</span> <span class="hljs-keyword">camera_module_callbacks_t</span> *callbacks)
-    : mCameraId(cameraId),
-      mCameraHandle(<span class="hljs-literal">NULL</span>),
-      mCameraInitialized(<span class="hljs-literal">false</span>),
-      mCallbacks(callbacks),
-    ...... <span class="hljs-comment">//&#x7701;&#x7565;&#x4E00;&#x7CFB;&#x5217;Camera &#x521D;&#x59CB;&#x5316;&#x9ED8;&#x8BA4;&#x503C;</span>
-{
-    <span class="hljs-comment">// 1. &#x83B7;&#x53D6;HAL &#x5C42; log &#x7B49;&#x7EA7;</span>
-    getLogLevel();
-    =========&gt;
-        property_get(<span class="hljs-string">&quot;persist.camera.hal.debug&quot;</span>, prop, <span class="hljs-string">&quot;0&quot;</span>);
-        property_get(<span class="hljs-string">&quot;persist.camera.kpi.debug&quot;</span>, prop, <span class="hljs-string">&quot;0&quot;</span>);
-        property_get(<span class="hljs-string">&quot;persist.camera.global.debug&quot;</span>, prop, <span class="hljs-string">&quot;0&quot;</span>);
-
-    mCommon.init(gCamCapability[cameraId]);
-    mCameraDevice.common.tag = HARDWARE_DEVICE_TAG;
-    mCameraDevice.common.version = CAMERA_DEVICE_API_VERSION_3_4;
-
-    mCameraDevice.common.close = close_camera_device;
-    mCameraDevice.ops = &amp;mCameraOps;
-        ===&#x21D2; @ hardware/qcom/camera/QCamera2/HAL3/QCamera3HWI.cpp
-    mCameraDevice.priv = <span class="hljs-keyword">this</span>;
-    gCamCapability[cameraId]-&gt;version = CAM_HAL_V3;
-
-    <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> hardcode for now until mctl add support for min_num_pp_bufs</span>
-    <span class="hljs-comment">//TBD - To see if this hardcoding is needed. Check by printing if this is filled by mctl to 3</span>
-    gCamCapability[cameraId]-&gt;min_num_pp_bufs = <span class="hljs-number">3</span>;
-    <span class="hljs-keyword">pthread_condattr_t</span> mCondAttr;
-
-    pthread_condattr_init(&amp;mCondAttr);
-    pthread_condattr_setclock(&amp;mCondAttr, CLOCK_MONOTONIC);
-
-    pthread_cond_init(&amp;mBuffersCond, &amp;mCondAttr);
-
-    pthread_cond_init(&amp;mRequestCond, &amp;mCondAttr);
-    pthread_cond_init(&amp;mHdrRequestCond, &amp;mCondAttr);
-
-    pthread_condattr_destroy(&amp;mCondAttr);
-
-    mPendingLiveRequest = <span class="hljs-number">0</span>;
-    mCurrentRequestId = <span class="hljs-number">-1</span>;
-    pthread_mutex_init(&amp;mMutex, <span class="hljs-literal">NULL</span>);
-
-    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; CAMERA3_TEMPLATE_COUNT; i++)
-        mDefaultMetadata[i] = <span class="hljs-literal">NULL</span>;
-
-    <span class="hljs-comment">// Getting system props of different kinds</span>
-    <span class="hljs-keyword">char</span> prop[PROPERTY_VALUE_MAX];
-    <span class="hljs-built_in">memset</span>(prop, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(prop));
-    <span class="hljs-comment">// &#x83B7;&#x53D6; persist.camera.raw.dump&#xFF0C;&#x662F;&#x5426;&#x4F7F;&#x80FD; RAW dump &#x529F;&#x80FD;</span>
-    property_get(<span class="hljs-string">&quot;persist.camera.raw.dump&quot;</span>, prop, <span class="hljs-string">&quot;0&quot;</span>);
-    mEnableRawDump = atoi(prop);
-    <span class="hljs-comment">// &#x83B7;&#x53D6; persist.camera.hal3.force.hdr&#xFF0C;&#x662F;&#x5426;&#x4F7F;&#x80FD; hdr &#x529F;&#x80FD;</span>
-    property_get(<span class="hljs-string">&quot;persist.camera.hal3.force.hdr&quot;</span>, prop, <span class="hljs-string">&quot;0&quot;</span>);
-    mForceHdrSnapshot = atoi(prop);
-
-    <span class="hljs-keyword">if</span> (mEnableRawDump)
-        LOGD(<span class="hljs-string">&quot;Raw dump from Camera HAL enabled&quot;</span>);
-
-    <span class="hljs-built_in">memset</span>(&amp;mInputStreamInfo, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(mInputStreamInfo));
-    <span class="hljs-built_in">memset</span>(mLdafCalib, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(mLdafCalib));
-
-    <span class="hljs-built_in">memset</span>(prop, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(prop));
-    property_get(<span class="hljs-string">&quot;persist.camera.tnr.preview&quot;</span>, prop, <span class="hljs-string">&quot;0&quot;</span>);
-    m_bTnrPreview = (<span class="hljs-keyword">uint8_t</span>)atoi(prop);
-
-    <span class="hljs-built_in">memset</span>(prop, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(prop));
-    property_get(<span class="hljs-string">&quot;persist.camera.swtnr.preview&quot;</span>, prop, <span class="hljs-string">&quot;1&quot;</span>);
-    m_bSwTnrPreview = (<span class="hljs-keyword">uint8_t</span>)atoi(prop);
-
-    <span class="hljs-built_in">memset</span>(prop, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(prop));
-    property_get(<span class="hljs-string">&quot;persist.camera.tnr.video&quot;</span>, prop, <span class="hljs-string">&quot;0&quot;</span>);
-    m_bTnrVideo = (<span class="hljs-keyword">uint8_t</span>)atoi(prop);
-
-    <span class="hljs-built_in">memset</span>(prop, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(prop));
-    property_get(<span class="hljs-string">&quot;persist.camera.avtimer.debug&quot;</span>, prop, <span class="hljs-string">&quot;0&quot;</span>);
-    m_debug_avtimer = (<span class="hljs-keyword">uint8_t</span>)atoi(prop);
-    LOGI(<span class="hljs-string">&quot;AV timer enabled: %d&quot;</span>, m_debug_avtimer);
-
-    <span class="hljs-built_in">memset</span>(prop, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(prop));
-    property_get(<span class="hljs-string">&quot;persist.camera.cacmode.disable&quot;</span>, prop, <span class="hljs-string">&quot;0&quot;</span>);
-    m_cacModeDisabled = (<span class="hljs-keyword">uint8_t</span>)atoi(prop);
-
-    mRdiModeFmt = gCamCapability[mCameraId]-&gt;rdi_mode_stream_fmt;
-    <span class="hljs-comment">//Load and read GPU library.</span>
-    lib_surface_utils = <span class="hljs-literal">NULL</span>;
-    LINK_get_surface_pixel_alignment = <span class="hljs-literal">NULL</span>;
-    mSurfaceStridePadding = CAM_PAD_TO_32;
-    <span class="hljs-comment">// &#x6253;&#x5F00; libadreno_utils.so</span>
-    lib_surface_utils = dlopen(<span class="hljs-string">&quot;libadreno_utils.so&quot;</span>, RTLD_NOW);
-    <span class="hljs-keyword">if</span> (lib_surface_utils) {
-        *(<span class="hljs-keyword">void</span> **)&amp;LINK_get_surface_pixel_alignment =
-                dlsym(lib_surface_utils, <span class="hljs-string">&quot;get_gpu_pixel_alignment&quot;</span>);
-         <span class="hljs-keyword">if</span> (LINK_get_surface_pixel_alignment) {
-             mSurfaceStridePadding = LINK_get_surface_pixel_alignment();
-         }
-         dlclose(lib_surface_utils);
-    }
-
-    <span class="hljs-keyword">if</span> (gCamCapability[cameraId]-&gt;is_quadracfa_sensor) {
-        LOGI(<span class="hljs-string">&quot;Sensor support Quadra CFA mode&quot;</span>);
-        m_bQuadraCfaSensor = <span class="hljs-literal">true</span>;
-    }
-
-    m_bQuadraCfaRequest = <span class="hljs-literal">false</span>;
-    m_bQuadraSizeConfigured = <span class="hljs-literal">false</span>;
-    <span class="hljs-built_in">memset</span>(&amp;mStreamList, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">camera3_stream_configuration_t</span>));
-}
-</code></pre>
-<p>&#x63A5;&#x4E0B;&#x6765;&#xFF0C;&#x8C03;&#x7528; <code>hw-&gt;openCamera(hw_device);</code></p>
-<pre><code class="lang-c++">hardware/qcom/camera/QCamera2/HAL3/QCamera3HWI.cpp
-
-<span class="hljs-keyword">int</span> QCamera3HardwareInterface::openCamera(<span class="hljs-keyword">struct</span> <span class="hljs-keyword">hw_device_t</span> **hw_device)
-{
-    <span class="hljs-keyword">if</span> (mState != CLOSED) {
-        *hw_device = <span class="hljs-literal">NULL</span>;
-        <span class="hljs-keyword">return</span> PERMISSION_DENIED;
-    }
-
-    mPerfLockMgr.acquirePerfLock(PERF_LOCK_OPEN_CAMERA);
-    LOGI(<span class="hljs-string">&quot;[KPI Perf]: E PROFILE_OPEN_CAMERA camera id %d&quot;</span>,mCameraId);
-
-    rc = openCamera();
-    <span class="hljs-keyword">if</span> (rc == <span class="hljs-number">0</span>) {
-        *hw_device = &amp;mCameraDevice.common;
-    } <span class="hljs-keyword">else</span> {
-        *hw_device = <span class="hljs-literal">NULL</span>;
-    }
-
-    LOGI(<span class="hljs-string">&quot;[KPI Perf]: X PROFILE_OPEN_CAMERA camera id %d, rc: %d&quot;</span>, mCameraId, rc);
-
-    <span class="hljs-keyword">if</span> (rc == NO_ERROR) {
-        mState = OPENED;
-    }
-    <span class="hljs-keyword">return</span> rc;
-}
-</code></pre>
-<p>&#x63A5;&#x4E0B;&#x6765;&#x8C03;&#x7528; <code>int QCamera3HardwareInterface::openCamera()</code></p>
-<pre><code class="lang-c++">@ hardware/qcom/camera/QCamera2/HAL3/QCamera3HWI.cpp
-<span class="hljs-keyword">int</span> QCamera3HardwareInterface::openCamera()
-{
-    KPI_ATRACE_CAMSCOPE_CALL(CAMSCOPE_HAL3_OPENCAMERA);
-    <span class="hljs-keyword">if</span> (mCameraHandle) {
-        LOGE(<span class="hljs-string">&quot;Failure: Camera already opened&quot;</span>);
-        <span class="hljs-keyword">return</span> ALREADY_EXISTS;
-    }
-
-    rc = QCameraFlash::getInstance().reserveFlashForCamera(mCameraId);
-    <span class="hljs-keyword">if</span> (rc &lt; <span class="hljs-number">0</span>) {
-        LOGE(<span class="hljs-string">&quot;Failed to reserve flash for camera id: %d&quot;</span>,
-                mCameraId);
-        <span class="hljs-keyword">return</span> UNKNOWN_ERROR;
-    }
-
-    rc = camera_open((<span class="hljs-keyword">uint8_t</span>)mCameraId, &amp;mCameraHandle);
-
-    rc = mCameraHandle-&gt;ops-&gt;register_event_notify(mCameraHandle-&gt;camera_handle, camEvtHandle, (<span class="hljs-keyword">void</span> *)<span class="hljs-keyword">this</span>);
-
-
-    mExifParams.debug_params = (<span class="hljs-keyword">mm_jpeg_debug_exif_params_t</span> *) <span class="hljs-built_in">malloc</span> (<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">mm_jpeg_debug_exif_params_t</span>));
-    <span class="hljs-keyword">if</span> (mExifParams.debug_params) {
-        <span class="hljs-built_in">memset</span>(mExifParams.debug_params, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">mm_jpeg_debug_exif_params_t</span>));
-    } <span class="hljs-keyword">else</span> {
-        LOGE(<span class="hljs-string">&quot;Out of Memory. Allocation failed for 3A debug exif params&quot;</span>);
-        <span class="hljs-keyword">return</span> NO_MEMORY;
-    }
-    mFirstConfiguration = <span class="hljs-literal">true</span>;
-
-    <span class="hljs-comment">//Notify display HAL that a camera session is active.</span>
-    <span class="hljs-comment">//But avoid calling the same during bootup because camera service might open/close</span>
-    <span class="hljs-comment">//cameras at boot time during its initialization and display service will also internally</span>
-    <span class="hljs-comment">//wait for camera service to initialize first while calling this display API, resulting in a</span>
-    <span class="hljs-comment">//deadlock situation. Since boot time camera open/close calls are made only to fetch</span>
-    <span class="hljs-comment">//capabilities, no need of this display bw optimization.</span>
-    <span class="hljs-comment">//Use &quot;service.bootanim.exit&quot; property to know boot status.</span>
-    property_get(<span class="hljs-string">&quot;service.bootanim.exit&quot;</span>, value, <span class="hljs-string">&quot;0&quot;</span>);
-    <span class="hljs-keyword">if</span> (atoi(value) == <span class="hljs-number">1</span>) {
-        pthread_mutex_lock(&amp;gCamLock);
-        <span class="hljs-keyword">if</span> (gNumCameraSessions++ == <span class="hljs-number">0</span>) {
-            setCameraLaunchStatus(<span class="hljs-literal">true</span>);
-        }
-        pthread_mutex_unlock(&amp;gCamLock);
-    }
-
-    <span class="hljs-comment">//fill the session id needed while linking dual cam</span>
-    pthread_mutex_lock(&amp;gCamLock);
-    rc = mCameraHandle-&gt;ops-&gt;get_session_id(mCameraHandle-&gt;camera_handle,
-        &amp;sessionId[mCameraId]);
-    pthread_mutex_unlock(&amp;gCamLock);
-
-    <span class="hljs-keyword">if</span> (rc &lt; <span class="hljs-number">0</span>) {
-        LOGE(<span class="hljs-string">&quot;Error, failed to get sessiion id&quot;</span>);
-        <span class="hljs-keyword">return</span> UNKNOWN_ERROR;
-    } <span class="hljs-keyword">else</span> {
-        <span class="hljs-comment">//Allocate related cam sync buffer</span>
-        <span class="hljs-comment">//this is needed for the payload that goes along with bundling cmd for related</span>
-        <span class="hljs-comment">//camera use cases</span>
-        m_pDualCamCmdHeap = <span class="hljs-keyword">new</span> QCamera3HeapMemory(<span class="hljs-number">1</span>);
-        rc = m_pDualCamCmdHeap-&gt;allocate(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">cam_dual_camera_cmd_info_t</span>));
-        <span class="hljs-keyword">if</span>(rc != OK) {
-            rc = NO_MEMORY;
-            LOGE(<span class="hljs-string">&quot;Dualcam: Failed to allocate Related cam sync Heap memory&quot;</span>);
-            <span class="hljs-keyword">return</span> NO_MEMORY;
-        }
-
-        <span class="hljs-comment">//Map memory for related cam sync buffer</span>
-        rc = mCameraHandle-&gt;ops-&gt;map_buf(mCameraHandle-&gt;camera_handle,
-                CAM_MAPPING_BUF_TYPE_DUAL_CAM_CMD_BUF,
-                m_pDualCamCmdHeap-&gt;getFd(<span class="hljs-number">0</span>),
-                <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">cam_dual_camera_cmd_info_t</span>),
-                m_pDualCamCmdHeap-&gt;getPtr(<span class="hljs-number">0</span>));
-        <span class="hljs-keyword">if</span>(rc &lt; <span class="hljs-number">0</span>) {
-            LOGE(<span class="hljs-string">&quot;Dualcam: failed to map Related cam sync buffer&quot;</span>);
-            rc = FAILED_TRANSACTION;
-            <span class="hljs-keyword">return</span> NO_MEMORY;
-        }
-        m_pDualCamCmdPtr = (<span class="hljs-keyword">cam_dual_camera_cmd_info_t</span>*) DATA_PTR(m_pDualCamCmdHeap,<span class="hljs-number">0</span>);
-    }
-
-    LOGH(<span class="hljs-string">&quot;mCameraId=%d&quot;</span>,mCameraId);
-
-    <span class="hljs-keyword">return</span> NO_ERROR;
-}
-</code></pre>
-<p><strong>(1) camera_open((uint8_t)mCameraId, &amp;mCameraHandle)</strong></p>
-<p>&#x6253;&#x5F00;Camera &#x6210;&#x529F;&#x540E;&#xFF0C;hardware &#x5C42;&#x4E2D;&#x5C06;Camera &#x6240;&#x6709;&#x4FE1;&#x606F;&#x4FDD;&#x5B58;&#x5728; <code>g_cam_ctrl.cam_obj[cam_idx]</code> &#x4E2D;&#xFF0C;&#x540C;&#x65F6;&#x8FD4;&#x56DE;&#x5BF9;&#x5E94;&#x7684;camera &#x7684;opt &#x64CD;&#x4F5C;&#x51FD;&#x6570;</p>
-<pre><code class="lang-c">hardware/qcom/camera/QCamera2/<span class="hljs-built_in">stack</span>/mm-camera-interface/src/mm_camera_interface.<span class="hljs-function">c
-int32_t <span class="hljs-title">camera_open</span><span class="hljs-params">(uint8_t camera_idx, mm_camera_vtbl_t **camera_vtbl)</span>
-</span>{
-    <span class="hljs-keyword">int32_t</span> rc = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">mm_camera_obj_t</span> *cam_obj = <span class="hljs-literal">NULL</span>;
-    <span class="hljs-keyword">uint32_t</span> cam_idx = camera_idx;
-    <span class="hljs-keyword">uint32_t</span> aux_idx = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">uint8_t</span> is_multi_camera = <span class="hljs-number">0</span>;
-
-<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> QCAMERA_REDEFINE_LOG</span>
-    mm_camera_debug_open();
-<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
-
-    LOGD(<span class="hljs-string">&quot;E camera_idx = %d\n&quot;</span>, camera_idx);
-    <span class="hljs-keyword">if</span> (is_dual_camera_by_idx(camera_idx)) {
-        is_multi_camera = <span class="hljs-number">1</span>;
-        cam_idx = mm_camera_util_get_handle_by_num(<span class="hljs-number">0</span>,g_cam_ctrl.cam_index[camera_idx]);
-        aux_idx = (get_aux_camera_handle(g_cam_ctrl.cam_index[camera_idx]) &gt;&gt; MM_CAMERA_HANDLE_SHIFT_MASK);
-        LOGH(<span class="hljs-string">&quot;Dual Camera: Main ID = %d Aux ID = %d&quot;</span>, cam_idx, aux_idx);
-    }
-
-    pthread_mutex_lock(&amp;g_intf_lock);
-    <span class="hljs-comment">/* opened already */</span>
-    <span class="hljs-keyword">if</span>(<span class="hljs-literal">NULL</span> != g_cam_ctrl.cam_obj[cam_idx] &amp;&amp; g_cam_ctrl.cam_obj[cam_idx]-&gt;ref_count != <span class="hljs-number">0</span>) {
-        pthread_mutex_unlock(&amp;g_intf_lock);
-        LOGE(<span class="hljs-string">&quot;Camera %d is already open&quot;</span>, cam_idx);
-        <span class="hljs-keyword">return</span> -EBUSY;
-    }
-
-    cam_obj = (<span class="hljs-keyword">mm_camera_obj_t</span> *)<span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">mm_camera_obj_t</span>));
-
-    <span class="hljs-comment">/* initialize camera obj */</span>
-    <span class="hljs-built_in">memset</span>(cam_obj, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">mm_camera_obj_t</span>));
-    cam_obj-&gt;ctrl_fd = <span class="hljs-number">-1</span>;
-    cam_obj-&gt;ds_fd = <span class="hljs-number">-1</span>;
-    cam_obj-&gt;ref_count++;
-    cam_obj-&gt;my_num = <span class="hljs-number">0</span>;
-    cam_obj-&gt;my_hdl = mm_camera_util_generate_handler(cam_idx);
-    cam_obj-&gt;vtbl.camera_handle = cam_obj-&gt;my_hdl; <span class="hljs-comment">/* set handler */</span>
-    cam_obj-&gt;vtbl.ops = &amp;mm_camera_ops;
-    pthread_mutex_init(&amp;cam_obj-&gt;cam_lock, <span class="hljs-literal">NULL</span>);
-    pthread_mutex_init(&amp;cam_obj-&gt;muxer_lock, <span class="hljs-literal">NULL</span>);
-    <span class="hljs-comment">/* unlock global interface lock, if not, in dual camera use case,
-      * current open will block operation of another opened camera obj*/</span>
-    pthread_mutex_lock(&amp;cam_obj-&gt;cam_lock);
-    pthread_mutex_unlock(&amp;g_intf_lock);
-
-    rc = mm_camera_open(cam_obj);
-
-    <span class="hljs-keyword">if</span> (is_multi_camera) {
-        <span class="hljs-comment">/*Open Aux camer&apos;s*/</span>
-        pthread_mutex_lock(&amp;g_intf_lock);
-        <span class="hljs-keyword">if</span>(<span class="hljs-literal">NULL</span> != g_cam_ctrl.cam_obj[aux_idx] &amp;&amp;
-                g_cam_ctrl.cam_obj[aux_idx]-&gt;ref_count != <span class="hljs-number">0</span>) {
-            pthread_mutex_unlock(&amp;g_intf_lock);
-            LOGE(<span class="hljs-string">&quot;Camera %d is already open&quot;</span>, aux_idx);
-            rc = -EBUSY;
-        } <span class="hljs-keyword">else</span> {
-            pthread_mutex_lock(&amp;cam_obj-&gt;muxer_lock);
-            pthread_mutex_unlock(&amp;g_intf_lock);
-            rc = mm_camera_muxer_camera_open(aux_idx, cam_obj);
-        }
-    }
-
-    LOGH(<span class="hljs-string">&quot;Open succeded: handle = %d&quot;</span>, cam_obj-&gt;vtbl.camera_handle);
-    g_cam_ctrl.cam_obj[cam_idx] = cam_obj;
-    *camera_vtbl = &amp;cam_obj-&gt;vtbl;
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-}
-</code></pre>
-<p>&#x6B64;&#x65F6;Open &#x5BF9;&#x5E94;&#x7684; /dev/video &#x8282;&#x70B9;&#xFF0C;&#x83B7;&#x5F97;&#x5BF9;&#x5E94;&#x7684;session_id&#xFF0C;&#x521B;&#x5EFA;&#x597D;&#x76F8;&#x5173;&#x7684; socket &#xFF0C;&#x6700;&#x7EC8;&#x6240;&#x6709;&#x4FE1;&#x606F;&#xFF0C;&#x4FDD;&#x5B58;&#x5728; <code>mm_camera_obj_t * cam_obj</code>&#x8282;&#x6784;&#x4F53;&#x4E2D;&#x3002;</p>
-<pre><code class="lang-c">@ hardware/qcom/camera/QCamera2/<span class="hljs-built_in">stack</span>/mm-camera-interface/src/mm_camera.<span class="hljs-function">c
-
-int32_t <span class="hljs-title">mm_camera_open</span><span class="hljs-params">(mm_camera_obj_t *my_obj)</span>
-</span>{
-    <span class="hljs-keyword">char</span> dev_name[MM_CAMERA_DEV_NAME_LEN];
-    <span class="hljs-keyword">int8_t</span> n_try=MM_CAMERA_DEV_OPEN_TRIES;
-    <span class="hljs-keyword">uint8_t</span> sleep_msec=MM_CAMERA_DEV_OPEN_RETRY_SLEEP;
-    <span class="hljs-keyword">int</span> cam_idx = <span class="hljs-number">0</span>;
-    <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *dev_name_value = <span class="hljs-literal">NULL</span>;
-
-    LOGD(<span class="hljs-string">&quot;begin\n&quot;</span>);
-
-    dev_name_value = mm_camera_util_get_dev_name_by_num(my_obj-&gt;my_num, my_obj-&gt;my_hdl);
-
-    <span class="hljs-built_in">snprintf</span>(dev_name, <span class="hljs-keyword">sizeof</span>(dev_name), <span class="hljs-string">&quot;/dev/%s&quot;</span>,dev_name_value);
-    <span class="hljs-built_in">sscanf</span>(dev_name, <span class="hljs-string">&quot;/dev/video%d&quot;</span>, &amp;cam_idx);
-    LOGD(<span class="hljs-string">&quot;dev name = %s, cam_idx = %d&quot;</span>, dev_name, cam_idx);
-
-    <span class="hljs-keyword">do</span>{
-        n_try--;
-        errno = <span class="hljs-number">0</span>;
-        my_obj-&gt;ctrl_fd = open(dev_name, O_RDWR | O_NONBLOCK);
-        l_errno = errno;
-        LOGD(<span class="hljs-string">&quot;ctrl_fd = %d, errno == %d&quot;</span>, my_obj-&gt;ctrl_fd, l_errno);
-        <span class="hljs-keyword">if</span>((my_obj-&gt;ctrl_fd &gt;= <span class="hljs-number">0</span>) || (errno != EIO &amp;&amp; errno != ETIMEDOUT) || (n_try &lt;= <span class="hljs-number">0</span> )) {
-            <span class="hljs-keyword">break</span>;
-        }
-        LOGE(<span class="hljs-string">&quot;Failed with %s error, retrying after %d milli-seconds&quot;</span>, strerror(errno), sleep_msec);
-        usleep(sleep_msec * <span class="hljs-number">1000U</span>);
-    }<span class="hljs-keyword">while</span> (n_try &gt; <span class="hljs-number">0</span>);
-
-      mm_camera_get_session_id(my_obj, &amp;my_obj-&gt;sessionid);
-      LOGH(<span class="hljs-string">&quot;Camera Opened id = %d sessionid = %d&quot;</span>, cam_idx, my_obj-&gt;sessionid);
-
-<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> DAEMON_PRESENT</span>
-    <span class="hljs-comment">/* open domain socket*/</span>
-    n_try = MM_CAMERA_DEV_OPEN_TRIES;
-    <span class="hljs-keyword">do</span> {
-        n_try--;
-        my_obj-&gt;ds_fd = mm_camera_socket_create(cam_idx, MM_CAMERA_SOCK_TYPE_UDP);
-        l_errno = errno;
-        LOGD(<span class="hljs-string">&quot;ds_fd = %d, errno = %d&quot;</span>, my_obj-&gt;ds_fd, l_errno);
-        <span class="hljs-keyword">if</span>((my_obj-&gt;ds_fd &gt;= <span class="hljs-number">0</span>) || (n_try &lt;= <span class="hljs-number">0</span> )) {
-            LOGD(<span class="hljs-string">&quot;opened, break out while loop&quot;</span>);
-            <span class="hljs-keyword">break</span>;
-        }
-        LOGD(<span class="hljs-string">&quot;failed with I/O error retrying after %d milli-seconds&quot;</span>, sleep_msec);
-        usleep(sleep_msec * <span class="hljs-number">1000U</span>);
-    } <span class="hljs-keyword">while</span> (n_try &gt; <span class="hljs-number">0</span>);
-
-<span class="hljs-meta">#<span class="hljs-meta-keyword">else</span> <span class="hljs-comment">/* DAEMON_PRESENT */</span></span>
-    <span class="hljs-keyword">cam_status_t</span> cam_status;
-    cam_status = mm_camera_module_open_session(my_obj-&gt;sessionid,mm_camera_module_event_handler);
-<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span> <span class="hljs-comment">/* DAEMON_PRESENT */</span></span>
-
-    pthread_condattr_init(&amp;cond_attr);
-    pthread_condattr_setclock(&amp;cond_attr, CLOCK_MONOTONIC);
-
-    pthread_mutex_init(&amp;my_obj-&gt;msg_lock, <span class="hljs-literal">NULL</span>);
-    pthread_mutex_init(&amp;my_obj-&gt;cb_lock, <span class="hljs-literal">NULL</span>);
-    pthread_mutex_init(&amp;my_obj-&gt;evt_lock, <span class="hljs-literal">NULL</span>);
-    pthread_cond_init(&amp;my_obj-&gt;evt_cond, &amp;cond_attr);
-    pthread_condattr_destroy(&amp;cond_attr);
-
-    LOGD(<span class="hljs-string">&quot;Launch evt Thread in Cam Open&quot;</span>);
-    <span class="hljs-built_in">snprintf</span>(my_obj-&gt;evt_thread.threadName, THREAD_NAME_SIZE, <span class="hljs-string">&quot;CAM_Dispatch&quot;</span>);
-    mm_camera_cmd_thread_launch(&amp;my_obj-&gt;evt_thread, mm_camera_dispatch_app_event, (<span class="hljs-keyword">void</span> *)my_obj);
-
-    <span class="hljs-comment">/* launch event poll thread
-     * we will add evt fd into event poll thread upon user first register for evt */</span>
-    LOGD(<span class="hljs-string">&quot;Launch evt Poll Thread in Cam Open&quot;</span>);
-    <span class="hljs-built_in">snprintf</span>(my_obj-&gt;evt_poll_thread.threadName, THREAD_NAME_SIZE, <span class="hljs-string">&quot;CAM_evntPoll&quot;</span>);
-    mm_camera_poll_thread_launch(&amp;my_obj-&gt;evt_poll_thread, MM_CAMERA_POLL_TYPE_EVT);
-    mm_camera_evt_sub(my_obj, TRUE);
-
-    <span class="hljs-comment">/* unlock cam_lock, we need release global intf_lock in camera_open(),
-     * in order not block operation of other Camera in dual camera use case.*/</span>
-    pthread_mutex_unlock(&amp;my_obj-&gt;cam_lock);
-    LOGD(<span class="hljs-string">&quot;end (rc = %d)\n&quot;</span>, rc);
-    <span class="hljs-keyword">return</span> rc;
-}
-</code></pre>
-<p><strong>(2) Camera &#x64CD;&#x4F5C;&#x8282;&#x6784;&#x4F53; cam_obj-&gt;vtbl.ops</strong></p>
-<pre><code class="lang-c">hardware/qcom/camera/QCamera2/<span class="hljs-built_in">stack</span>/mm-camera-interface/src/mm_camera_interface.c
-
-<span class="hljs-keyword">static</span> <span class="hljs-keyword">mm_camera_ops_t</span> mm_camera_ops = {
-    .query_capability = mm_camera_intf_query_capability,
-    .register_event_notify = mm_camera_intf_register_event_notify,
-    .close_camera = mm_camera_intf_close,
-    .set_parms = mm_camera_intf_set_parms,
-    .get_parms = mm_camera_intf_get_parms,
-    .do_auto_focus = mm_camera_intf_do_auto_focus,
-    .cancel_auto_focus = mm_camera_intf_cancel_auto_focus,
-    .prepare_snapshot = mm_camera_intf_prepare_snapshot,
-    .start_zsl_snapshot = mm_camera_intf_start_zsl_snapshot,
-    .stop_zsl_snapshot = mm_camera_intf_stop_zsl_snapshot,
-    .map_buf = mm_camera_intf_map_buf,
-    .map_bufs = mm_camera_intf_map_bufs,
-    .unmap_buf = mm_camera_intf_unmap_buf,
-    .add_channel = mm_camera_intf_add_channel,
-    .delete_channel = mm_camera_intf_del_channel,
-    .get_bundle_info = mm_camera_intf_get_bundle_info,
-    .add_stream = mm_camera_intf_add_stream,
-    .link_stream = mm_camera_intf_link_stream,
-    .delete_stream = mm_camera_intf_del_stream,
-    .config_stream = mm_camera_intf_config_stream,
-    .qbuf = mm_camera_intf_qbuf,
-    .cancel_buffer = mm_camera_intf_cancel_buf,
-    .get_queued_buf_count = mm_camera_intf_get_queued_buf_count,
-    .map_stream_buf = mm_camera_intf_map_stream_buf,
-    .map_stream_bufs = mm_camera_intf_map_stream_bufs,
-    .unmap_stream_buf = mm_camera_intf_unmap_stream_buf,
-    .set_stream_parms = mm_camera_intf_set_stream_parms,
-    .get_stream_parms = mm_camera_intf_get_stream_parms,
-    .start_channel = mm_camera_intf_start_channel,
-    .stop_channel = mm_camera_intf_stop_channel,
-    .request_super_buf = mm_camera_intf_request_super_buf,
-    .cancel_super_buf_request = mm_camera_intf_cancel_super_buf_request,
-    .flush_super_buf_queue = mm_camera_intf_flush_super_buf_queue,
-    .configure_notify_mode = mm_camera_intf_configure_notify_mode,
-    .process_advanced_capture = mm_camera_intf_process_advanced_capture,
-    .get_session_id = mm_camera_intf_get_session_id,
-    .set_dual_cam_cmd = mm_camera_intf_set_dual_cam_cmd,
-    .flush = mm_camera_intf_flush,
-    .register_stream_buf_cb = mm_camera_intf_register_stream_buf_cb,
-    .register_frame_sync = mm_camera_intf_reg_frame_sync,
-    .handle_frame_sync_cb = mm_camera_intf_handle_frame_sync_cb
-};
-</code></pre>
-<h4 id="2323-&#x3010;hardware&#x3011;-&#x521D;&#x59CB;&#x5316;framewroks&#x5C42;&#x7684;callback-&#x51FD;&#x6570;-qcamera3hardwareinterfaceinitialize-">2.3.2.3 &#x3010;Hardware&#x3011; &#x521D;&#x59CB;&#x5316;Framewroks&#x5C42;&#x7684;Callback &#x51FD;&#x6570; QCamera3HardwareInterface::initialize( )</h4>
-<pre><code class="lang-c++">hardware/qcom/camera/QCamera2/HAL3/QCamera3HWI.cpp
-
-<span class="hljs-comment">/*===========================================================================
- * FUNCTION   : initialize
- * DESCRIPTION: Initialize frameworks callback functions
- *   @callback_ops : callback function to frameworks
- *==========================================================================*/</span>
-<span class="hljs-keyword">int</span> QCamera3HardwareInterface::initialize(<span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> camera3_callback_ops *callback_ops)
-{
-    ATRACE_CAMSCOPE_CALL(CAMSCOPE_HAL3_INIT);
-    LOGI(<span class="hljs-string">&quot;E :mCameraId = %d mState = %d&quot;</span>, mCameraId, mState);
-
-    rc = initParameters();
-
-    mCallbackOps = callback_ops;
-    =====&gt; &#x8BE5;Callback &#x662F;&#x4ECE; frameworks/av/services/camera/libcameraservice/CameraService.cpp &#x4E2D;&#x4F20;&#x9012;&#x4E0B;&#x6765;&#x7684;
-        <span class="hljs-keyword">if</span> (mModule-&gt;getModuleApiVersion() &gt;= CAMERA_MODULE_API_VERSION_2_1) {
-            mModule-&gt;setCallbacks(<span class="hljs-keyword">this</span>);
-        }
-
-    mChannelHandle = mCameraHandle-&gt;ops-&gt;add_channel( mCameraHandle-&gt;camera_handle, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-keyword">this</span>);
-
-    mCameraInitialized = <span class="hljs-literal">true</span>;
-    mState = INITIALIZED;
-    LOGI(<span class="hljs-string">&quot;X&quot;</span>);
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-}
-</code></pre>
-<h2 id="24-&#x4E8B;&#x4EF6;&#x5904;&#x7406;&#x7A0B;&#x5E8F;&#xFF08;&#xFF09;">2.4 &#x4E8B;&#x4EF6;&#x5904;&#x7406;&#x7A0B;&#x5E8F;&#xFF08;&#xFF09;</h2>
-<p>&#x5728; EventHandler &#x4E2D;&#xFF0C;&#x6839;&#x636E;&#x5177;&#x4F53;&#x7684;&#x4E8B;&#x4EF6;&#xFF0C;&#x8C03;&#x7528;&#x4E0D;&#x540C;&#x7684; callback &#x51FD;&#x6570;&#x3002;</p>
-<pre><code class="lang-java">@ frameworks/base/core/java/android/hardware/Camera.java
-<span class="hljs-keyword">private</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EventHandler</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Handler</span>
-    </span>{
-        <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> Camera mCamera;
-
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">EventHandler</span><span class="hljs-params">(Camera c, Looper looper)</span> </span>{
-            <span class="hljs-keyword">super</span>(looper);
-            mCamera = c;
-        }
-
-        <span class="hljs-meta">@Override</span>
-        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">handleMessage</span><span class="hljs-params">(Message msg)</span> </span>{
-            <span class="hljs-keyword">switch</span>(msg.what) {
-            <span class="hljs-keyword">case</span> CAMERA_MSG_SHUTTER:
-                <span class="hljs-keyword">if</span> (mShutterCallback != <span class="hljs-keyword">null</span>) {
-                    mShutterCallback.onShutter();
-                }
-                <span class="hljs-keyword">return</span>;
-
-            <span class="hljs-keyword">case</span> CAMERA_MSG_RAW_IMAGE:
-                <span class="hljs-keyword">if</span> (mRawImageCallback != <span class="hljs-keyword">null</span>) {
-                    mRawImageCallback.onPictureTaken((<span class="hljs-keyword">byte</span>[])msg.obj, mCamera);
-                }
-                <span class="hljs-keyword">return</span>;
-
-            <span class="hljs-keyword">case</span> CAMERA_MSG_COMPRESSED_IMAGE:
-                <span class="hljs-keyword">if</span> (mJpegCallback != <span class="hljs-keyword">null</span>) {
-                    mJpegCallback.onPictureTaken((<span class="hljs-keyword">byte</span>[])msg.obj, mCamera);
-                }
-                <span class="hljs-keyword">return</span>;
-
-            <span class="hljs-keyword">case</span> CAMERA_MSG_PREVIEW_FRAME:
-                PreviewCallback pCb = mPreviewCallback;
-                <span class="hljs-keyword">if</span> (pCb != <span class="hljs-keyword">null</span>) {
-                    <span class="hljs-keyword">if</span> (mOneShot) {
-                        <span class="hljs-comment">// Clear the callback variable before the callback</span>
-                        <span class="hljs-comment">// in case the app calls setPreviewCallback from</span>
-                        <span class="hljs-comment">// the callback function</span>
-                        mPreviewCallback = <span class="hljs-keyword">null</span>;
-                    } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!mWithBuffer) {
-                        <span class="hljs-comment">// We&apos;re faking the camera preview mode to prevent</span>
-                        <span class="hljs-comment">// the app from being flooded with preview frames.</span>
-                        <span class="hljs-comment">// Set to oneshot mode again.</span>
-                        setHasPreviewCallback(<span class="hljs-keyword">true</span>, <span class="hljs-keyword">false</span>);
-                    }
-                    pCb.onPreviewFrame((<span class="hljs-keyword">byte</span>[])msg.obj, mCamera);
-                }
-                <span class="hljs-keyword">return</span>;
-
-            <span class="hljs-keyword">case</span> CAMERA_MSG_POSTVIEW_FRAME:
-                <span class="hljs-keyword">if</span> (mPostviewCallback != <span class="hljs-keyword">null</span>) {
-                    mPostviewCallback.onPictureTaken((<span class="hljs-keyword">byte</span>[])msg.obj, mCamera);
-                }
-                <span class="hljs-keyword">return</span>;
-
-            <span class="hljs-keyword">case</span> CAMERA_MSG_FOCUS:
-                AutoFocusCallback cb = <span class="hljs-keyword">null</span>;
-                <span class="hljs-keyword">synchronized</span> (mAutoFocusCallbackLock) {
-                    cb = mAutoFocusCallback;
-                }
-                <span class="hljs-keyword">if</span> (cb != <span class="hljs-keyword">null</span>) {
-                    <span class="hljs-keyword">boolean</span> success = msg.arg1 == <span class="hljs-number">0</span> ? <span class="hljs-keyword">false</span> : <span class="hljs-keyword">true</span>;
-                    cb.onAutoFocus(success, mCamera);
-                }
-                <span class="hljs-keyword">return</span>;
-
-            <span class="hljs-keyword">case</span> CAMERA_MSG_ZOOM:
-                <span class="hljs-keyword">if</span> (mZoomListener != <span class="hljs-keyword">null</span>) {
-                    mZoomListener.onZoomChange(msg.arg1, msg.arg2 != <span class="hljs-number">0</span>, mCamera);
-                }
-                <span class="hljs-keyword">return</span>;
-
-            <span class="hljs-keyword">case</span> CAMERA_MSG_PREVIEW_METADATA:
-                <span class="hljs-keyword">if</span> (mFaceListener != <span class="hljs-keyword">null</span>) {
-                    mFaceListener.onFaceDetection((Face[])msg.obj, mCamera);
-                }
-                <span class="hljs-keyword">return</span>;
-
-            <span class="hljs-keyword">case</span> CAMERA_MSG_ERROR :
-                Log.e(TAG, <span class="hljs-string">&quot;Error &quot;</span> + msg.arg1);
-                <span class="hljs-keyword">if</span> (mErrorCallback != <span class="hljs-keyword">null</span>) {
-                    mErrorCallback.onError(msg.arg1, mCamera);
-                }
-                <span class="hljs-keyword">return</span>;
-
-            <span class="hljs-keyword">case</span> CAMERA_MSG_FOCUS_MOVE:
-                <span class="hljs-keyword">if</span> (mAutoFocusMoveCallback != <span class="hljs-keyword">null</span>) {
-                    mAutoFocusMoveCallback.onAutoFocusMoving(msg.arg1 == <span class="hljs-number">0</span> ? <span class="hljs-keyword">false</span> : <span class="hljs-keyword">true</span>, mCamera);
-                }
-                <span class="hljs-keyword">return</span>;
-            <span class="hljs-comment">/* ### QC ADD-ONS: START */</span>
-            <span class="hljs-keyword">case</span> CAMERA_MSG_STATS_DATA:
-                <span class="hljs-keyword">int</span> statsdata[] = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">257</span>];
-                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i =<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">257</span>; i++ ) {
-                   statsdata[i] = byteToInt( (<span class="hljs-keyword">byte</span>[])msg.obj, i*<span class="hljs-number">4</span>);
-                }
-                <span class="hljs-keyword">if</span> (mCameraDataCallback != <span class="hljs-keyword">null</span>) {
-                     mCameraDataCallback.onCameraData(statsdata, mCamera);
-                }
-                <span class="hljs-keyword">return</span>;
-
-            <span class="hljs-keyword">case</span> CAMERA_MSG_META_DATA:
-                <span class="hljs-keyword">if</span> (mCameraMetaDataCallback != <span class="hljs-keyword">null</span>) {
-                    mCameraMetaDataCallback.onCameraMetaData((<span class="hljs-keyword">byte</span>[])msg.obj, mCamera);
-                }
-                <span class="hljs-keyword">return</span>;
-            <span class="hljs-comment">/* ### QC ADD-ONS: END */</span>
-            <span class="hljs-keyword">default</span>:
-                Log.e(TAG, <span class="hljs-string">&quot;Unknown message type &quot;</span> + msg.what);
-                <span class="hljs-keyword">return</span>;
-            }
-        }
-    }
-</code></pre>
-<p>&#x81F3;&#x6B64;&#xFF0C;&#x6574;&#x4E2A;open Camera &#x6D41;&#x7A0B;&#x5C31;&#x5B8C;&#x4E86;&#x3002;</p>
+<h2 id="&#x4E8C;&#x3001;framework&#x5C42;-camerajava-&#x4E2D;&#x7684;-open">&#x4E8C;&#x3001;<em>Framework</em>&#x5C42; <em>Camera.java</em> &#x4E2D;&#x7684; <em>open()</em></h2>
+<ul>
+<li>&#x5728;<code>Camera open()</code> &#x51FD;&#x6570;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x6307;&#x5B9A;<em>open</em> &#x5BF9;&#x5E94;&#x7684;<em>camera id</em>&#xFF0C;&#x5219;&#x9ED8;&#x8BA4;&#x6253;&#x5F00;&#x540E;&#x6444;</li>
+<li>&#x6839;&#x636E;&#x4F20;&#x5165;&#x7684; <em>camera id</em> &#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;</li>
+<li>&#x6CE8;&#x518C; <em>EventHandler</em> &#x5FAA;&#x73AF;&#x76D1;&#x542C;<em>Camera</em> &#x4E8B;&#x4EF6;</li>
+<li>&#x8C03;&#x7528; <code>native_setup() JNI &#x51FD;&#x6570;</code>&#xFF0C;&#x5E76;&#x4E0B;&#x53D1; <em>camera id</em> &#x3001;&#x5F53;&#x524D;&#x5305;&#x540D;&#x3001;<em>hal</em>&#x5C42;&#x7248;&#x672C;&#x53F7;</li>
+</ul>
+<h2 id="&#x4E09;&#x3001;jni-&#x5C42;-androidhardwarecameranativesetup">&#x4E09;&#x3001;JNI &#x5C42; <em>android_hardware_Camera_native_setup</em></h2>
+<ul>
+<li>&#x8C03;&#x7528; <code>Camera::connect()</code> &#x51FD;&#x6570;&#xFF0C;<em>connect</em> &#x4E3A; <em>AIDL</em> &#x65B9;&#x6CD5;&#xFF0C;&#x901A;&#x8FC7;<em>binder</em> &#x8C03;&#x7528;&#x5230;&#x670D;&#x52A1;&#x7AEF;CameraService.cpp&#x4E2D;&#x7684; <code>CameraService::connect()</code> &#x65B9;&#x6CD5;&#x4E2D;</li>
+<li>&#x83B7;&#x53D6; <em>Camera</em> <em>Class</em>&#xFF0C;&#x5EFA;&#x7ACB;&#x4E13;&#x95E8;&#x8D1F;&#x8D23;&#x4E0E;<em>java</em> <em>Camera</em>&#x5BF9;&#x8C61;&#x901A;&#x4FE1;&#x7684;&#x5BF9;&#x8C61;</li>
+<li>&#x5982;&#x679C;&#x6CA1;&#x6709;&#x8BBE;&#x7F6E;&#x5C4F;&#x5E55;&#x663E;&#x793A;&#x65B9;&#x5411;&#xFF0C;&#x5219;&#x9ED8;&#x8BA4;&#x4E3A;0&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x4E3A;0&#xFF0C;&#x8C03;&#x7528;<code>sendCommand</code> &#x4E0B;&#x53D1;&#x5C4F;&#x5E55;&#x663E;&#x793A;&#x65B9;&#x5411;</li>
+</ul>
+<h2 id="&#x56DB;&#x3001;c-native-&#x5C42;-cameraservicecpp-&#x4E2D;">&#x56DB;&#x3001;<em>C++</em> <em>Native</em> &#x5C42; <em>CameraService.cpp</em> &#x4E2D;</h2>
+<ul>
+<li><em>CameraService.cpp</em> &#x662F;camera &#x521D;&#x59CB;&#x5316;&#x4E2D;&#x8BB2;&#x8FC7;&#x4E86;&#xFF0C;&#x5728;&#x5F00;&#x673A;&#x65F6;&#x4F1A;&#x6CE8;&#x518C;&#x597D;&#x5BF9;&#x5E94;&#x7684; <em>cameraservice</em> &#x670D;&#x52A1;</li>
+<li>&#x524D;&#x9762;AIDL&#x4E2D;&#xFF0C;&#x8C03;&#x7528;&#x5230; <em>CameraService.cpp</em>&#x4E2D;&#x7684; <code>CameraService::connect()</code> &#x65B9;&#x6CD5; &#x5728;&#x8BE5;&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;</li>
+<li>&#x9996;&#x5148;&#x68C0;&#x67E5;&#x662F;&#x5426;&#x5B58;&#x5728; <em>client</em> &#xFF0C;&#x5982;&#x679C;&#x5B58;&#x5728;&#x7684;&#x8BDD;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;</li>
+<li>&#x5173;&#x95ED;&#x6240;&#x6709;&#x7684; <em>flashlight</em> &#x5BF9;&#x8C61;</li>
+<li>&#x8C03;&#x7528;<code>makeClient()</code> &#x521B;&#x5EFA; <em>Camera Client</em> &#x5BF9;&#x8C61;&#x3002; <em>client</em>&#x662F;&#x901A;&#x8FC7; <code>Camera2ClientBase()</code> &#x8FDB;&#x884C;&#x521B;&#x5EFA;&#x7684;&#xFF0C;&#x540C;&#x65F6;&#x521B;&#x5EFA;<em>Camera3Device</em> &#x5BF9;&#x8C61;</li>
+<li>&#x8C03;&#x7528;<code>client-&gt;initialize</code>&#x5BF9;&#x524D;&#x9762;&#x521B;&#x5EFA;&#x597D;&#x7684; <em>Camera client</em> &#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;</li>
+<li>&#x521D;&#x59CB;&#x5316;&#x524D;&#x5148;&#x5BF9;<em>device</em> &#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316; &#xFF0C;&#x5728;<code>Camera3Device-&gt;initialize()</code>&#x4E2D;&#x6253;&#x5F00;&#x5BF9;&#x5E94;&#x7684; <em>Camera</em> &#x8282;&#x70B9;<em>/dev/videox</em>&#xFF0C;&#x8FDB;&#x884C;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x83B7;&#x53D6;&#x5230; <em>Camera</em> &#x7684;&#x64CD;&#x4F5C;&#x65B9;&#x6CD5;</li>
+<li>&#x521D;&#x59CB;&#x5316; <em>Camera</em> &#x9ED8;&#x8BA4;&#x53C2;&#x6570;</li>
+<li>&#x63A5;&#x7740;&#x5BF9;&#x521B;&#x5EFA; <em>Camera</em> &#x8FD0;&#x884C;&#x65F6;&#x7684;&#x516D;&#x5927;&#x7EBF;&#x7A0B;&#xFF0C;&#x5904;&#x7406;<em>preview</em>&#x548C;&#x5F55;&#x50CF; <em>stream</em>&#x7684;&#x7EBF;&#x7A0B;&#x3001;&#x5904;&#x7406;<em>3A</em>&#x548C;&#x4EBA;&#x8138;&#x8BC6;&#x522B;&#x7684;&#x7EBF;&#x7A0B;&#x3001;&#x62CD;&#x7167;&#x6D41;&#x7A0B;&#x72B6;&#x6001;&#x673A;&#x7EBF;&#x7A0B;&#x3001;&#x5904;&#x7406;&#x62CD;&#x7167; <em>jpeg stream</em> &#x7EBF;&#x7A0B;&#x3001;&#x5904;&#x7406;&#x96F6;&#x5EF6;&#x65F6;<em>zsl stream</em>&#x4F7F;&#x7528;&#x7684;&#x7EBF;&#x7A0B;&#x3001;&#x5904;&#x7406;callback&#x7684;&#x7EBF;&#x7A0B; </li>
+</ul>
 <footer class="page-footer"><span class="copyright">copyright by duguosheng all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x4EF6;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
-2022-08-15 16:24:07
+2022-08-16 16:57:54
 </span></footer>
                                 
                                 </section>
@@ -1768,12 +431,12 @@ int32_t <span class="hljs-title">mm_camera_open</span><span class="hljs-params">
 
             
                 
-                <a href="Camera_init流程.html" class="navigation navigation-prev " aria-label="Previous page: 第 4 章：Camera Init 初始化流程">
+                <a href="相机初始化流程.html" class="navigation navigation-prev " aria-label="Previous page: 4.1 Camera Init 初始化流程">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="open_Camera代码分析.html" class="navigation navigation-next " aria-label="Next page: 5.1 open_Camera 流程">
+                <a href="open_Camera代码分析.html" class="navigation navigation-next " aria-label="Next page: 5.1 open_Camera 代码分析">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -1784,7 +447,7 @@ int32_t <span class="hljs-title">mm_camera_open</span><span class="hljs-params">
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"第 5 章：open_Camera 流程","level":"1.6","depth":1,"next":{"title":"5.1 open_Camera 流程","level":"1.6.1","depth":2,"path":"Sdm660_Camera/open_Camera代码分析.md","ref":"Sdm660_Camera/open_Camera代码分析.md","articles":[]},"previous":{"title":"第 4 章：Camera Init 初始化流程","level":"1.5","depth":1,"path":"Sdm660_Camera/Camera_init流程.md","ref":"Sdm660_Camera/Camera_init流程.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-pro","expandable-chapters","code-optimize","splitter","pageview-count","tbfed-pagefooter","flexible-alerts"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"copyright by duguosheng","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"splitter":{},"search-pro":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"pageview-count":{},"flexible-alerts":{"danger":{"className":"danger","icon":"fa fa-ban","label":"Attention"},"note":{"className":"info","icon":"fa fa-info-circle","label":"Note"},"style":"flat","tip":{"className":"tip","icon":"fa fa-lightbulb-o","label":"Tip"},"warning":{"className":"warning","icon":"fa fa-exclamation-triangle","label":"Warning"}},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"code-optimize":{"copyButtons":true,"showLines":false},"expandable-chapters":{}},"theme":"default","author":"DuGuoSheng","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"6.S081 All-In-One","gitbook":"*"},"file":{"path":"Sdm660_Camera/open_Camera流程.md","mtime":"2022-08-15T08:24:07.461Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-08-16T06:16:13.899Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"第 5 章：open_Camera 流程","level":"1.6","depth":1,"next":{"title":"5.1 open_Camera 代码分析","level":"1.6.1","depth":2,"path":"Sdm660_Camera/open_Camera代码分析.md","ref":"Sdm660_Camera/open_Camera代码分析.md","articles":[]},"previous":{"title":"4.1 Camera Init 初始化流程","level":"1.5.1","depth":2,"path":"Sdm660_Camera/相机初始化流程.md","ref":"Sdm660_Camera/相机初始化流程.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-pro","expandable-chapters","code-optimize","splitter","pageview-count","tbfed-pagefooter","flexible-alerts"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"copyright by duguosheng","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"splitter":{},"search-pro":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"pageview-count":{},"flexible-alerts":{"danger":{"className":"danger","icon":"fa fa-ban","label":"Attention"},"note":{"className":"info","icon":"fa fa-info-circle","label":"Note"},"style":"flat","tip":{"className":"tip","icon":"fa fa-lightbulb-o","label":"Tip"},"warning":{"className":"warning","icon":"fa fa-exclamation-triangle","label":"Warning"}},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"code-optimize":{"copyButtons":true,"showLines":false},"expandable-chapters":{}},"theme":"default","author":"DuGuoSheng","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"6.S081 All-In-One","gitbook":"*"},"file":{"path":"Sdm660_Camera/open_Camera流程.md","mtime":"2022-08-16T08:57:54.462Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-08-16T08:58:08.874Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

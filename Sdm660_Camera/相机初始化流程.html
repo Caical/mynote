@@ -1,0 +1,1086 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>4.1 Camera Init 初始化流程 · 6.S081 All-In-One</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        <meta name="author" content="DuGuoSheng">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search-pro/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code-optimize/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-splitter/splitter.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-pageview-count/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-tbfed-pagefooter/footer.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-flexible-alerts/style.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="open_Camera流程.html" />
+    
+    
+    <link rel="prev" href="系统架构.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    介绍
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="相机介绍.html">
+            
+                <a href="相机介绍.html">
+            
+                    
+                    第 1 章：SC66_Camera 介绍
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="高通Camera设计.html">
+            
+                <a href="高通Camera设计.html">
+            
+                    
+                    1.1 高通 Camera 设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="代码组织.html">
+            
+                <a href="代码组织.html">
+            
+                    
+                    1.2 代码组织
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="使用流程.html">
+            
+                <a href="使用流程.html">
+            
+                    
+                    第 2 章：SC66_Camera 使用流程
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="相机驱动移植流程.html">
+            
+                <a href="相机驱动移植流程.html">
+            
+                    
+                    2.1 Camera_driver 移植流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="附加内容.html">
+            
+                <a href="附加内容.html">
+            
+                    
+                    2.2 附加知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="kernel层初始化流程.html">
+            
+                <a href="kernel层初始化流程.html">
+            
+                    
+                    第 3 章：kernel 层初始化流程
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="V4L2分析.html">
+            
+                <a href="V4L2分析.html">
+            
+                    
+                    3.1 V4L2 框架分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="kernel代码分析.html">
+            
+                <a href="kernel代码分析.html">
+            
+                    
+                    3.2 kernel 层代码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="系统架构.html">
+            
+                <a href="系统架构.html">
+            
+                    
+                    第 4 章：Camera 系统架构
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.5.1" data-path="相机初始化流程.html">
+            
+                <a href="相机初始化流程.html">
+            
+                    
+                    4.1 Camera Init 初始化流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="open_Camera流程.html">
+            
+                <a href="open_Camera流程.html">
+            
+                    
+                    第 5 章：open_Camera 流程
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="open_Camera代码分析.html">
+            
+                <a href="open_Camera代码分析.html">
+            
+                    
+                    5.1 open_Camera 代码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >4.1 Camera Init 初始化流程</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <p><em>Open Camera</em>&#x662F;<em>Preview&#x3001;TakePicture&#x3001;Record</em>&#x7684;&#x57FA;&#x7840;&#xFF0C;<em>Open Camera</em>&#x4F1A;&#x521D;&#x59CB;&#x5316;&#x5F88;&#x591A;&#x5BF9;&#x8C61;&#xFF0C;&#x800C;<em>Preview</em>&#x7B49;&#x64CD;&#x4F5C;&#x662F;&#x56F4;&#x7ED5;&#x7740;&#x8FD9;&#x4E9B;&#x5BF9;&#x8C61;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x7684;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x7528;<em>Open Camera</em>&#x6765;&#x7406;&#x6E05;&#x5404;&#x4E2A;&#x5BF9;&#x8C61;&#x95F4;&#x7684;&#x4EA4;&#x4E92;&#x5173;&#x7CFB;&#x3002;</p>
+<h2 id="&#x4E00;&#x3001;camera-init-&#x521D;&#x59CB;&#x5316;&#x6D41;&#x7A0B;">&#x4E00;&#x3001;Camera Init &#x521D;&#x59CB;&#x5316;&#x6D41;&#x7A0B;</h2>
+<h2 id="11-cameraservice-&#x542F;&#x52A8;">1.1 CameraService &#x542F;&#x52A8;</h2>
+<p><em>CameraService</em> &#x662F;&#x4E00;&#x4E2A;&#x53EF;&#x6267;&#x884C;&#x7A0B;&#x5E8F;&#x653E;&#x5728; <em>/system/bin/cameraserver</em>&#xFF0C;&#x5F00;&#x673A;&#x65F6;&#x901A;&#x8FC7;<code>init.rc</code> &#x6587;&#x4EF6;&#x81EA;&#x542F;&#x52A8;&#x3002;</p>
+<pre><code class="lang-rc">frameworks/av/camera/cameraserver/cameraserver.rc
+service cameraserver /system/bin/cameraserver
+    class main
+    user cameraserver
+    group audio camera input drmrpc
+    ioprio rt 4
+    writepid /dev/cpuset/camera-daemon/tasks /dev/stune/foreground/tasks
+</code></pre>
+<p>cameraserver &#x53EF;&#x6267;&#x884C;&#x7A0B;&#x5E8F;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-cpp">frameworks/av/camera/cameraserver/main_cameraserver.cpp
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> LOG_TAG <span class="hljs-string">&quot;cameraserver&quot;</span></span>
+<span class="hljs-comment">//#define LOG_NDEBUG 0</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-string">&quot;CameraService.h&quot;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> android;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc __unused, <span class="hljs-keyword">char</span>** argv __unused)</span>
+</span>{
+    signal(SIGPIPE, SIG_IGN);
+
+    sp&lt;ProcessState&gt; proc(ProcessState::self());
+    sp&lt;IServiceManager&gt; sm = defaultServiceManager();
+    ALOGI(<span class="hljs-string">&quot;ServiceManager: %p&quot;</span>, sm.get());
+    CameraService::instantiate();
+    ProcessState::self()-&gt;startThreadPool();
+    IPCThreadState::self()-&gt;disableBackgroundScheduling(<span class="hljs-literal">true</span>);
+    IPCThreadState::self()-&gt;joinThreadPool();
+}
+</code></pre>
+<h2 id="12-cameraserviceinstantiate">1.2 CameraService::instantiate()</h2>
+<pre><code class="lang-c">frameworks/native/include/binder/BinderService.h
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">static</span> status_t <span class="hljs-title">publish</span><span class="hljs-params">(<span class="hljs-keyword">bool</span> allowIsolated = <span class="hljs-literal">false</span>)</span> </span>{
+        sp&lt;IServiceManager&gt; sm(defaultServiceManager());
+        <span class="hljs-keyword">return</span> sm-&gt;addService( String16(SERVICE::getServiceName()), <span class="hljs-keyword">new</span> SERVICE(), allowIsolated);
+    }
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">instantiate</span><span class="hljs-params">()</span> </span>{ publish(); }
+</code></pre>
+<p>&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;&#x7684;&#x610F;&#x601D;&#x662F;&#xFF0C;&#x5411; <em>ServicIeManager</em>&#x6DFB;&#x52A0; <em>name</em> &#x4E3A; &quot;<em>media.camera</em>&quot;&#x7684;<em>service</em> &#x3002;</p>
+<pre><code class="lang-c">String16(SERVICE::getServiceName())
+=============&gt;
+    <span class="hljs-comment">// Implementation of BinderService&lt;T&gt;</span>
+    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">char</span> <span class="hljs-keyword">const</span>* <span class="hljs-title">getServiceName</span><span class="hljs-params">()</span> </span>{ <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;media.camera&quot;</span>; }
+
+<span class="hljs-keyword">new</span> SERVICE()
+=============&gt;
+&#x76F8;&#x5F53;&#x4E8E;&#x8C03;&#x7528; <span class="hljs-keyword">new</span> CameraService()
+</code></pre>
+<h2 id="13-cameraservicecpp">1.3 CameraService.cpp</h2>
+<p>&#x7531;&#x4E8E;&#x662F;&#x8FD8; &#x5F3A;&#x6307;&#x9488;&#x7684;&#x5F15;&#x7528;&#x7C7B;&#x578B;&#xFF0C;&#x4EE3;&#x7801;<code>new CameraService()</code> &#xFF0C;&#x5728;&#x8C03;&#x7528; <code>CameraService::CameraService()</code> &#x540C;&#x65F6;&#x8FD8;&#x4F1A;&#x8C03;&#x7528; <code>void CameraService::onFirstRef()</code>&#x3002;</p>
+<h2 id="14-cameraservicecameraservice">1.4 CameraService::CameraService()</h2>
+<p>&#x4E3B;&#x8981;&#x5DE5;&#x4F5C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol>
+<li>&#x5B9A;&#x4E49;&#x5168;&#x5C40; <em>CameraService</em> &#x6307;&#x9488;&#x5BF9;&#x8C61; <em>gCameraService</em></li>
+<li>&#x521D;&#x59CB;&#x5316;&#x53D8;&#x91CF; <em>mNumberOfCameras = 0&#x3001;mNumberOfNormalCameras = 0&#x3001;mModule = NULL</em></li>
+<li>&#x5C06;&#x5F53;&#x524D;&#x5BF9;&#x8C61;&#x4FDD;&#x5B58;&#x5728; &#x5168;&#x5C40; <em>CameraService</em> &#x6307;&#x9488; <em>gCameraService</em> &#x4E2D;</li>
+</ol>
+<pre><code class="lang-cpp">frameworks/av/services/camera/libcameraservice/CameraService.cpp
+
+<span class="hljs-keyword">static</span> CameraService *gCameraService;  <span class="hljs-comment">// 1. &#x5B9A;&#x4E49;&#x5168;&#x5C40; CameraService &#x6307;&#x9488;&#x5BF9;&#x8C61;</span>
+
+CameraService::CameraService() :
+        mEventLog(DEFAULT_EVENT_LOG_LENGTH),
+        mNumberOfCameras(<span class="hljs-number">0</span>), mNumberOfNormalCameras(<span class="hljs-number">0</span>),
+        mSoundRef(<span class="hljs-number">0</span>), mModule(<span class="hljs-literal">nullptr</span>) {
+    ALOGI(<span class="hljs-string">&quot;CameraService started (pid=%d)&quot;</span>, getpid());
+    gCameraService = <span class="hljs-keyword">this</span>;    <span class="hljs-comment">// 1. &#x5C06;&#x5F53;&#x524D;&#x5BF9;&#x8C61;&#x4FDD;&#x5B58;&#x5728; &#x5168;&#x5C40; CameraService &#x6307;&#x9488;&#x4E2D;</span>
+
+    <span class="hljs-keyword">this</span>-&gt;camera_device_status_change = android::camera_device_status_change;
+    <span class="hljs-keyword">this</span>-&gt;torch_mode_status_change = android::torch_mode_status_change;
+
+    mServiceLockWrapper = <span class="hljs-built_in">std</span>::make_shared&lt;WaitableMutexWrapper&gt;(&amp;mServiceLock);
+}
+</code></pre>
+<h2 id="15-cameraserviceonfirstref">1.5 CameraService::onFirstRef()</h2>
+<p>&#x4E3B;&#x8981;&#x5DE5;&#x4F5C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol>
+<li><p>&#x52A0;&#x8F7D; <em>hal</em> &#x5C42; <em>camera modul</em>e&#xFF0C;&#x4FDD;&#x5B58;&#x5728; <em>rawModule</em> &#x4E2D; &#xFF0C;<em>module</em>&#x5B9A;&#x4E49;&#x5728; </p>
+<p><em>hardware/libhardware/include/hardware/camera_common.h</em></p>
+</li>
+<li><p>&#x521D;&#x59CB;&#x5316; <em>CameraModule</em> &#x5BF9;&#x50CF;&#xFF0C;&#x5C06; <em>*camera_module_t</em> <em>rawModule</em> &#x4FDD;&#x5B58;&#x5728; <em>mModule</em> &#x4E2D;</p>
+</li>
+<li><p>&#x8C03;&#x7528; <em>Camera HAL module</em> &#x7684; <em>init</em> &#x65B9;&#x6CD5;&#xFF0C;&#x8C03;&#x7528;<code>mModule-&gt;get_number_of_cameras()</code>&#xFF0C;&#x7528;&#x6765;&#x8BBE;&#x7F6E; <em>mCameraInfoMap vector</em> &#x7684;&#x5BB9;&#x91CF;</p>
+</li>
+<li><p>&#x6253;&#x5370; <em>hardware camera module</em> &#x7684; <em>name</em> &#xFF0C;<em>hal</em> &#x5C42;&#x4EE3;&#x7801;&#x5B9A;&#x4E49;&#x5728; <em>hardware/qcom/camera/QCamera2/QCamera2Hal.cpp</em></p>
+</li>
+<li><p>&#x83B7;&#x53D6; <em>camera</em> &#x4E2A;&#x6570;&#xFF0C;&#x4FDD;&#x5B58;&#x5728;<em>CameraService</em> &#x7684;&#x79C1;&#x6709;&#x53D8;&#x91CF; <em>mNumberOfCameras</em> &#x53CA; <em>mNumberOfNormalCameras</em> &#x4E2D;</p>
+</li>
+<li><p>&#x521D;&#x59CB;&#x5316; <em>CameraFlashlight</em> &#x6A21;&#x5757;&#xFF0C;&#x6839;&#x636E; <em>camera</em> <em>number</em> &#x521D;&#x59CB;&#x5316; <em>mHasFlashlightMap</em> <em>vector</em> &#x6570;&#x7EC4;&#x53D8;&#x91CF;</p>
+</li>
+<li><p>&#x8C03;&#x7528;<code>mModule-&gt;getCameraInfo()</code></p>
+</li>
+<li><p>&#x8FD4;&#x56DE;<em>hal</em> &#x5C42;<em>mHalDescriptors</em> &#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x4FDD;&#x5B58;&#x5728; <em>info</em> &#x4E2D;</p>
+</li>
+<li><p>&#x901A;&#x8FC7; <em>BpCameraServiceProxy</em> &#x8FDC;&#x7A0B;&#x8C03;&#x7528; <em>BnCameraService</em> &#x7684; <code>pingForUserUpdate()</code> &#x51FD;&#x6570;</p>
+</li>
+</ol>
+<pre><code class="lang-cpp">frameworks/av/services/camera/libcameraservice/CameraService.cpp
+<span class="hljs-keyword">void</span> CameraService::onFirstRef()
+{
+    ALOGI(<span class="hljs-string">&quot;CameraService process starting&quot;</span>);
+    BnCameraService::onFirstRef();
+
+    <span class="hljs-comment">// 1. &#x52A0;&#x8F7D; hal &#x5C42; camera module&#xFF0C;&#x4FDD;&#x5B58;&#x5728; rawModule &#x4E2D;</span>
+    <span class="hljs-comment">// #define CAMERA_HARDWARE_MODULE_ID &quot;camera&quot;</span>
+    <span class="hljs-comment">// module&#x5B9A;&#x4E49;&#x5728; hardware/libhardware/include/hardware/camera_common.h </span>
+
+    <span class="hljs-keyword">camera_module_t</span> *rawModule;  
+    <span class="hljs-keyword">int</span> err = hw_get_module(CAMERA_HARDWARE_MODULE_ID,(<span class="hljs-keyword">const</span> <span class="hljs-keyword">hw_module_t</span> **)&amp;rawModule);
+
+
+    <span class="hljs-comment">// 2. &#x521D;&#x59CB;&#x5316; CameraModule &#x5BF9;&#x50CF;&#xFF0C;&#x5C06; camera_module_t *rawModule &#x4FDD;&#x5B58;&#x5728; mModule &#x4E2D;</span>
+    mModule = <span class="hljs-keyword">new</span> CameraModule(rawModule);    
+
+    <span class="hljs-comment">// 3. &#x8C03;&#x7528; Camera HAL module &#x7684; init &#x65B9;&#x6CD5;</span>
+    <span class="hljs-comment">// &#x4ECE; hardware/libhardware/include/hardware/camera_common.h  &#x4E2D;&#x5F97;&#x77E5; </span>
+    <span class="hljs-comment">// #define CAMERA_MODULE_API_VERSION_CURRENT CAMERA_MODULE_API_VERSION_2_4</span>
+    <span class="hljs-comment">// &#x56E0;&#x6B64;&#xFF0C;hal &#x5C42;&#x4EE3;&#x7801;&#x4F4D;&#x4E8E; hardware/qcom/camera/QCamera2/QCamera2Hal.cpp</span>
+    err = mModule-&gt;init();
+    ================&gt;
+    +    @ frameworks/frameworks-<span class="hljs-keyword">new</span>/av/services/camera/libcameraservice/common/CameraModule.cpp
+    +    <span class="hljs-keyword">int</span> CameraModule::init() {
+    +        <span class="hljs-keyword">if</span> (getModuleApiVersion() &gt;= CAMERA_MODULE_API_VERSION_2_4 &amp;&amp; mModule-&gt;init != <span class="hljs-literal">NULL</span>) {
+    +            ATRACE_BEGIN(<span class="hljs-string">&quot;camera_module-&gt;init&quot;</span>);
+    +            res = mModule-&gt;init();  <span class="hljs-comment">// &#x4ECE; QCamera2Hal.cpp &#x4E2D;&#x5F97;&#x77E5;&#xFF0C;init = NULL</span>
+    +        }
+    +        mCameraInfoMap.setCapacity(getNumberOfCameras());    <span class="hljs-comment">// &#x8BBE;&#x7F6E;CameraInfoMap vector&#x7684;&#x5927;&#x5C0F;</span>
+    +        ==========&gt;
+    +            numCameras = mModule-&gt;get_number_of_cameras();    
+    +        <span class="hljs-keyword">return</span> res;
+    +    }
+    &lt;================
+    <span class="hljs-comment">// 4. &#x6253;&#x5370; hardware camera module &#x7684;name &#xFF0C;&#x5B9A;&#x4E49;&#x5728;  hardware/qcom/camera/QCamera2/QCamera2Hal.cpp</span>
+    ALOGI(<span class="hljs-string">&quot;Loaded \&quot;%s\&quot; camera module&quot;</span>, mModule-&gt;getModuleName());  <span class="hljs-comment">// &quot;QCamera Module&quot;</span>
+
+    <span class="hljs-comment">// 5. &#x83B7;&#x53D6; camera &#x4E2A;&#x6570;&#xFF0C;&#x4FDD;&#x5B58;&#x5728;CameraService &#x7684;&#x79C1;&#x6709;&#x53D8;&#x91CF; mNumberOfCameras &#x53CA; mNumberOfNormalCameras &#x4E2D;</span>
+    mNumberOfCameras = mModule-&gt;getNumberOfCameras();
+    mNumberOfNormalCameras = mNumberOfCameras;
+
+    <span class="hljs-comment">// 6. &#x521D;&#x59CB;&#x5316; CameraFlashlight &#x6A21;&#x5757;&#xFF0C;&#x6839;&#x636E; camera number &#x521D;&#x59CB;&#x5316; mHasFlashlightMap vector &#x6570;&#x7EC4;&#x53D8;&#x91CF;</span>
+    mFlashlight = <span class="hljs-keyword">new</span> CameraFlashlight(*mModule, *<span class="hljs-keyword">this</span>);
+    <span class="hljs-keyword">status_t</span> res = mFlashlight-&gt;findFlashUnits();
+
+    <span class="hljs-comment">// 7. &#x8C03;&#x7528;mModule-&gt;getCameraInfo()</span>
+    <span class="hljs-keyword">int</span> latestStrangeCameraId = INT_MAX;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; mNumberOfCameras; i++) {
+        String8 cameraId = String8::format(<span class="hljs-string">&quot;%d&quot;</span>, i);
+        <span class="hljs-comment">// Get camera info</span>
+
+        <span class="hljs-keyword">struct</span> camera_info info;
+        <span class="hljs-keyword">bool</span> haveInfo = <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">status_t</span> rc = mModule-&gt;getCameraInfo(i, &amp;info);  <span class="hljs-comment">// 8. &#x8FD4;&#x56DE; hardware &#x5C42; mHalDescriptors &#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x4FDD;&#x5B58;&#x5728; info &#x4E2D;</span>
+
+        <span class="hljs-comment">// Defaults to use for cost and conflicting devices</span>
+        <span class="hljs-keyword">int</span> cost = <span class="hljs-number">100</span>;
+        <span class="hljs-keyword">char</span>** conflicting_devices = <span class="hljs-literal">nullptr</span>;
+        <span class="hljs-keyword">size_t</span> conflicting_devices_length = <span class="hljs-number">0</span>;
+
+        <span class="hljs-comment">// If using post-2.4 module version, query the cost + conflicting devices from the HAL</span>
+        <span class="hljs-keyword">if</span> (mModule-&gt;getModuleApiVersion() &gt;= CAMERA_MODULE_API_VERSION_2_4 &amp;&amp; haveInfo) {
+            cost = info.resource_cost;
+            conflicting_devices = info.conflicting_devices;
+            conflicting_devices_length = info.conflicting_devices_length;
+        }
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">set</span>&lt;String8&gt; conflicting;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; conflicting_devices_length; i++) {
+            conflicting.emplace(String8(conflicting_devices[i]));
+        }
+        <span class="hljs-comment">// Initialize state for each camera device</span>
+        {
+            Mutex::<span class="hljs-function">Autolock <span class="hljs-title">lock</span><span class="hljs-params">(mCameraStatesLock)</span></span>;
+            mCameraStates.emplace(cameraId, <span class="hljs-built_in">std</span>::make_shared&lt;CameraState&gt;(cameraId, cost, conflicting));
+        }
+
+        <span class="hljs-keyword">if</span> (mFlashlight-&gt;hasFlashUnit(cameraId)) {
+            mTorchStatusMap.add(cameraId, ICameraServiceListener::TORCH_STATUS_AVAILABLE_OFF);
+        }
+    }
+    <span class="hljs-keyword">if</span> (mModule-&gt;getModuleApiVersion() &gt;= CAMERA_MODULE_API_VERSION_2_1) {
+        mModule-&gt;setCallbacks(<span class="hljs-keyword">this</span>);
+    }
+    <span class="hljs-comment">// 9. &#x901A;&#x8FC7; BpCameraServiceProxy &#x8FDC;&#x7A0B;&#x8C03;&#x7528; BnCameraService &#x7684; pingForUserUpdate() &#x51FD;&#x6570;</span>
+    <span class="hljs-comment">// &#x8FDC;&#x7A0B;&#x51FD;&#x6570;&#x4F4D;&#x4E8E; IMPLEMENT_META_INTERFACE(CameraServiceProxy, &quot;android.hardware.ICameraServiceProxy&quot;);</span>
+
+    CameraService::pingCameraServiceProxy();
+}
+</code></pre>
+<h2 id="16-&#x83B7;&#x53D6;camera&#x6570;&#x91CF;-mmodule-getnumberofcameras">1.6 &#x83B7;&#x53D6;Camera&#x6570;&#x91CF; mModule-&gt;getNumberOfCameras()</h2>
+<p>&#x8FDB;&#x5165;hardware &#x5C42;&#x4EE3;&#x7801;&#x4E2D;&#xFF1A;</p>
+<pre><code class="lang-cpp">hardware/qcom/camera/QCamera2/QCamera2Hal.cpp
+
+<span class="hljs-keyword">camera_module_t</span> HAL_MODULE_INFO_SYM = {
+    .common                 = camera_common,
+    .get_number_of_cameras  = qcamera::QCamera2Factory::get_number_of_cameras,
+    .get_camera_info        = qcamera::QCamera2Factory::get_camera_info,
+    .set_callbacks          = qcamera::QCamera2Factory::set_callbacks,
+    .get_vendor_tag_ops     = qcamera::QCamera3VendorTags::get_vendor_tag_ops,
+    .open_legacy            = qcamera::QCamera2Factory::open_legacy,
+    .set_torch_mode         = qcamera::QCamera2Factory::set_torch_mode,
+    .init                   = <span class="hljs-literal">NULL</span>,
+    .reserved               = {<span class="hljs-number">0</span>}
+};
+</code></pre>
+<p>&#x9996;&#x5148;&#x521D;&#x59CB;&#x5316; <em>gQCamera2Factory</em> &#x5BF9;&#x50CF;&#xFF0C;&#x63A5;&#x7740;&#x5224;&#x65AD;&#x5F53;&#x524D;<em>camera hal</em> &#x5C42;&#x8D70; <em>HAL1</em> &#x8FD8;&#x662F; <em>HAL3</em>&#xFF0C;&#x8C03;&#x7528;&#x5BF9;&#x5E94;&#x7684;&#x63A5;&#x53E3;&#x3002;
+<em>camera</em> &#x4E2A;&#x6570;&#x662F;&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#x7684;&#x53D8;&#x91CF;<em>mNumOfCameras_expose</em>&#xFF0C;&#x800C; <em>mNumOfCameras_expose</em> &#x53D8;&#x91CF;&#x662F;&#x5728; <em>gQCamera2Factory</em>() &#x4E2D;&#x8D4B;&#x503C;&#x7684;&#x3002;
+&#x63A5;&#x7740;&#xFF0C;&#x901A;&#x8FC7;&#x5224;&#x5B9A;&#x662F;&#x5426;&#x652F;&#x6301; &#x53CC;&#x6444;&#xFF0C;&#x6765;&#x8C03;&#x7528;&#x4E0D;&#x540C;&#x7684; <em>getNumberOfCameras</em>() &#x51FD;&#x6570;</p>
+<pre><code class="lang-cpp">hardware/qcom/camera/QCamera2/QCamera2Factory.cpp
+
+<span class="hljs-keyword">int</span> QCamera2Factory::get_number_of_cameras()
+{
+    <span class="hljs-keyword">int</span> numCameras = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">if</span> (!gQCamera2Factory) {
+        gQCamera2Factory = <span class="hljs-keyword">new</span> QCamera2Factory();
+    }
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> QCAMERA_HAL1_SUPPORT</span>
+    <span class="hljs-keyword">if</span>(gQCameraMuxer)
+        numCameras = gQCameraMuxer-&gt;get_number_of_cameras();
+    <span class="hljs-keyword">else</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+        numCameras = gQCamera2Factory-&gt;getNumberOfCameras();
+            =======&gt;  <span class="hljs-keyword">return</span> mNumOfCameras_expose;
+
+    LOGH(<span class="hljs-string">&quot;num of cameras: %d&quot;</span>, numCameras);
+    <span class="hljs-keyword">return</span> numCameras;
+}
+</code></pre>
+<p>&#x63A5;&#x4E0B;&#x6765;&#x8FDB;&#x5165;&#x51FD;&#x6570; <code>QCamera2Factory()</code> &#x770B;&#x4E0B;&#xFF1A;</p>
+<ol>
+<li>&#x6253;&#x5F00;<em>/dev/mediax</em> &#x8282;&#x70B9; &#x83B7;&#x53D6;<em>camera</em> &#x7684;&#x4E2A;&#x6570;&#xFF0C;&#x4FDD;&#x5B58;&#x5728;g_cam_ctrl.num_cam</li>
+<li>&#x8FD4;&#x56DE; <code>g_cam_ctrl.num_cam_to_expose = g_cam_ctrl.num_cam - is_secure;</code> &#xFF0C;&#x6B64;&#x5904;&#x6211;&#x4EEC;&#x6CA1;&#x6709; <em>secure</em> &#xFF0C;&#x6240;&#x5C31;&#x5B83;&#x5C31;&#x662F;camera &#x4E2A;&#x6570;</li>
+<li>&#x5224;&#x65AD;&#x5F53;&#x524D;<em>Camera</em>&#x7CFB;&#x7EDF; &#x662F;&#x5426;&#x652F;&#x5F85; <em>HAL3</em>&#xFF0C;&#x4E14;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x5B9A;&#x4E49;<em>QCAMERA_HAL1_SUPPORT</em> ,&#x5219;&#x9ED8;&#x8BA4;&#x652F;&#x6301; HAL3</li>
+<li>&#x5224;&#x65AD;&#x5F53;&#x524D;<em>Camera</em>&#x7CFB;&#x7EDF;&#x662F;&#x5426;&#x652F;&#x6301;&#x53CC;&#x6444;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x8D70;<em>HAL3</em> &#xFF0C;&#x5373;&#x672A;&#x5B9A;&#x4E49;<em>QCAMERA_HAL1_SUPPORT</em> &#xFF0C;&#x9ED8;&#x8BA4;&#x4E0D;&#x652F;&#x5F85;&#x53CC;&#x6444;</li>
+<li>&#x5224;&#x65AD;&#x5F53;&#x524D;<em>Camera</em>&#x7CFB;&#x7EDF;&#x4E2D;&#x6240;&#x6709;<em>camera</em>&#x662F;&#x5426;&#x8D70;&#x7684;&#x662F;<em>HAL3</em>&#xFF0C; <em>YUV sensor</em>&#x662F;&#x53EA;&#x80FD;&#x8D70;<em>HAL1</em> &#x4E86;
+&#x66F4;&#x65B0; <em>mHalDescriptors</em> &#x4E2D;&#x6BCF;&#x4E2A;<em>camear id</em> &#x6240;&#x5BF9;&#x5E94;&#x7684; <em>HAL API VERSION</em></li>
+</ol>
+<pre><code class="lang-c++">QCamera2Factory::QCamera2Factory()
+{
+    mHalDescriptors = <span class="hljs-literal">NULL</span>;
+    mCallbacks = <span class="hljs-literal">NULL</span>;
+    mNumOfCameras = get_num_of_cameras();        <span class="hljs-comment">// 1. &#x6253;&#x5F00;/dev/mediax &#x8282;&#x70B9; &#x83B7;&#x53D6;camera &#x7684;&#x4E2A;&#x6570;&#xFF0C;&#x4FDD;&#x5B58;&#x5728;g_cam_ctrl.num_cam</span>
+    mNumOfCameras_expose = get_num_of_cameras_to_expose(); <span class="hljs-comment">// 2. &#x8FD4;&#x56DE; g_cam_ctrl.num_cam_to_expose = g_cam_ctrl.num_cam - is_secure; &#xFF0C;&#x6B64;&#x5904;&#x6211;&#x4EEC;&#x6CA1;&#x6709; secure &#xFF0C;&#x6240;&#x5C31;&#x5B83;&#x5C31;&#x662F;camera &#x4E2A;&#x6570;</span>
+    <span class="hljs-keyword">int</span> bDualCamera = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">char</span> propDefault[PROPERTY_VALUE_MAX];
+    <span class="hljs-keyword">char</span> prop[PROPERTY_VALUE_MAX];
+    <span class="hljs-comment">// 3. &#x5224;&#x65AD;&#x5F53;&#x524D;Camera&#x7CFB;&#x7EDF; &#x662F;&#x5426;&#x652F;&#x5F85; HAL3&#xFF0C;&#x4E14;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x5B9A;&#x4E49;QCAMERA_HAL1_SUPPORT ,&#x5219;&#x9ED8;&#x8BA4;&#x652F;&#x6301; HAL3</span>
+    property_get(<span class="hljs-string">&quot;persist.camera.HAL3.enabled&quot;</span>, prop, <span class="hljs-string">&quot;0&quot;</span>);
+    <span class="hljs-keyword">int</span> isHAL3Enabled = atoi(prop);
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifndef</span> QCAMERA_HAL1_SUPPORT</span>
+    isHAL3Enabled = <span class="hljs-number">1</span>;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+
+    <span class="hljs-comment">// 4. &#x5224;&#x65AD;&#x5F53;&#x524D;Camera&#x7CFB;&#x7EDF;&#x662F;&#x5426;&#x652F;&#x6301;&#x53CC;&#x6444;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x8D70;HAL3 &#xFF0C;&#x5373;&#x672A;&#x5B9A;&#x4E49;QCAMERA_HAL1_SUPPORT &#xFF0C;&#x9ED8;&#x8BA4;&#x4E0D;&#x652F;&#x5F85;&#x53CC;&#x6444;</span>
+    <span class="hljs-comment">// Signifies whether system has to enable dual camera mode</span>
+    <span class="hljs-built_in">snprintf</span>(propDefault, PROPERTY_VALUE_MAX, <span class="hljs-string">&quot;%d&quot;</span>, isDualCamAvailable(isHAL3Enabled));
+    property_get(<span class="hljs-string">&quot;persist.camera.dual.camera&quot;</span>, prop, <span class="hljs-string">&quot;0&quot;</span>);
+    bDualCamera = atoi(prop);
+    LOGH(<span class="hljs-string">&quot;dualCamera:%d &quot;</span>, bDualCamera);
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifndef</span> QCAMERA_HAL1_SUPPORT</span>
+    bDualCamera = <span class="hljs-number">0</span>;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+
+    <span class="hljs-keyword">if</span>(bDualCamera) {
+        LOGI(<span class="hljs-string">&quot;Enabling QCamera Muxer&quot;</span>);
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> QCAMERA_HAL1_SUPPORT</span>
+        <span class="hljs-keyword">if</span> (!gQCameraMuxer) {
+            QCameraMuxer::getCameraMuxer(&amp;gQCameraMuxer, mNumOfCameras);
+            <span class="hljs-keyword">if</span> (!gQCameraMuxer) {
+                LOGE(<span class="hljs-string">&quot;Error !! Failed to get QCameraMuxer&quot;</span>);
+            }
+        }
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+    }
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> QCAMERA_HAL1_SUPPORT</span>
+    <span class="hljs-keyword">if</span> (!gQCameraMuxer &amp;&amp; (mNumOfCameras &gt; <span class="hljs-number">0</span>) &amp;&amp;(mNumOfCameras &lt;= MM_CAMERA_MAX_NUM_SENSORS)) {
+<span class="hljs-meta">#<span class="hljs-meta-keyword">else</span></span>
+    <span class="hljs-keyword">if</span> ((mNumOfCameras &gt; <span class="hljs-number">0</span>) &amp;&amp;(mNumOfCameras &lt;= MM_CAMERA_MAX_NUM_SENSORS)) {
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+        mHalDescriptors = <span class="hljs-keyword">new</span> hal_desc[mNumOfCameras];
+        <span class="hljs-keyword">if</span> ( <span class="hljs-literal">NULL</span> != mHalDescriptors) {
+            <span class="hljs-keyword">uint32_t</span> cameraId = <span class="hljs-number">0</span>;
+
+            <span class="hljs-comment">// 5. &#x5224;&#x65AD;&#x5F53;&#x524D;Camera&#x7CFB;&#x7EDF;&#x4E2D;&#x6240;&#x6709;camera&#x662F;&#x5426;&#x8D70;&#x7684;&#x662F;HAL3&#xFF0C;  YUV sensor&#x662F;&#x53EA;&#x80FD;&#x8D70;HAL1 &#x4E86;</span>
+            <span class="hljs-comment">// 6. &#x66F4;&#x65B0; mHalDescriptors &#x4E2D;&#x6BCF;&#x4E2A;camear id &#x6240;&#x5BF9;&#x5E94;&#x7684; HAL API VERSION</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; mNumOfCameras ; i++, cameraId++) {
+                mHalDescriptors[i].cameraId = cameraId;
+                <span class="hljs-comment">// Set Device version to 3.x when both HAL3 is enabled &amp; its BAYER sensor</span>
+                <span class="hljs-keyword">if</span> (isHAL3Enabled &amp;&amp; !(is_yuv_sensor(cameraId))) {
+                    mHalDescriptors[i].device_version = CAMERA_DEVICE_API_VERSION_3_0;
+                } <span class="hljs-keyword">else</span> {
+                    mHalDescriptors[i].device_version = CAMERA_DEVICE_API_VERSION_1_0;
+                }
+            }
+        }
+    } 
+}
+</code></pre>
+<h2 id="17-hardware&#x5C42;&#x8C03;&#x7528;-getnumofcameras">1.7 hardware&#x5C42;&#x8C03;&#x7528; get_num_of_cameras()</h2>
+<ol>
+<li>&#x6253;&#x5F00; <em>/dev/media0 --&gt;&#xFF08;msm_config&#xFF09;msm_sensor_init /dev/media1 ----&gt;&#xFF08;msm_camera&#xFF09;v4l2</em></li>
+<li>&#x8C03;&#x7528; <em>MEDIA_IOC_DEVICE_INFO</em> &#x83B7;&#x53D6;&#x8BBE;&#x5907;&#x4FE1;&#x606F;</li>
+<li>&#x5982;&#x679C;&#x5224;&#x65AD;&#x4E0D;&#x662F; <em>msm_config</em> &#x5219;&#x76F4;&#x63A5;<em>continue</em></li>
+<li>&#x5BFB;&#x627E; <em>entity.id = 2</em> &#x7684;&#x6240;&#x6709;<em>subdev</em> &#xFF0C;&#x4E14; <em>type=MEDIA_ENT_T_V4L2_SUBDEV , group_id=14 , name =</em> <em>&quot;msm_sensor_init&quot;</em></li>
+<li>&#x627E;&#x5F00; <em>/dev/media0 /dev/media1</em> ... &#xFF0C;&#x5F00;&#x59CB;&#x67E5;&#x627E;<em>camear</em> &#x4E2A;&#x6570;&#xFF0C;&#x4FDD;&#x5B58;&#x5728; <em>g_cam_ctrl.num_cam</em> &#x4E2D;</li>
+<li>&#x5982;&#x679C;&#x5224;&#x65AD;&#x4E0D;&#x662F; <em>msm_config</em> &#x5219;&#x76F4;&#x63A5;<em>continue</em></li>
+<li>&#x904D;&#x5386; <em>V4L2</em> &#x4E0B;<em>camear</em> &#x7684;&#x4E2A;&#x6570;</li>
+<li>&#x83B7;&#x53D6;&#x6240;&#x6709;&#x4FE1;&#x606F;&#xFF0C;&#x4FDD;&#x5B58;&#x5728; <em>g_cam_ctrl</em> &#x4E2D;</li>
+</ol>
+<pre><code class="lang-c">hardware/qcom/camera/QCamera2/<span class="hljs-built_in">stack</span>/mm-camera-interface/src/mm_camera_interface.<span class="hljs-function">c
+
+uint8_t <span class="hljs-title">get_num_of_cameras</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-keyword">struct</span> media_device_info mdev_info;
+    <span class="hljs-keyword">int</span> num_media_devices = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int8_t</span> num_cameras = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">char</span> subdev_name[<span class="hljs-number">32</span>];
+    <span class="hljs-keyword">char</span> prop[PROPERTY_VALUE_MAX];
+    LOGD(<span class="hljs-string">&quot;E&quot;</span>);
+
+    <span class="hljs-built_in">memset</span> (&amp;g_cam_ctrl, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span> (g_cam_ctrl));
+
+    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) {
+        <span class="hljs-keyword">uint32_t</span> num_entities = <span class="hljs-number">1U</span>;
+        <span class="hljs-keyword">char</span> dev_name[<span class="hljs-number">32</span>];
+        <span class="hljs-comment">// 1. &#x6253;&#x5F00; /dev/media0 --&gt;&#xFF08;msm_config&#xFF09;msm_sensor_init     /dev/media1  ----&gt;&#xFF08;msm_camera&#xFF09;v4l2</span>
+        <span class="hljs-built_in">snprintf</span>(dev_name, <span class="hljs-keyword">sizeof</span>(dev_name), <span class="hljs-string">&quot;/dev/media%d&quot;</span>, num_media_devices);
+        dev_fd = open(dev_name, O_RDWR | O_NONBLOCK);
+
+        num_media_devices++;
+        <span class="hljs-comment">// 2. &#x8C03;&#x7528; MEDIA_IOC_DEVICE_INFO &#x83B7;&#x53D6;&#x8BBE;&#x5907;&#x4FE1;&#x606F;</span>
+        rc = ioctl(dev_fd, MEDIA_IOC_DEVICE_INFO, &amp;mdev_info);
+        ===============&gt;
+        +    <span class="hljs-comment">// kernel/msm-4.4/drivers/media/media-device.c</span>
+        +    <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">long</span> <span class="hljs-title">media_device_ioctl</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> file *filp, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> cmd, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> arg)</span></span>{
+        +        <span class="hljs-keyword">switch</span> (cmd) {
+        +        <span class="hljs-keyword">case</span> MEDIA_IOC_DEVICE_INFO:
+        +            ret = media_device_get_info(dev, (<span class="hljs-keyword">struct</span> media_device_info __user *)arg);
+        +            ============&gt;
+        +            -        strlcpy(info.driver, dev-&gt;dev-&gt;driver-&gt;name, <span class="hljs-keyword">sizeof</span>(info.driver));
+        +            -        strlcpy(info.model, dev-&gt;model, <span class="hljs-keyword">sizeof</span>(info.model));
+        +            -        strlcpy(info.serial, dev-&gt;serial, <span class="hljs-keyword">sizeof</span>(info.serial));
+        +            -        strlcpy(info.bus_info, dev-&gt;bus_info, <span class="hljs-keyword">sizeof</span>(info.bus_info));
+        +            -    
+        +            -        info.media_version = MEDIA_API_VERSION;
+        +            -        info.hw_revision = dev-&gt;hw_revision;
+        +            -        info.driver_version = dev-&gt;driver_version;
+        +            -        copy_to_user(__info, &amp;info, <span class="hljs-keyword">sizeof</span>(*__info))
+        +            &lt;============    
+        +            <span class="hljs-keyword">break</span>;
+        +    
+        +        <span class="hljs-keyword">case</span> MEDIA_IOC_ENUM_ENTITIES:
+        +            ret = media_device_enum_entities(dev, (<span class="hljs-keyword">struct</span> media_entity_desc __user *)arg);
+        +            <span class="hljs-keyword">break</span>;
+        +    }
+        &lt;===============
+
+        <span class="hljs-comment">// 3. &#x5982;&#x679C;&#x5224;&#x65AD;&#x4E0D;&#x662F; msm_config &#x5219;&#x76F4;&#x63A5;continue </span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strncmp</span>(mdev_info.model, MSM_CONFIGURATION_NAME, <span class="hljs-keyword">sizeof</span>(mdev_info.model)) != <span class="hljs-number">0</span>) {
+            close(dev_fd);
+            dev_fd = <span class="hljs-number">-1</span>;
+            <span class="hljs-keyword">continue</span>;
+        }
+
+        <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) {
+            <span class="hljs-keyword">struct</span> media_entity_desc entity;
+            <span class="hljs-built_in">memset</span>(&amp;entity, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(entity));
+            entity.id = num_entities++;        <span class="hljs-comment">// 2</span>
+            LOGD(<span class="hljs-string">&quot;entity id %d&quot;</span>, entity.id);
+
+            <span class="hljs-comment">// 4. &#x5BFB;&#x627E; entity.id = 2 &#x7684;&#x6240;&#x6709;subdev &#xFF0C;&#x4E14; type=MEDIA_ENT_T_V4L2_SUBDEV , group_id=14 , name = &quot;msm_sensor_init&quot;</span>
+            rc = ioctl(dev_fd, MEDIA_IOC_ENUM_ENTITIES, &amp;entity);
+            ===========&gt;
+            +     media_device_enum_entities(dev, (<span class="hljs-keyword">struct</span> media_entity_desc __user *)arg);
+            +    -------&gt;
+            +        pvdev-&gt;vdev-&gt;entity.type = MEDIA_ENT_T_DEVNODE_V4L;         <span class="hljs-comment">// V4L</span>
+            +        pvdev-&gt;vdev-&gt;entity.group_id = QCAMERA_VNODE_GROUP_ID;   <span class="hljs-comment">// #define QCAMERA_VNODE_GROUP_ID 2</span>
+            +    &lt;-------
+            &lt;===========
+
+            LOGD(<span class="hljs-string">&quot;entity name %s type %d group id %d&quot;</span>,  entity.name, entity.type, entity.group_id);
+            <span class="hljs-keyword">if</span> (entity.type == MEDIA_ENT_T_V4L2_SUBDEV &amp;&amp; entity.group_id == MSM_CAMERA_SUBDEV_SENSOR_INIT) {
+                <span class="hljs-built_in">snprintf</span>(subdev_name, <span class="hljs-keyword">sizeof</span>(dev_name), <span class="hljs-string">&quot;/dev/%s&quot;</span>, entity.name);
+                <span class="hljs-keyword">break</span>;
+            }
+        }
+        close(dev_fd);
+        dev_fd = <span class="hljs-number">-1</span>;
+    }
+
+    num_media_devices = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) {
+        <span class="hljs-keyword">uint32_t</span> num_entities = <span class="hljs-number">1U</span>;
+        <span class="hljs-keyword">char</span> dev_name[<span class="hljs-number">32</span>];
+        <span class="hljs-comment">// 5. &#x627E;&#x5F00; /dev/media0 /dev/media1 ... &#xFF0C;&#x5F00;&#x59CB;&#x67E5;&#x627E;camear &#x4E2A;&#x6570;</span>
+        <span class="hljs-built_in">snprintf</span>(dev_name, <span class="hljs-keyword">sizeof</span>(dev_name), <span class="hljs-string">&quot;/dev/media%d&quot;</span>, num_media_devices);
+        dev_fd = open(dev_name, O_RDWR | O_NONBLOCK);
+        num_media_devices++;
+
+        <span class="hljs-built_in">memset</span>(&amp;mdev_info, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(mdev_info));
+        rc = ioctl(dev_fd, MEDIA_IOC_DEVICE_INFO, &amp;mdev_info);
+
+        <span class="hljs-comment">// 6. &#x5982;&#x679C;&#x5224;&#x65AD;&#x4E0D;&#x662F; `msm_camera` &#x5219;&#x76F4;&#x63A5;`continue` </span>
+        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">strncmp</span>(mdev_info.model, MSM_CAMERA_NAME, <span class="hljs-keyword">sizeof</span>(mdev_info.model)) != <span class="hljs-number">0</span>) {
+            close(dev_fd);
+            dev_fd = <span class="hljs-number">-1</span>;
+            <span class="hljs-keyword">continue</span>;
+        }
+
+        <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) {
+            <span class="hljs-keyword">struct</span> media_entity_desc entity;
+            <span class="hljs-built_in">memset</span>(&amp;entity, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(entity));
+            entity.id = num_entities++;
+            rc = ioctl(dev_fd, MEDIA_IOC_ENUM_ENTITIES, &amp;entity);
+
+              <span class="hljs-comment">// 7. &#x904D;&#x5386; V4L2 &#x4E0B;camear &#x7684;&#x4E2A;&#x6570;</span>
+            <span class="hljs-keyword">if</span>(entity.type == MEDIA_ENT_T_DEVNODE_V4L &amp;&amp; entity.group_id == QCAMERA_VNODE_GROUP_ID) {
+                strlcpy(g_cam_ctrl.video_dev_name[num_cameras], entity.name, <span class="hljs-keyword">sizeof</span>(entity.name));
+                LOGI(<span class="hljs-string">&quot;dev_info[id=%d,name=&apos;%s&apos;]\n&quot;</span>, (<span class="hljs-keyword">int</span>)num_cameras, g_cam_ctrl.video_dev_name[num_cameras]);
+                num_cameras++;
+                <span class="hljs-keyword">break</span>;
+            }
+        }
+        close(dev_fd);
+        dev_fd = <span class="hljs-number">-1</span>;
+        <span class="hljs-keyword">if</span> (num_cameras &gt;= MM_CAMERA_MAX_NUM_SENSORS) {
+            LOGW(<span class="hljs-string">&quot;Maximum number of camera reached %d&quot;</span>, num_cameras);
+            <span class="hljs-keyword">break</span>;
+        }
+    }
+
+    g_cam_ctrl.num_cam = num_cameras;
+
+    <span class="hljs-comment">// 8. &#x83B7;&#x53D6;&#x6240;&#x6709;&#x4FE1;&#x606F;&#xFF0C;&#x4FDD;&#x5B58;&#x5728; g_cam_ctrl &#x4E2D;</span>
+    get_sensor_info();
+    <span class="hljs-comment">// 9. &#x91CD;&#x65B0;&#x6574;&#x7406; g_cam_ctrl &#x4E2D;&#x7684;camear &#x987A;&#x5E8F;&#xFF0C;&#x786E;&#x4FDD; &#x540E;&#x6444;inx &#x6BD4;&#x524D;&#x6444;&#x5927;</span>
+        <span class="hljs-comment">/* Order of the camera exposed is
+        0  - Back Main Camera
+        1  - Front Main Camera
+        ++  - Back Aux Camera
+        ++  - Front Aux Camera
+        ++  - Back Main + Back Aux camera
+        ++  - Front Main + Front Aux camera
+        ++  - Secure Camera
+       */</span>
+    sort_camera_info(g_cam_ctrl.num_cam);
+    <span class="hljs-comment">/* unlock the mutex */</span>
+
+    LOGI(<span class="hljs-string">&quot;num_cameras=%d\n&quot;</span>, (<span class="hljs-keyword">int</span>)g_cam_ctrl.num_cam);
+    <span class="hljs-keyword">return</span>(<span class="hljs-keyword">uint8_t</span>)g_cam_ctrl.num_cam;
+}
+</code></pre>
+<h2 id="18-camera-init-&#x521D;&#x59CB;&#x5316;&#x6D41;&#x7A0B;&#x603B;&#x7ED3;">1.8 Camera Init &#x521D;&#x59CB;&#x5316;&#x6D41;&#x7A0B;&#x603B;&#x7ED3;</h2>
+<p>&#x5728;<em>Init</em> &#x6574;&#x4E2A;&#x8FC7;&#x7A0B;&#x4E2D;&#xFF0C;&#x4E3B;&#x8981;&#x505A;&#x4E86;&#x5982;&#x4E0B;&#x4E8B;&#x60C5;&#xFF1A;</p>
+<ol>
+<li>&#x5B9A;&#x4E49;&#x5168;&#x5C40; <em>CameraService</em> &#x6307;&#x9488;&#x5BF9;&#x8C61; <em>gCameraService</em>&#x3002;</li>
+<li>&#x52A0;&#x8F7D; <em>hal</em> &#x5C42; <em>camera module</em>&#xFF0C;&#x4FDD;&#x5B58;&#x5728; <em>rawModule</em> &#x4E2D; &#xFF0C;<em>module</em>&#x5B9A;&#x4E49;&#x5728;<em>hardware/libhardware/include/hardware/camera_common.h</em>&#x3002;</li>
+<li>&#x8C03;&#x7528;<em>Camera hardware module</em> &#x7684;<code>mModule-&gt;get_number_of_cameras()</code>&#xFF0C;&#x83B7;&#x5F97;<em>Camera Number</em>&#x3002;</li>
+<li>&#x8C03;&#x7528; <em>MEDIA_IOC_DEVICE_INFO</em> &#x83B7;&#x53D6;&#x9A71;&#x52A8;&#x5C42; <em>Camera V4L2</em> &#x7684;&#x6240;&#x6709;&#x8BBE;&#x5907;&#x4FE1;&#x606F;&#x3002;</li>
+<li>&#x540C;&#x65F6;&#x521D;&#x59CB;&#x5316; <em>hardware</em> &#x5C42;&#x7684; <em>mHalDescriptors</em> &#x6570;&#x7EC4;&#xFF0C;&#x66F4;&#x65B0;&#x6BCF;&#x4E2A;Camera &#x4F7F;&#x7528;&#x7684; <em>camera hal1</em> &#x8FD8;&#x662F; <em>hal3</em>&#x3002;</li>
+</ol>
+<h2 id="&#x4E8C;&#x3001;hwgetmodule">&#x4E8C;&#x3001;hw_get_module()</h2>
+<p>&#x5728;&#x524D;&#x9762;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x901A;&#x8FC7; <code>hw_get_module(CAMERA_HARDWARE_MODULE_ID,(const hw_module_t **)&amp;rawModule)</code> &#x6765;&#x83B7;&#x53D6;&#x5230;&#x9A71;&#x52A8;&#x5C42;&#x7684;&#x76F8;&#x5173;&#x63A5;&#x53E3;&#x3002;</p>
+<p>&#x63A5;&#x4E0B;&#x6765;&#xFF0C;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E0B; <code>hw_get_module</code> &#x5177;&#x4F53;&#x505A;&#x4E86;&#x4EC0;&#x4E48;&#x64CD;&#x4F5C;&#xFF1A;</p>
+<pre><code class="lang-c">@ hardware/libhardware/hardware.<span class="hljs-function">c
+
+<span class="hljs-keyword">int</span> <span class="hljs-title">hw_get_module</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *id, <span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> hw_module_t **module)</span>
+</span>{
+    <span class="hljs-keyword">return</span> hw_get_module_by_class(id, <span class="hljs-literal">NULL</span>, module);
+}
+</code></pre>
+<p>&#x7531;&#x6B64;&#x53EF;&#x77E5;&#xFF0C;<code>CameraService.cpp</code> &#x4E2D;&#x8C03;&#x7528;<code>hw_get_module</code>&#xFF0C;&#x4F20;&#x9012;&#x7684;&#x53C2;&#x6570;&#x4E3A; <code>CAMERA_HARDWARE_MODULE_ID</code> &#x548C; <code>&amp;rawModule</code>
+<code>#define CAMERA_HARDWARE_MODULE_ID &quot;camera&quot;</code></p>
+<p>&#x8FDB;&#x5165; <code>hw_get_module_by_class()</code> &#x5206;&#x6790;&#x4E0B;:</p>
+<ol>
+<li><code>id = &quot;camera&quot;</code>&#x3001;<code>inst = NULL</code>&#x3001;<code>module = &amp;rawModule</code></li>
+<li><code>&#x62FC;&#x51D1;&#x51FA; PATH_MAX = &quot;camera&quot;</code></li>
+</ol>
+<pre><code class="lang-c">hardware/libhardware/hardware.<span class="hljs-function">c
+
+<span class="hljs-keyword">int</span> <span class="hljs-title">hw_get_module_by_class</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *class_id, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *inst,  <span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> hw_module_t **module)</span>
+</span>{
+    <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">char</span> prop[PATH_MAX] = {<span class="hljs-number">0</span>};
+    <span class="hljs-keyword">char</span> path[PATH_MAX] = {<span class="hljs-number">0</span>};
+    <span class="hljs-keyword">char</span> name[PATH_MAX] = {<span class="hljs-number">0</span>};
+    <span class="hljs-keyword">char</span> prop_name[PATH_MAX] = {<span class="hljs-number">0</span>};
+
+    <span class="hljs-comment">// 1. &#x62FC;&#x51D1;&#x51FA; PATH_MAX = &quot;camera&quot;</span>
+    <span class="hljs-keyword">if</span> (inst)
+        <span class="hljs-built_in">snprintf</span>(name, PATH_MAX, <span class="hljs-string">&quot;%s.%s&quot;</span>, class_id, inst);
+    <span class="hljs-keyword">else</span>
+        strlcpy(name, class_id, PATH_MAX);
+
+    <span class="hljs-comment">// 2. &#x62FC;&#x51D1;&#x51FA; prop_name = &quot;ro.hardware.camera&quot;</span>
+    <span class="hljs-comment">/* First try a property specific to the class and possibly instance */</span>
+    <span class="hljs-built_in">snprintf</span>(prop_name, <span class="hljs-keyword">sizeof</span>(prop_name), <span class="hljs-string">&quot;ro.hardware.%s&quot;</span>, name);
+    <span class="hljs-keyword">if</span> (property_get(prop_name, prop, <span class="hljs-literal">NULL</span>) &gt; <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">if</span> (hw_module_exists(path, <span class="hljs-keyword">sizeof</span>(path), name, prop) == <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">goto</span> found;
+        }
+    }
+    <span class="hljs-comment">/* Loop through the configuration variants looking for a module */</span>
+    <span class="hljs-keyword">for</span> (i=<span class="hljs-number">0</span> ; i&lt;HAL_VARIANT_KEYS_COUNT; i++) {
+        <span class="hljs-keyword">if</span> (property_get(variant_keys[i], prop, <span class="hljs-literal">NULL</span>) == <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">continue</span>;
+        }
+        <span class="hljs-keyword">if</span> (hw_module_exists(path, <span class="hljs-keyword">sizeof</span>(path), name, prop) == <span class="hljs-number">0</span>) {
+            <span class="hljs-keyword">goto</span> found;
+        }
+    }
+    <span class="hljs-comment">/* Nothing found, try the default */</span>
+    <span class="hljs-keyword">if</span> (hw_module_exists(path, <span class="hljs-keyword">sizeof</span>(path), name, <span class="hljs-string">&quot;default&quot;</span>) == <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">goto</span> found;
+    }
+    <span class="hljs-keyword">return</span> -ENOENT;
+found:
+    <span class="hljs-comment">/* load the module, if this fails, we&apos;re doomed, and we should not try
+     * to load a different variant. */</span>
+    <span class="hljs-keyword">return</span> load(class_id, path, module);
+}
+</code></pre>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x5728;<em>hardware.c</em> &#x4E2D;&#xFF0C;&#x5728;&#x5982;&#x4E0B;&#x4E09;&#x4E2A;&#x76EE;&#x5F55;&#x4F9D;&#x6B21;&#x67E5;&#x627E; &#x201D;<em>camera.sdm660.so</em>&#x201C; &#xFF0C;&#x627E;&#x5230;&#x540E;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;<em>load</em> &#x5E93;&#x6587;&#x4EF6;</p>
+<pre><code class="lang-c"><span class="hljs-comment">// @ hardware/libhardware/hardware.c</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> HAL_LIBRARY_PATH1 <span class="hljs-string">&quot;/system/lib64/hw&quot;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> HAL_LIBRARY_PATH2 <span class="hljs-string">&quot;/vendor/lib64/hw&quot;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> HAL_LIBRARY_PATH3 <span class="hljs-string">&quot;/odm/lib64/hw&quot;</span></span>
+
+<span class="hljs-comment">/*
+ * Check if a HAL with given name and subname exists, if so return 0, otherwise
+ * otherwise return negative.  On success path will contain the path to the HAL.
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">hw_module_exists</span><span class="hljs-params">(<span class="hljs-keyword">char</span> *path, size_t path_len, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *name, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *subname)</span>
+</span>{
+    <span class="hljs-built_in">snprintf</span>(path, path_len, <span class="hljs-string">&quot;%s/%s.%s.so&quot;</span>, HAL_LIBRARY_PATH3, name, subname);
+    <span class="hljs-keyword">if</span> (access(path, R_OK) == <span class="hljs-number">0</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+    <span class="hljs-built_in">snprintf</span>(path, path_len, <span class="hljs-string">&quot;%s/%s.%s.so&quot;</span>,  HAL_LIBRARY_PATH2, name, subname);
+    <span class="hljs-keyword">if</span> (access(path, R_OK) == <span class="hljs-number">0</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+    <span class="hljs-built_in">snprintf</span>(path, path_len, <span class="hljs-string">&quot;%s/%s.%s.so&quot;</span>,  HAL_LIBRARY_PATH1, name, subname);
+    <span class="hljs-keyword">if</span> (access(path, R_OK) == <span class="hljs-number">0</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">return</span> -ENOENT;
+}
+</code></pre>
+<h2 id="21-camerasdm660so">2.1 camera.sdm660.so</h2>
+<p>camera.sdm660.so &#x6587;&#x4EF6;&#x4EE3;&#x7801;&#x4F4D;&#x4E8E; hardware/qcom/camera/QCamera2/</p>
+<pre><code class="lang-c"><span class="hljs-meta"># Enable SDLLVM compiler option for build flavour &gt;= N flavour</span>
+PLATFORM_SDK_NPDK = <span class="hljs-number">24</span>
+
+LOCAL_COPY_HEADERS_TO := qcom/camera
+LOCAL_COPY_HEADERS := QCameraFormat.h
+
+LOCAL_SRC_FILES := \
+        util/QCameraBufferMaps.cpp \
+        util/QCameraCmdThread.cpp \
+        util/QCameraFlash.cpp \
+        util/QCameraPerf.cpp \
+        util/QCameraQueue.cpp \
+        util/QCameraCommon.cpp \
+        util/QCameraTrace.cpp \
+        util/camscope_packet_type.cpp \
+        QCamera2Hal.cpp \
+        QCamera2Factory.cpp
+
+<span class="hljs-meta">#HAL 3.0 source</span>
+LOCAL_SRC_FILES += \
+        HAL3/QCamera3HWI.cpp \
+        HAL3/QCamera3Mem.cpp \
+        HAL3/QCamera3Stream.cpp \
+        HAL3/QCamera3Channel.cpp \
+        HAL3/QCamera3VendorTags.cpp \
+        HAL3/QCamera3PostProc.cpp \
+        HAL3/QCamera3CropRegionMapper.cpp \
+        HAL3/QCamera3StreamMem.cpp
+
+LOCAL_CFLAGS := -Wall -Wextra -Werror
+
+<span class="hljs-meta">#HAL 1.0 source</span>
+
+ifeq ($(TARGET_SUPPORT_HAL1),<span class="hljs-literal">false</span>)
+LOCAL_CFLAGS += -DQCAMERA_HAL3_SUPPORT
+<span class="hljs-keyword">else</span>
+LOCAL_CFLAGS += -DQCAMERA_HAL1_SUPPORT
+LOCAL_SRC_FILES += \
+        HAL/QCamera2HWI.cpp \
+        HAL/QCameraMuxer.cpp \
+        HAL/QCameraMem.cpp \
+        HAL/QCameraStateMachine.cpp \
+        util/QCameraDisplay.cpp \
+        HAL/QCameraChannel.cpp \
+        HAL/QCameraStream.cpp \
+        HAL/QCameraPostProc.cpp \
+        HAL/QCamera2HWICallbacks.cpp \
+        HAL/QCameraParameters.cpp \
+        HAL/QCameraParametersIntf.cpp \
+        HAL/QCameraThermalAdapter.cpp \
+        util/QCameraFOVControl.cpp \
+        util/QCameraHALPP.cpp \
+        util/QCameraDualFOVPP.cpp \
+        util/QCameraExtZoomTranslator.cpp \
+        util/QCameraPprocManager.cpp \
+        util/QCameraBokeh.cpp \
+        util/QCameraClearSight.cpp
+endif
+
+LOCAL_MODULE_RELATIVE_PATH := hw
+LOCAL_MODULE := camera.$(TARGET_BOARD_PLATFORM)
+LOCAL_MODULE_TAGS := optional
+
+LOCAL_32_BIT_ONLY := $(BOARD_QTI_CAMERA_32BIT_ONLY)
+include $(BUILD_SHARED_LIBRARY)
+</code></pre>
+<footer class="page-footer"><span class="copyright">copyright by duguosheng all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x4EF6;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
+2022-08-16 16:57:54
+</span></footer>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="系统架构.html" class="navigation navigation-prev " aria-label="Previous page: 第 4 章：Camera 系统架构">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="open_Camera流程.html" class="navigation navigation-next " aria-label="Next page: 第 5 章：open_Camera 流程">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"4.1 Camera Init 初始化流程","level":"1.5.1","depth":2,"next":{"title":"第 5 章：open_Camera 流程","level":"1.6","depth":1,"path":"Sdm660_Camera/open_Camera流程.md","ref":"Sdm660_Camera/open_Camera流程.md","articles":[{"title":"5.1 open_Camera 代码分析","level":"1.6.1","depth":2,"path":"Sdm660_Camera/open_Camera代码分析.md","ref":"Sdm660_Camera/open_Camera代码分析.md","articles":[]}]},"previous":{"title":"第 4 章：Camera 系统架构","level":"1.5","depth":1,"path":"Sdm660_Camera/系统架构.md","ref":"Sdm660_Camera/系统架构.md","articles":[{"title":"4.1 Camera Init 初始化流程","level":"1.5.1","depth":2,"path":"Sdm660_Camera/相机初始化流程.md","ref":"Sdm660_Camera/相机初始化流程.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-pro","expandable-chapters","code-optimize","splitter","pageview-count","tbfed-pagefooter","flexible-alerts"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"copyright by duguosheng","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"splitter":{},"search-pro":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"pageview-count":{},"flexible-alerts":{"danger":{"className":"danger","icon":"fa fa-ban","label":"Attention"},"note":{"className":"info","icon":"fa fa-info-circle","label":"Note"},"style":"flat","tip":{"className":"tip","icon":"fa fa-lightbulb-o","label":"Tip"},"warning":{"className":"warning","icon":"fa fa-exclamation-triangle","label":"Warning"}},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"code-optimize":{"copyButtons":true,"showLines":false},"expandable-chapters":{}},"theme":"default","author":"DuGuoSheng","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"6.S081 All-In-One","gitbook":"*"},"file":{"path":"Sdm660_Camera/相机初始化流程.md","mtime":"2022-08-16T08:57:54.464Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-08-16T08:58:08.874Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/jquery.mark.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search-pro/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-expandable-chapters/expandable-chapters.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-code-optimize/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-splitter/splitter.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-pageview-count/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-flexible-alerts/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
