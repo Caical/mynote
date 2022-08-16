@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>2.2 附加知识 · 6.S081 All-In-One</title>
+        <title>第 1 章：SC66_Camera 介绍 · 6.S081 All-In-One</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -81,10 +81,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="kernel层初始化流程.html" />
+    <link rel="next" href="高通Camera设计.html" />
     
     
-    <link rel="prev" href="Camera_driver移植流程.html" />
+    <link rel="prev" href="../" />
     
 
     </head>
@@ -126,9 +126,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="SC66_Camera介绍.html">
+        <li class="chapter active" data-level="1.2" data-path="相机介绍.html">
             
-                <a href="SC66_Camera介绍.html">
+                <a href="相机介绍.html">
             
                     
                     第 1 章：SC66_Camera 介绍
@@ -137,11 +137,43 @@
             
 
             
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="高通Camera设计.html">
+            
+                <a href="高通Camera设计.html">
+            
+                    
+                    1.1 高通 Camera 设计
+            
+                </a>
+            
+
+            
         </li>
     
-        <li class="chapter " data-level="1.3" data-path="SC66_Camera使用流程.html">
+        <li class="chapter " data-level="1.2.2" data-path="代码组织.html">
             
-                <a href="SC66_Camera使用流程.html">
+                <a href="代码组织.html">
+            
+                    
+                    1.2 代码组织
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="使用流程.html">
+            
+                <a href="使用流程.html">
             
                     
                     第 2 章：SC66_Camera 使用流程
@@ -153,9 +185,9 @@
             <ul class="articles">
                 
     
-        <li class="chapter " data-level="1.3.1" data-path="Camera_driver移植流程.html">
+        <li class="chapter " data-level="1.3.1" data-path="相机驱动移植流程.html">
             
-                <a href="Camera_driver移植流程.html">
+                <a href="相机驱动移植流程.html">
             
                     
                     2.1 Camera_driver 移植流程
@@ -166,9 +198,9 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3.2" data-path="additional.html">
+        <li class="chapter " data-level="1.3.2" data-path="附加内容.html">
             
-                <a href="additional.html">
+                <a href="附加内容.html">
             
                     
                     2.2 附加知识
@@ -229,16 +261,35 @@
             
         </li>
     
-        <li class="chapter " data-level="1.5" data-path="Camera_init流程.html">
+        <li class="chapter " data-level="1.5" data-path="系统架构.html">
             
-                <a href="Camera_init流程.html">
+                <a href="系统架构.html">
             
                     
-                    第 4 章：Camera Init 初始化流程
+                    第 4 章：Camera 系统架构
             
                 </a>
             
 
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="相机初始化流程.html">
+            
+                <a href="相机初始化流程.html">
+            
+                    
+                    4.1 Camera Init 初始化流程
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
             
         </li>
     
@@ -261,7 +312,7 @@
                 <a href="open_Camera代码分析.html">
             
                     
-                    5.1 open_Camera 流程
+                    5.1 open_Camera 代码分析
             
                 </a>
             
@@ -304,7 +355,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >2.2 附加知识</a>
+        <a href=".." >第 1 章：SC66_Camera 介绍</a>
     </h1>
 </div>
 
@@ -319,17 +370,11 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="&#x9644;&#x52A0;&#x77E5;&#x8BC6;&#xFF1A;">&#x9644;&#x52A0;&#x77E5;&#x8BC6;&#xFF1A;</h2>
-<p>&#x540E;&#x7EED;&#x5B66;&#x4E60;&#x5982;&#x679C;&#x540D;&#x8BCD;&#x5B58;&#x5728;&#x7591;&#x60D1;&#xFF0C;&#x5728;&#x8FD9;&#x8FB9;&#x53EF;&#x4EE5;&#x67E5;&#x8BE2;&#x76F8;&#x5E94;&#x6587;&#x6863;&#x3002;</p>
-<p> <img src="image/IMG_5006(20220815-103233).JPG" alt="IMG_5006(20220815-103233)" style="zoom:33%;"></p>
-<p>Note&#xFF1A;</p>
-<ol>
-<li>&#x4EC0;&#x4E48;&#x662F;&#x5E73;&#x53F0;&#x9A71;&#x52A8;  &#x300A;<a href="https://www.cnblogs.com/DF11G/p/9697885.html" target="_blank">&#x5E73;&#x53F0;&#x8BBE;&#x5907;&#x548C;&#x5E73;&#x53F0;&#x9A71;&#x52A8;</a>&#x300B;</li>
-<li>V4L2&#x662F;&#x4EC0;&#x4E48;  &#x300A;<a href="https://blog.csdn.net/wjky2014/article/details/124013250" target="_blank">&#x6DF1;&#x5165;&#x7406;&#x89E3;&#x76F8;&#x673A;&#x67B6;&#x6784;V4L2</a>&#x300B;</li>
-<li>&#x9AD8;&#x901A;Camera&#x300A;<a href="https://blog.csdn.net/Ciellee/article/details/105483079" target="_blank">Camera V4L2 &#x9A71;&#x52A8;&#x5C42;&#x5206;&#x6790;</a>&#x300B;</li>
-</ol>
+                                <h2 id="sc66camera&#x4ECB;&#x7ECD;">SC66_Camera&#x4ECB;&#x7ECD;</h2>
+<p>&#x672C;&#x4E66;&#x4E2D;SC66&#x7684;&#x5DE5;&#x4F5C;&#x5E73;&#x53F0;&#x4E3A;sdm660&#xFF0C;&#x7CFB;&#x7EDF;&#x4E3A;Android10&#xFF0C;&#x5C06;&#x4F1A;&#x5206;&#x522B;&#x4ECE;Camera&#x67B6;&#x6784;&#x3001;Camera&#x4EE3;&#x7801;&#x7EC4;&#x7EC7;&#x3001;&#x4EE5;&#x53CA;&#x5404;&#x5C42;&#x4EE3;&#x7801;&#x5206;&#x6790;&#x4E0E;&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;&#x8FDB;&#x884C;&#x4ECB;&#x7ECD;&#x3002;</p>
+<p> <img src="image/IMG_4988.JPG" alt="IMG_4988"> </p>
 <footer class="page-footer"><span class="copyright">copyright by duguosheng all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x4EF6;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
-2022-08-15 17:44:05
+2022-08-16 16:54:18
 </span></footer>
                                 
                                 </section>
@@ -357,12 +402,12 @@
 
             
                 
-                <a href="Camera_driver移植流程.html" class="navigation navigation-prev " aria-label="Previous page: 2.1 Camera_driver 移植流程">
+                <a href="../" class="navigation navigation-prev " aria-label="Previous page: 介绍">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="kernel层初始化流程.html" class="navigation navigation-next " aria-label="Next page: 第 3 章：kernel 层初始化流程">
+                <a href="高通Camera设计.html" class="navigation navigation-next " aria-label="Next page: 1.1 高通 Camera 设计">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -373,7 +418,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"2.2 附加知识","level":"1.3.2","depth":2,"next":{"title":"第 3 章：kernel 层初始化流程","level":"1.4","depth":1,"path":"Sdm660_Camera/kernel层初始化流程.md","ref":"Sdm660_Camera/kernel层初始化流程.md","articles":[{"title":"3.1 V4L2 框架分析","level":"1.4.1","depth":2,"path":"Sdm660_Camera/V4L2分析.md","ref":"Sdm660_Camera/V4L2分析.md","articles":[]},{"title":"3.2 kernel 层代码分析","level":"1.4.2","depth":2,"path":"Sdm660_Camera/kernel代码分析.md","ref":"Sdm660_Camera/kernel代码分析.md","articles":[]}]},"previous":{"title":"2.1 Camera_driver 移植流程","level":"1.3.1","depth":2,"path":"Sdm660_Camera/Camera_driver移植流程.md","ref":"Sdm660_Camera/Camera_driver移植流程.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-pro","expandable-chapters","code-optimize","splitter","pageview-count","tbfed-pagefooter","flexible-alerts","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"copyright by duguosheng","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"livereload":{},"splitter":{},"search-pro":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"pageview-count":{},"flexible-alerts":{"danger":{"className":"danger","icon":"fa fa-ban","label":"Attention"},"note":{"className":"info","icon":"fa fa-info-circle","label":"Note"},"style":"flat","tip":{"className":"tip","icon":"fa fa-lightbulb-o","label":"Tip"},"warning":{"className":"warning","icon":"fa fa-exclamation-triangle","label":"Warning"}},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"code-optimize":{"copyButtons":true,"showLines":false},"expandable-chapters":{}},"theme":"default","author":"DuGuoSheng","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"6.S081 All-In-One","gitbook":"*"},"file":{"path":"Sdm660_Camera/additional.md","mtime":"2022-08-15T09:44:05.038Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-08-16T06:12:58.617Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"第 1 章：SC66_Camera 介绍","level":"1.2","depth":1,"next":{"title":"1.1 高通 Camera 设计","level":"1.2.1","depth":2,"path":"Sdm660_Camera/高通Camera设计.md","ref":"Sdm660_Camera/高通Camera设计.md","articles":[]},"previous":{"title":"介绍","level":"1.1","depth":1,"path":"README.md","ref":"README.md","articles":[]},"dir":"ltr"},"config":{"plugins":["-lunr","-search","search-pro","expandable-chapters","code-optimize","splitter","pageview-count","tbfed-pagefooter","flexible-alerts","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"copyright by duguosheng","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"livereload":{},"splitter":{},"search-pro":{},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"pageview-count":{},"flexible-alerts":{"danger":{"className":"danger","icon":"fa fa-ban","label":"Attention"},"note":{"className":"info","icon":"fa fa-info-circle","label":"Note"},"style":"flat","tip":{"className":"tip","icon":"fa fa-lightbulb-o","label":"Tip"},"warning":{"className":"warning","icon":"fa fa-exclamation-triangle","label":"Warning"}},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"code-optimize":{"copyButtons":true,"showLines":false},"expandable-chapters":{}},"theme":"default","author":"DuGuoSheng","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"6.S081 All-In-One","gitbook":"*"},"file":{"path":"Sdm660_Camera/相机介绍.md","mtime":"2022-08-16T08:54:18.995Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-08-16T08:56:14.098Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
