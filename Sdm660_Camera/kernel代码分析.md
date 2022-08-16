@@ -1,22 +1,11 @@
 # kernel代码分析
 
-## 1. Camera Kernel 驱动
-
-*Kernel*驱动中高通把*Camera*系统分为*Camera*和*Sensor*两部分：
-
-+ *Camera*部分是通用的代码逻辑，该部分由*msm_cam* 设备作为 *video*设备 与 *userspace* 进行交互，*Qcom*自已的*MIPI*，*ISP*，*CPP* 等硬件设备都属于*Camera*部分。
-
-+ Sensor 可以理解为外部设备，是不同产商生产的Camera sensor模组。开发者分只需要配置不同的Sensor模组，将其注册到msm_cam设备上，创建好对应的video 设备，其他具体的接口逻辑均由Camera部分来实现。
-
-
-在实际工作时，*camera video*设备主要是提供一个*v4l2*接口，*Camera* 驱动在接收到*event*消息后，会把该*event*消息及其参数以*Post* *event*形式发出到*hal* 层中，*hal*层接收到*camera* 驱动*post* 上来的*event*，来调用对应的逻辑，如果要操作*sensor* ，刚调用对应的 *video*设备就可以了。
-
 
 接下来，我们依次来看看 *msm_cam*、*sensor*、*v4l2* 这几部分的代码逻辑：
 
-## 2. msm-cam 驱动
+## 1. msm-cam 驱动
 
-msm-cam是在dts 中定义的，在*\kernel\msm-4.4\arch\arm\boot\dts\qcom\sdm660-camera.dtsi中*：
+*msm-cam*是在dts 中定义的，在*\kernel\msm-4.4\arch\arm\boot\dts\qcom\sdm660-camera.dtsi中*：
 
 ```c
 	qcom,msm-cam@ca00000 {
@@ -59,9 +48,10 @@ static int __init msm_init(void)
 初始化注册成功后，会调用`msm_probe`函数，在该函数中，主要工作如下：
 
 1. 初始化 *v4l2_device*、*video_device* 、*media_device* 结构体并分配好*KERNEL* 内存。
-
 2. 注册 *media_device* 、*v4l2_device*、*video_device* 设备。
 3. 创建好 *camera* *debug* *root* *fs*
+
+关于这部分建议先看一下**3.1节的V4L2分析**。
 
 ```c
 \kernel\msm-4.4\drivers\media\platform\msm\camera_v2\msm.c
@@ -127,7 +117,7 @@ static int msm_probe(struct platform_device *pdev)
 }
 ```
 
-### 2.1 struct v4l2_device 结构体描述
+### 1.1 struct v4l2_device 结构体描述
 
 ```c
 \kernel\msm-4.4\include\media\v4l2-device.h
@@ -161,7 +151,7 @@ struct v4l2_device {
 };
 ```
 
-### 2.2 struct msm_video_device 结构体描述
+### 1.2 struct msm_video_device 结构体描述
 
 ```c
 \kernel\msm-4.4\drivers\media\platform\msm\camera_v2\msm.h
@@ -173,7 +163,7 @@ struct msm_video_device {
 };
 ```
 
-### 2.3 struct media_device 结构体描述
+### 1.3 struct media_device 结构体描述
 
 ```c
 struct media_device {
@@ -199,7 +189,7 @@ struct media_device {
 };
 ```
 
-## 3. Sensor 驱动
+## 2. Sensor 驱动
 
 还是从 *dts* 开始看，前面我们配置*camera* *sensor*时，节点为 *compatible = "qcom,camera"*;对应代码在*\kernel\msm-4.4\drivers\media\platform\msm\camera_v2\sensor\msm_sensor_driver.c*。
 
@@ -242,7 +232,7 @@ static int __init msm_sensor_driver_init(void)
 }
 ```
 
-### 3.1 平台驱动probe函数 msm_sensor_driver_platform_probe()
+### 2.1 平台驱动probe函数 msm_sensor_driver_platform_probe()
 
 在 `msm_sensor_driver_platform_probe`函数中，其主要工作如下:
 
@@ -320,7 +310,7 @@ static int32_t msm_sensor_driver_platform_probe(struct platform_device *pdev)
 }
 ```
 
-### 3.2 解析Camera DTS 节点 msm_sensor_driver_get_dt_data()
+### 2.2 解析Camera DTS 节点 msm_sensor_driver_get_dt_data()
 
 在该函数中主要是对*dts* 中配置的*camera* 节点解析，工作如下:
 
@@ -514,7 +504,7 @@ static int32_t msm_sensor_driver_get_dt_data(struct msm_sensor_ctrl_t *s_ctrl)
 }
 ```
 
-#### 3.2.1 msm_camera_sensor_board_info 结构体描述
+#### 2.2.1 msm_camera_sensor_board_info 结构体描述
 
 在*msm_camera_sensor_board_info* 中保存了所有*camera* 及硬件相关的*name*及参数。
 
@@ -539,7 +529,7 @@ struct msm_camera_sensor_board_info {
 };
 ```
 
-#### 3.2.2 Camera 支持的外设类型 sensor_sub_module_t
+#### 2.2.2 Camera 支持的外设类型 sensor_sub_module_t
 
 ```c
 \kernel\msm-4.4\include\uapi\media\msm_cam_sensor.h
@@ -562,7 +552,7 @@ enum sensor_sub_module_t {
 };
 ```
 
-### 3.3 【重点】全局CameraSensorCtrol数组g_sctrl
+### 2.3 【重点】全局CameraSensorCtrol数组g_sctrl
 
 *g_sctrl* 是静态全局的一个*msm_sensor_ctrl_t* * 结构体指针数组，其定义如下：
 
@@ -577,13 +567,13 @@ static struct msm_sensor_ctrl_t *g_sctrl[MAX_CAMERAS];
 
 至此，我们代码中，就把*dts* 的内容成功的转化为了`msm_sensor_ctrl_t`结构体保存在 全局 *g_sctrl* 中。
 
-### 3.4 【重点】摄像头probe 函数 msm_sensor_driver_probe()
+### 2.4 【重点】摄像头probe 函数 msm_sensor_driver_probe()
 
 3.1 中我们分析过了 平台驱动probe函数 `msm_sensor_driver_platform_probe()`，这个函数主要作用还是解析*DTS*，但并不会真正*probe camera sensor*。那，*camera sensor probe* 是在什么时候呢？
 
 其实，*camera probe* 并不是和其他*kernerl* 驱动一样，在初始化时就*probe*，而是通过*hal* 层下发 *probe* 指令来控制*probe* 的。
 
-#### 3.4.1 hal层函数 module_sensor_init()
+#### 2.4.1 hal层函数 module_sensor_init()
 
 hal层代码位于 *\vendor\qcom\proprietary\mm-camera\mm-camera2\media-controller\modules\sensors\module\module_sensor.c*
 
@@ -612,7 +602,7 @@ mct_module_t *module_sensor_init(const char *name)
  }
 ```
 
-#### 3.4.2 hal层函数 sensor_init_probe()
+#### 2.4.2 hal层函数 sensor_init_probe()
 
 上层代码逻辑我们后续会详细分析，并不是我们本章的重点，我们重点关注`sensor_init_probe()`，其内容如下:
 
@@ -767,7 +757,7 @@ XML_PROBE_EXIT:
 
 ```
 
-#### 3.4.3 hal层函数 sensor_probe() 下发 CFG_SINIT_PROBE
+#### 2.4.3 hal层函数 sensor_probe() 下发 CFG_SINIT_PROBE
 
 进入 `sensor_probe()`函数：
 在函数中可以看出，首先会调用 `sensor_load_library()`加载*vendor* 中*camera sensor*的库文件。
@@ -820,7 +810,7 @@ enum msm_sensor_init_cfg_type_t {
 };
 ```
 
-#### 3.4.4 Kernel Ioctl 函数 msm_sensor_init_subdev_ioctl()
+#### 2.4.4 Kernel Ioctl 函数 msm_sensor_init_subdev_ioctl()
 
 上层*IOCTRL* 命令下发到*kernerl* 中，进入`msm_sensor_init_subdev_ioctl()`中，接着转发到`msm_sensor_driver_cmd()`中，调用 `msm_sensor_driver_probe()`函数
 
@@ -861,7 +851,7 @@ static int32_t msm_sensor_driver_cmd(struct msm_sensor_init_t *s_init, void *arg
 
 ```
 
-#### 3.4.5 probe函数 msm_sensor_driver_probe()
+#### 2.4.5 probe函数 msm_sensor_driver_probe()
 
 从上层开始下发*probe* 命令，至此正式开始*probe* 初始化 *camera*，代码如下：
 
@@ -1089,7 +1079,7 @@ CSID_TG:
 
 ```
 
-#### 3.4.6 创建 /dev/videoX节点 msm_sensor_driver_create_v4l_subdev()
+#### 2.4.6 创建 /dev/videoX节点 msm_sensor_driver_create_v4l_subdev()
 
 ```c
 \kernel\msm-4.4\drivers\media\platform\msm\camera_v2\camera\camera.c
@@ -1145,7 +1135,7 @@ static int32_t msm_sensor_driver_create_v4l_subdev(struct msm_sensor_ctrl_t *s_c
 
 ```
 
-### 3.5 struct msm_sensor_ctrl_t 结构体描述
+### 2.5 struct msm_sensor_ctrl_t 结构体描述
 
 ```c
 \kernel\msm-4.4\drivers\media\platform\msm\camera_v2\sensor\msm_sensor.h
@@ -1178,16 +1168,5 @@ struct msm_sensor_ctrl_t {
 };
 
 ```
-
-## 4. Camera 驱动总结
-
-通过前面的分析，我们再次验证了*Kernel Camera*中的 *camera*及 *Sensor* 的两部份。
-
-1. *Camera* 部分
-   通过解析*compatible = "qcom,msm-cam"*;来初始化并注册好*media_device* 、*v4l2_device*、*video_device* 设备，同时生成*/dev/media0*节点。
-
-2. *Sensor* 部分
-   通过解析*compatible = "qcom,camera"*;来初始化调用probe解析*camera sensor*的*dts*节点信息，保存在全局*g_sctrl* 数组中。
-   然后，上层在初始化时，依次对每个*sensor*下发 *ioctl* 参数，触发其作初始化*probe* ，上电*check_sensor_id* 及 创建对应的 /dev/*videoX* 节点 及 /dev/*mediaX* 的节点
 
 至此，给合我们之前的移植过程，我们就将Kernel 中的 dts 相关的部分通过代码流程分析清楚了。
